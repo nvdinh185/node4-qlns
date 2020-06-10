@@ -1,0 +1,52 @@
+{
+  "name": "cuongdq-bsc-kpi",
+  "version": "0.0.1",
+  "author": "Cuongdq",
+  "homepage": "https://c3.mobifone.vn/bsc-kpi",
+  "private": true,
+  "scripts": {
+    "start": "node server"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "convert-excel-to-json": "^1.6.0",
+    "cryptiles": "^4.1.3",
+    "dddos": "^0.1.2",
+    "delay": "^4.3.0",
+    "exceljs": "^1.15.0",
+    "exif-js": "^2.3.0",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "gradle": "^1.0.9",
+    "hoek": "^6.0.4",
+    "http": "0.0.0",
+    "jimp": "^0.6.0",
+    "jsonwebtoken": "^8.4.0",
+    "mime-types": "^2.1.21",
+    "node-cron": "^2.0.3",
+    "node-html-parser": "^1.1.11",
+    "node-rsa": "^1.0.1",
+    "node-server-screenshot": "^0.2.1",
+    "nodemailer": "^6.4.4",
+    "os": "^0.1.1",
+    "path": "^0.12.7",
+    "pdfkit": "^0.10.0",
+    "rxjs": "5.5.11",
+    "sharp": "^0.23.2",
+    "simple-crypto-js": "^2.2.0",
+    "socket.io": "^2.2.0",
+    "sqlite3": "^4.1.1",
+    "svg-captcha": "^1.4.0",
+    "sw-toolbox": "3.6.0",
+    "tar": "4.4.8",
+    "underscore": "^1.9.1",
+    "url": "^0.11.0",
+    "xlsx-to-json-lc": "^0.5.0",
+    "zone.js": "0.8.26"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  }
+}
