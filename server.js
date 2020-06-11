@@ -30,10 +30,6 @@ function main(isHttp, isHttps) {
     res.end('<h1>Xin lỗi trang bạn muốn tìm không tồn tại!</h1>Địa chỉ ip của bạn là : ' + req.clientIp);
   });
 
-  //cac route truoc chi can throw, thi error nay se tra loi cho nguoi sdung
-  //Error handle ALLWAYS keep last route even all
-  app.use(require('./handlers/error-handler').errors);
-
   if (isHttp) {
     // For http
     const httpServer = require('http').createServer(app);
