@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { HomePage } from './home.page';
+import { OrganizationsPage } from './organizations.page';
 import { Ngxi4DynamicServiceModule } from 'ngxi4-dynamic-service';
 
 @NgModule({
@@ -12,10 +12,10 @@ import { Ngxi4DynamicServiceModule } from 'ngxi4-dynamic-service';
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
+        component: OrganizationsPage
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [OrganizationsPage]
 })
-export class HomePageModule {}
+export class OrganizationsPageModule {}

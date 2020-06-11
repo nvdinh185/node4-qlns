@@ -3,11 +3,11 @@ import { AuthService } from 'ngxi4-dynamic-service';
 
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-organizations',
+  templateUrl: 'organizations.page.html',
+  styleUrls: ['organizations.page.scss'],
 })
-export class HomePage {
+export class OrganizationsPage {
 
   userReport: any; //Đối tượng nhận 1 lần ban đầu về chu kỳ đơn vị, cá nhân
 
@@ -36,7 +36,7 @@ export class HomePage {
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-organizations", true);
       console.log(this.organizations);
-      /* if (Array.isArray(this.organizations)) {
+      if (Array.isArray(this.organizations)) {
         //lọc lấy cây id = root_id để làm gốc cây
         //thiết lập parent_id=undefined cho gốc cây
         //đã có cây thì ta reset parent_id
@@ -51,16 +51,16 @@ export class HomePage {
           }
         });
 
-        //tạo cấu trúc hình cây để khai báo, chỉnh sửa cây tổ chức
-        let organizationsTree = this.apiAuth.createTreeMenu(this.organizations, 'id', 'parent_id');
+        // tạo cấu trúc hình cây để khai báo, chỉnh sửa cây tổ chức
+        // let organizationsTree = this.apiAuth.createTreeMenu(this.organizations, 'id', 'parent_id');
 
-        if (this.userReport && Array.isArray(organizationsTree)) {
-          this.organizationsTree = organizationsTree.filter(x => x.id === this.userReport.organization_id);
-        } else {
-          this.organizationsTree = organizationsTree;
-        }
+        // if (this.userReport && Array.isArray(organizationsTree)) {
+        //   this.organizationsTree = organizationsTree.filter(x => x.id === this.userReport.organization_id);
+        // } else {
+        //   this.organizationsTree = organizationsTree;
+        // }
 
-      } */
+      }
 
     } catch (e) { }
 
