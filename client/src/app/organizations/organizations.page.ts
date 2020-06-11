@@ -10,10 +10,10 @@ import { PopoverController } from '@ionic/angular';
 })
 export class OrganizationsPage {
 
-  userReport: any; //Đối tượng nhận 1 lần ban đầu về chu kỳ đơn vị, cá nhân
+  userReport: any;
 
-  organizations: any; //ghi bảng ghi gốc của tổ chức cấp độc lập (lấy id=root_id)
-  organizationsTree: any; //ghi cây của các tổ chức độc lập đến subs
+  organizations: any;
+  organizationsTree: any;
 
   itemOpen: any;
 

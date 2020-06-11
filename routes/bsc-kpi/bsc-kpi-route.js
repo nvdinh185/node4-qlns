@@ -14,5 +14,4 @@ router.get('/get-organizations'
     , adminHandler.getOrganizations
 );
 
-
 module.exports = router;

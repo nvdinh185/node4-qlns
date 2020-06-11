@@ -5,6 +5,6 @@
  * const db = require('../../db/sqlite3/db-pool');
  */
 const SQLiteDAO = require('./sqlite-dao');
-const dbFile = './db/database/kpi-bsc-database-v9.db';
+const dbFile = './db/database/qlns-database-v1.db';
 
 module.exports = new SQLiteDAO(dbFile);
