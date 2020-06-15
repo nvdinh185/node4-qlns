@@ -118,6 +118,63 @@ export class OrganizationsPage {
 
   }
 
+  onClickTreeItem(event) {
+
+    //Khi cây con có click_type>0 thì ta tự mở node ra để xem
+    if (event.item.click_type > 0) {
+      event.item.visible = true;
+    }
+
+    //Khai báo menu popup
+    let menu = [
+      {
+        name: "Chỉnh sửa thông tin",
+        value: "edit-owner",
+        icon: {
+          name: "md-create",
+          color: "primary",
+        }
+      }
+      ,
+      {
+        name: "Thêm đơn vị cấp con",
+        value: "add-child",
+        icon: {
+          name: "md-add",
+          color: "secondary",
+        }
+      }
+      ,
+      {
+        name: event.item.status === 1 ? "Loại bỏ đơn vị" : "Mở hoạt động đơn vị",
+        value: "stop-owner",
+        icon: {
+          name: "trash",
+          color: "danger",
+        }
+      }
+    ];
+
+
+    //Thực hiện hiển thị menu
+    this.apiCommon.presentPopover(
+      event.event, PopoverCardComponent
+      , {
+        type: 'single-choice',
+        title: "Chọn chức năng",
+        color: "primary",
+        menu: menu
+      })
+      .then(data => {
+        // console.log(data);
+        this.processKpiDetails(data, event.item)
+      })
+      .catch(err => {
+        console.log('err: ', err);
+      });
+
+  }
+
   /**
    * Xử lý từng lệnh 
    * @param cmd 
@@ -150,7 +207,7 @@ export class OrganizationsPage {
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
       item.title_name = 'Tổ chức';
 
-      // this.addNewItem(item, 'edit');
+      this.addNewItem(item, 'edit');
     }
 
 
@@ -162,7 +219,7 @@ export class OrganizationsPage {
       item.table_name = 'organizations'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
 
-      // this.stopItem(item);
+      this.stopItem(item);
     }
 
   }
@@ -213,12 +270,44 @@ export class OrganizationsPage {
 
   }
 
+  stopItem(item) {
+    let form = {
+      title: "Thay đổi trạng thái"
+      , buttons: [
+        { color: "danger", icon: "close", next: "CLOSE" }
+      ]
+      , items: [
+        { type: "title", name: item.name }
+        , { type: "hidden", key: "id", value: item.id } //đối tượng để update
+        , { type: "hidden", key: "table_name", value: item.table_name }
+        , { type: "hidden", key: "wheres", value: item.wheres }
+        , { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
+        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" }
+        , {
+          type: "button"
+          , options: [
+            {
+              name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
+                + "/post-parameters", token: true, signed: true
+            }
+          ]
+        }
+      ]
+    }
+
+    this.apiCommon.openModal(DynamicFormMobilePage, {
+      parent: this,
+      form: form,
+      callback: this.callbackKpi
+    })
+  }
+
   /**
    * Hàm xử lý kết quả post sửa thêm
    */
   callbackKpi = (res) => {
 
-    console.log(res);
+    // console.log(res);
 
     return new Promise((resolve, reject) => {
 
@@ -229,7 +318,7 @@ export class OrganizationsPage {
         //ta không cần refresh trang
       } else {
         //lấy lại kết quả đã tính toán
-        // this.onChangeSelect();
+        this.refreshNews();
       }
       resolve({ next: "CLOSE" })
     })

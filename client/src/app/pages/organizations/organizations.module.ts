@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { OrganizationsPage } from './organizations.page';
 import { Ngxi4DynamicServiceModule } from 'ngxi4-dynamic-service';
+import { TreeList } from 'src/app/components/tree-list/tree-list';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { Ngxi4DynamicServiceModule } from 'ngxi4-dynamic-service';
       }
     ])
   ],
-  declarations: [OrganizationsPage]
+  declarations: [OrganizationsPage, TreeList]
 })
 export class OrganizationsPageModule {}

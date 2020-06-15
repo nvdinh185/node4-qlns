@@ -1,0 +1,38 @@
+<div [style.padding-left]="level?'8px':'0px'">
+    <ion-grid class="ion-no-padding">
+        <ion-row *ngFor="let item of treeData; let idx = index" style="padding: 1px; border-radius: 0.8em;"
+            [style.background]="item.id<0||item.status===0?'red':level?'#fafafaf6':'#e4f5f2'">
+
+            <ion-col size="1" style="margin:auto;text-align:center">
+                <ion-icon *ngIf="item.subs?.length" tappable (click)="toggleChildren(item)" style="font-size: 2em"
+                    [style.color]="item.visible?'darkgoldenrod':'darkblue'"
+                    name="{{item.visible?'remove-circle':'add-circle'}}"></ion-icon>
+                <ion-label class="ion-text-wrap" *ngIf="!item.subs?.length" style="font-size: 1.1em; font-weight: bold;">{{idx+1}}
+                </ion-label>
+            </ion-col>
+
+            <ion-col size="9" style="margin:auto;text-align:justify; border: solid 0.1em #FFFFFF;" tappable
+                (click)="onClickItem($event, item)"
+                [style.background]="item.kpi_role==='C'?'#2fe95e':item.kpi_role==='Tr'?'#eef134':item.kpi_role==='R'?'#fadfa6':''">
+                <ion-label class="ion-text-wrap" [style.font-size]="item.font_size?item.font_size:'1.3em'">
+                    <ion-icon item-start *ngIf="item.click_type" style="font-size: 1em" [style.color]="'lightblue'"
+                        name="md-cloud-upload"></ion-icon>
+                    {{item.name}}
+                    <p *ngIf="item.job_name" style="font-size: 0.8em">{{item.job_name}}</p>
+                </ion-label>
+            </ion-col>
+
+            <ion-col size="2" style="margin:auto;text-align:center;">
+                <ion-icon style="font-size: 2em" name="{{(item.status===1?'ios-unlock':'ios-lock')}}"
+                    color="{{(item.status===1?'primary':'light')}}"></ion-icon>
+            </ion-col>
+
+            <ion-col size="12">
+                <tree-list [treeData]="item.subs" *ngIf="item.visible" [level]="(level+1)"
+                    (onClickKpi)="onClickTreeItem($event)">
+                </tree-list>
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+</div>
