@@ -47,6 +47,62 @@ class Handler {
             });
     }
 
+    setFunctionFromPath(req, res, next) {
+        req.functionCode = req.pathName.substring(req.pathName.lastIndexOf("/") + 1);
+        next();
+    }
+
+    async checkFunctionRole(req, res, next) {
+        // dữ liệu data này nằm ở bảng admin_users
+        console.log(req.functionCode);
+
+        if (req.functionCode) { //can kiem tra quyen cua user co khong
+            if (req.user && req.user.data) {
+                if (req.user.data.role === 99) {
+                    next() //quyen root
+                } else {
+                    try {
+                        let row = await db.getRst(`select b.roles from users a, admin_roles b
+                                                    where a.id = b.user_id
+                                                    and a.status = 1
+                                                    and a.username='${req.user.username}'`);
+
+                        // console.log('row:', row);
+
+
+                        let row2 = await db.getRst(`select id
+                                                    from admin_functions
+                                                    where function_code ='${req.functionCode}'`);
+
+                        // console.log('row2:', row2, req.functionCode);       
+
+                        let roles = row && row.roles ? JSON.parse(row.roles) : undefined; //tra ve object
+                        let functionId = row2 ? row2.id : undefined; //tra ve id
+                        //console.log('rolesFunction', functionId, roles);
+                        let index = roles && functionId && roles.functions ? roles.functions.findIndex(x => x === functionId) : -1;
+
+                        if (index >= 0) {
+                            next()
+                        } else {
+                            res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+                            res.end(JSON.stringify({ message: 'Bạn KHÔNG ĐƯỢC PHÂN QUYỀN thực hiện chức năng này' }));
+                        }
+
+                    } catch (e) {
+                        res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+                        res.end(JSON.stringify({ message: 'Lỗi trong lúc kiểm tra quyền', error: e }));
+                    }
+                }
+            } else {
+                res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ message: 'Bạn không có quyền thực hiện chức năng này' }));
+            }
+        } else {
+            next(); //xem nhu khong can kiem tra quyen
+        }
+
+    }
+
 }
 
 module.exports = new Handler();

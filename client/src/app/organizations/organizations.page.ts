@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService, CommonsService, PopoverCardComponent } from 'ngxi4-dynamic-service';
-import { PopoverController } from '@ionic/angular';
-
+import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePage } from 'ngxi4-dynamic-service';
 
 @Component({
   selector: 'app-organizations',
@@ -20,7 +18,6 @@ export class OrganizationsPage {
   constructor(
     private apiAuth: AuthService
     , private apiCommon: CommonsService
-    , private popoverCtrl: PopoverController
   ) { }
 
   ngOnInit() {
@@ -78,43 +75,164 @@ export class OrganizationsPage {
    * @param card 
    */
   onClickSpec(ev, card) {
-    console.log(card);
+    // console.log(card);
     let menu =
       [
         {
-          icon: "md-add",
-          color: "secondary",
+          id: 1,
           name: "Thêm đơn vị phụ thuộc",
-          value: "add-child"
+          value: "add-child",
+          icon: {
+            name: "md-add",
+            color: "secondary",
+          }
         }
         ,
         {
-          icon: "md-create",
-          color: "primary",
+          id: 2,
           name: "Chỉnh sửa thông tin",
-          value: "edit-owner"
+          value: "edit-owner",
+          icon: {
+            name: "md-create",
+            color: "primary",
+          }
         }
       ];
 
     //Thực hiện hiển thị menu
-    // let popover = this.popoverCtrl.create(PopoverCardComponent, {
-    //   form: {
-    //     type: "item", //icon/color/tab/item
-    //     menu: menu
-    //   }
-    // });
+    this.apiCommon.presentPopover(
+      ev, PopoverCardComponent
+      , {
+        type: 'single-choice',
+        title: "Chọn chức năng",
+        color: "primary",
+        menu: menu
+      })
+      .then(data => {
+        // console.log(data);
+        this.processKpiDetails(data, card)
+      })
+      .catch(err => {
+        console.log('err: ', err);
+      });
 
-    //Hiển thị menu tại nơi xãy ra sự kiện $event này
-    // popover.present({ ev: ev });
+  }
 
-    // //Sau khi người dùng lựa chọn một item thì sẽ trả về dữ liệu data sau
-    // popover.onDidDismiss(data => {
-    //   if (data) {
-    //     //thực hiện tùy vào tham số data trả về này
-    //     this.processKpiDetails(data, card)
-    //   }
-    // })
+  /**
+   * Xử lý từng lệnh 
+   * @param cmd 
+   * @param item 
+   */
+  processKpiDetails(cmd, item) {
 
+    //thêm tham số
+    if (cmd.value === 'add-child') {
+      this.itemOpen = item;
+      //item là một nhánh cây đang xét
+      let itemNew = {
+        id: -1, //Giả id để thêm vào
+        parent_id: item.id, //kế thừa cấp cha của nó
+        table_name: 'organizations', //tên bảng cần đưa vào
+        wheres: [], //Mệnh đề wheres để update
+        title_name: item.name //tên của cấp cha
+      }
+
+      // console.log(cmd);
+      // console.log(item);
+      this.addNewItem(itemNew, 'add');
+    }
+
+    //sửa tham số
+    if (cmd.value === 'edit-owner') {
+      this.itemOpen = item;
+
+      item.table_name = 'organizations'; //tên bảng cần đưa vào
+      item.wheres = ['id'];              //Mệnh đề wheres để update = '';
+      item.title_name = 'Tổ chức';
+
+      // this.addNewItem(item, 'edit');
+    }
+
+
+    //thêm kpi từ Chỉ tiêu
+    if (cmd.value === 'stop-owner') {
+
+      this.itemOpen = item;
+
+      item.table_name = 'organizations'; //tên bảng cần đưa vào
+      item.wheres = ['id'];              //Mệnh đề wheres để update = '';
+
+      // this.stopItem(item);
+    }
+
+  }
+
+  /**
+   * Thêm kpi mới có kpi_role là C và Tr từ cây
+   * @param item 
+   */
+  addNewItem(item, type) {
+
+    let form = {
+      title: (type === 'add' ? 'THÊM' : 'SỬA') + " DANH MỤC"
+      , buttons: [
+        { color: "danger", icon: "close", next: "CLOSE" }
+      ]
+      , items: [
+        { type: "title", name: item.title_name }
+        , { type: "hidden", key: "id", value: item.id }
+        , { type: "hidden", key: "parent_id", value: item.parent_id }
+        , { type: "hidden", key: "table_name", value: item.table_name }
+        , { type: "hidden", key: "wheres", value: item.wheres }
+
+        //hiển thị nội dung nhập vào cho Chỉ tiêu chỉ là tên và trọng số
+        //new Date().toISOString().slice(0, 10)
+        , { type: "text", key: "name", value: item.name, name: "Tên đơn vị", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
+        , { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" }
+        //, { type: "datetime", key: "start_date", value: item.start_date, name: "Chọn ngày hoạt động", hint: "Lựa chọn ngày", display: "DD/MM/YYYY", picker: "DD/MM/YYYY", validators: [{ required: true }] }
+        , { type: "text_area", key: "description", value: item.description, name: "Mô tả thông tin của đơn vị", input_type: "text", icon: "md-alert", hint: "Nhập mô tả này để ghi nhớ" }
+        , {
+          type: "button"
+          , options: [
+            { name: "Reset", next: "RESET" }
+            , {
+              name: type === 'add' ? 'Tạo mới' : 'Chỉnh sửa', next: "CALLBACK"
+              , url: this.apiAuth.serviceUrls.RESOURCE_SERVER
+                + "/post-parameters", token: true
+            }
+          ]
+        }
+      ]
+    };
+
+    this.apiCommon.openModal(DynamicFormMobilePage, {
+      parent: this,
+      form: form,
+      callback: this.callbackKpi
+    })
+
+  }
+
+  /**
+   * Hàm xử lý kết quả post sửa thêm
+   */
+  callbackKpi = (res) => {
+
+    console.log(res);
+
+    return new Promise((resolve, reject) => {
+
+      if (res.error) {
+        this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)))
+      } else if (res.ajax) {
+        //Khi thay đổi cần gọi ajax thì nó gọi cái này
+        //ta không cần refresh trang
+      } else {
+        //lấy lại kết quả đã tính toán
+        // this.onChangeSelect();
+      }
+      resolve({ next: "CLOSE" })
+    })
   }
 
 }
