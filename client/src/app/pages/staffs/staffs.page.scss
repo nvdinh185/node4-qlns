@@ -1,0 +1,49 @@
+//thiết lập chữ cho tiêu đề công ty
+.card-title-header {
+    font-size: 1.5em;
+    width: 90%;
+    font-weight: bold;
+    color: darkblue;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+//Thiết lập khung nền và cỡ chữ cho card viễn cảnh
+.card-prospect{
+    border-radius: 0.8em;
+    border: solid 0.15em #FFFFFF;
+    width:100%;
+    //opacity: 0.8;
+}
+
+.card-prospect .prospect-header {
+    font-size: 1.2em;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+//Thiết lập dòng chẵn lẻ cho bảng
+.table-row .table-header { //tất cả các cột sau class này
+    background: #99b7f0e0 !important;
+    color:#0a0909fb !important;
+    font-weight: bold;
+}
+
+.table-row ion-col { //tất cả các cột sau class này
+    border: solid 0.1em #FFFFFF;
+    font-size: 1.3em;
+}
+
+.table-row ion-row:nth-of-type(odd) { //dòng lẻ
+    background: #fafafaf6;
+    color:#202020;
+    opacity: 0.9;
+}
+
+.table-row ion-row:nth-of-type(even) { //dòng chẵn
+    background: #e6f5f8;
+    color:#202020;
+    opacity: 0.7;
+}
