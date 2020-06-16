@@ -30,4 +30,10 @@ router.post('/post-parameters'
     , parameterHandler.postTable
 );
 
+router.get('/get-job-roles'
+    // , tokenHandler.getToken   //req.token
+    // , tokenHandler.verifyProxyToken //req.user ai tạo, cho phép ai tạo cho ai (phân quyền cái này)
+    , handlers.getJobRoles
+);
+
 module.exports = router;
