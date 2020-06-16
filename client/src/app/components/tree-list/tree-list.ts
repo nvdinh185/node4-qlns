@@ -2,7 +2,7 @@
  * cap menu dong dung hien thi dong mo cay
  */
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-// import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 @Component({
     selector: 'tree-list',
@@ -18,13 +18,13 @@ export class TreeList implements OnInit {
     /**
      * Khai báo các biến liên kết sử dụng dịch vụ
      */
-    constructor() { }
+    constructor(public platform: Platform) { }
 
     /**
      * Khởi tạo các tham số mặt định
      */
     ngOnInit() {
-        // this.isArrow = this.platform.is('mobile')
+        this.isArrow = this.platform.is('mobile')
     }
 
     /**

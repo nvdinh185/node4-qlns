@@ -79,7 +79,6 @@ export class OrganizationsPage {
     let menu =
       [
         {
-          id: 1,
           name: "Thêm đơn vị phụ thuộc",
           value: "add-child",
           icon: {
@@ -89,7 +88,6 @@ export class OrganizationsPage {
         }
         ,
         {
-          id: 2,
           name: "Chỉnh sửa thông tin",
           value: "edit-owner",
           icon: {

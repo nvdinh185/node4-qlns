@@ -13,18 +13,20 @@
 
 <ion-content>
   <ion-row>
-    <ion-col *ngFor="let item of organizationsTree">
+    <ion-col class="ion-text-center" size="12" class="card-prospect" *ngFor="let item of organizationsTree"
+      [style.background]="(item.background?item.background:'#fafafaf6')">
       <ion-row (click)="onClickSpec($event, item)">
-        <ion-col>
-          {{item.name}}
+        <ion-col size="10" class="prospect-header" [style.color]="(item.color?item.color:'darkblue')">
+          <ion-icon *ngIf="item.click_type" style="font-size: 1em" [style.color]="'lightblue'"
+            name="md-cloud-upload"></ion-icon>{{item.name}}
         </ion-col>
-        <ion-col>
+        <ion-col size="2" class="prospect-header" [style.color]="(item.color?item.color:'darkblue')">
           {{item.status}}
         </ion-col>
       </ion-row>
 
-       <!-- Bộ cây tổ chức của tổ chức độc lập cấp phòng ban, cấp tổ/đội, vùng -->
-       <tree-list [treeData]="item.subs" (onClickKpi)="onClickTreeItem($event)"></tree-list>
+      <!-- Bộ cây tổ chức của tổ chức độc lập cấp phòng ban, cấp tổ/đội, vùng -->
+      <tree-list [treeData]="item.subs" (onClickKpi)="onClickTreeItem($event)"></tree-list>
     </ion-col>
   </ion-row>
 </ion-content>
