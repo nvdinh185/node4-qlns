@@ -20,20 +20,16 @@ router.get('/get-organizations'
 
 router.post('/post-parameters'
     , postHandler.jsonProcess //lay json_data
-    // , tokenHandler.getToken //req.token
-    // , tokenHandler.verifyProxyToken //req.user
-    //chèn yêu cầu phân quyền để thực hiện việc này
-    // , adminHandler.setFunctionFromPath //thiet lap chuc nang tu pathName
-    // , adminHandler.checkFunctionRole   //kiem tra quyen co khong de cho phep
-    //chèn các biến đổi dữ liệu cần thiết (nếu có) tùy vào tham số
     //thực hiện chèn và sửa thông tin
     , parameterHandler.postTable
 );
 
 router.get('/get-job-roles'
-    // , tokenHandler.getToken   //req.token
-    // , tokenHandler.verifyProxyToken //req.user ai tạo, cho phép ai tạo cho ai (phân quyền cái này)
     , handlers.getJobRoles
+);
+
+router.get('/get-staffs'
+    , handlers.getStaffs
 );
 
 module.exports = router;

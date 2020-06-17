@@ -221,6 +221,76 @@ export class StaffsPage implements OnInit {
   }
 
   /**
+   * Click vào cell Chỉ tiêu hoặc Cell Kpi 
+   * depth = 2,3
+   * @param event 
+   */
+  onClickTreeItem(event) {
+
+    //Khi cây con có click_type>0 thì ta tự mở node ra để xem
+    if (event.item.click_type > 0) {
+      event.item.visible = true;
+    }
+
+    //Khai báo menu popup
+    let menu;
+
+
+    //cây nhân sự thuần
+    if (!event.item.main_tree) {
+
+      menu = [
+        {
+          icon: {
+            name: "md-create",
+            color: "primary",
+          },
+          name: "Chỉnh sửa nhân sự",
+          value: "edit-owner"
+        }
+        ,
+        {
+          icon: {
+            name: "trash",
+            color: "danger",
+          },
+          name: event.item.status === 1 ? "Khóa bỏ nhân sự" : "Kích hoạt nhân sự",
+          value: "stop-owner"
+        }
+      ];
+
+    } else if (event.item.$is_leaf === 1) {
+      menu = [
+        {
+          icon: {
+            name: "md-add",
+            color: "secondary",
+          },
+          name: "Thêm nhân sự",
+          value: "add-child"
+        }
+      ];
+    }
+
+    //Thực hiện hiển thị menu
+    this.apiCommon.presentPopover(
+      event.event, PopoverCardComponent
+      , {
+        type: 'single-choice',
+        title: "Chọn chức năng",
+        color: "primary",
+        menu: menu
+      })
+      .then(data => {
+        // console.log(data);
+        this.processKpiDetails(data, event.item)
+      })
+      .catch(err => {
+        console.log('err: ', err);
+      });
+  }
+
+  /**
    * Xử lý từng lệnh 
    * @param cmd 
    * @param item 
@@ -245,26 +315,26 @@ export class StaffsPage implements OnInit {
     }
 
     //sửa tham số
-    if (cmd === 'edit-owner') {
+    if (cmd.value === 'edit-owner') {
       this.itemOpen = item;
 
       item.table_name = 'staffs'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
       item.title_name = 'NHÂN SỰ CỦA TỔ CHỨC';
 
-      // this.addNewItem(item, 'edit');
+      this.addNewItem(item, 'edit');
     }
 
 
     //thêm kpi từ Chỉ tiêu
-    if (cmd === 'stop-owner') {
+    if (cmd.value === 'stop-owner') {
 
       this.itemOpen = item;
 
       item.table_name = 'staffs'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
 
-      // this.stopItem(item);
+      this.stopItem(item);
     }
 
   }
@@ -360,6 +430,43 @@ export class StaffsPage implements OnInit {
       callback: this.callbackKpi
     })
 
+  }
+
+  /**
+   * Dừng đối tượng này
+   * @param item 
+   */
+  stopItem(item) {
+    let form = {
+      title: "Thay đổi trạng thái"
+      , home_disable: true
+      , buttons: [
+        { color: "danger", icon: "close", next: "CLOSE" }
+      ]
+      , items: [
+        { type: "title", name: item.name }
+        , { type: "hidden", key: "id", value: item.id } //đối tượng để update
+        , { type: "hidden", key: "table_name", value: item.table_name }
+        , { type: "hidden", key: "wheres", value: item.wheres }
+        , { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
+        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" }
+        , {
+          type: "button"
+          , options: [
+            {
+              name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
+                + "/post-parameters", token: true, signed: true
+            }
+          ]
+        }
+      ]
+    }
+
+    this.apiCommon.openModal(DynamicFormMobilePage, {
+      parent: this,
+      form: form,
+      callback: this.callbackKpi
+    })
   }
 
   /**

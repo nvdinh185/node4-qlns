@@ -14,7 +14,7 @@ class Handler {
                                     from users a
                                     LEFT JOIN organizations c
                                     ON a.organization_id = c.id
-                                    where username='766777123'
+                                    where username = '766777123'
                                     `);
 
         // console.log('user', user);
@@ -127,6 +127,67 @@ class Handler {
             .then(results => {
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(arrObj.getJsonStringify(results));
+            })
+            .catch(err => {
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify([]));
+            });
+    }
+
+    /**
+     * Lấy danh sách nhân viên của tổ chức
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    getStaffs(req, res, next) {
+
+        let organizationList = [];
+
+        try {
+            organizationList = req.paramS && req.paramS.organization_list ? JSON.parse(req.paramS.organization_list) : []; //chuyển thành array
+        } catch (e) {
+            organizationList = [];
+        }
+
+        if (req.paramS && req.paramS.organization_id) organizationList.push(req.paramS.organization_id);
+
+        // console.log('organizationList', organizationList);
+
+
+        db.getRsts(`select 
+                    a.name || '  - '  || b.name as view_name,
+                    b.name as organization_name,
+                    c.name as job_name,
+                    a.*
+                    from staffs a
+                    LEFT JOIN organizations b
+                    ON a.organization_id = b.id
+                    LEFT JOIN job_roles c
+                    ON a.job_id = c.id
+                    where a.organization_id in
+                    (WITH RECURSIVE under_tree AS
+                        (
+                        select a.* from organizations a
+                        where a.id in (${organizationList.toString()})
+                        UNION ALL
+                        SELECT b.*
+                            FROM organizations b JOIN under_tree
+                            ON b.parent_id = under_tree.id
+                        )
+                        select id from under_tree
+                    )
+                    order by a.organization_id, a.first_name, a.last_name`)
+            .then(results => {
+                // sap xep alpha vietnamese
+                // console.log('results', results);
+                // Trường hợp first_name == null và last_name == null thì chạy vô hạn
+                let resultsRtn = arrObj.orderArrayObjects(results, ['organization_id', 'first_name', 'last_name']);
+
+                // console.log('resultsRtn', resultsRtn);
+
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(arrObj.getJsonStringify(resultsRtn));
             })
             .catch(err => {
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

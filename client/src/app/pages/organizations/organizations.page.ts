@@ -31,13 +31,14 @@ export class OrganizationsPage {
       //Lấy chu kỳ báo cáo + đơn vị + danh sách department
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-user-report", true);
+      // console.log(this.userReport);
 
 
       //Lấy danh sách đơn vị trong toàn bộ cây danh sách, 
       //lọc lấy tách cây id=root_id và chỉ sử dụng nhánh cây mà user đang sở hữu thôi, không hiển thị các nhánh cây khác
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-organizations", true);
-      console.log(this.organizations);
+      // console.log(this.organizations);
       if (Array.isArray(this.organizations)) {
         //lọc lấy cây id = root_id để làm gốc cây
         //thiết lập parent_id=undefined cho gốc cây
@@ -61,7 +62,7 @@ export class OrganizationsPage {
         } else {
           this.organizationsTree = organizationsTree;
         }
-        console.log(this.organizationsTree);
+        // console.log(this.organizationsTree);
 
       }
 
@@ -192,8 +193,6 @@ export class OrganizationsPage {
         title_name: item.name //tên của cấp cha
       }
 
-      // console.log(cmd);
-      // console.log(item);
       this.addNewItem(itemNew, 'add');
     }
 
@@ -207,7 +206,6 @@ export class OrganizationsPage {
 
       this.addNewItem(item, 'edit');
     }
-
 
     //thêm kpi từ Chỉ tiêu
     if (cmd.value === 'stop-owner') {
