@@ -7,15 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { JobRolesPageRoutingModule } from './job-roles-routing.module';
 
 import { JobRolesPage } from './job-roles.page';
-import { TreeList } from 'src/app/components/tree-list/tree-list';
+import { SharedModule } from 'src/app/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     JobRolesPageRoutingModule
   ],
-  declarations: [JobRolesPage, TreeList]
+  declarations: [JobRolesPage]
 })
 export class JobRolesPageModule {}

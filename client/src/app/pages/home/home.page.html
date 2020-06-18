@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Các chức năng</ion-label>
+    </ion-list-header>
+
+    <ion-item routerLink="/organizations">
+      <ion-icon slot="start" color="primary" name="book"></ion-icon>
+      <ion-label>Mô hình tổ chức</ion-label>
+    </ion-item>
+
+    <ion-item routerLink="/job-roles">
+      <ion-icon slot="start" color="primary" name="contacts"></ion-icon>
+      <ion-label>Cây chức danh</ion-label>
+    </ion-item>
+
+    <ion-item routerLink="/staffs">
+      <ion-icon slot="start" color="primary" name="browsers"></ion-icon>
+      <ion-label>Cây nhân sự</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

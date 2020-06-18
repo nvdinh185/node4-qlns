@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 
 import { OrganizationsPage } from './organizations.page';
 import { Ngxi4DynamicServiceModule } from 'ngxi4-dynamic-service';
-import { TreeList } from 'src/app/components/tree-list/tree-list';
+import { SharedModule } from '../../shared.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
+    SharedModule,
     Ngxi4DynamicServiceModule,
     RouterModule.forChild([
       {
@@ -19,6 +20,6 @@ import { TreeList } from 'src/app/components/tree-list/tree-list';
       }
     ])
   ],
-  declarations: [OrganizationsPage, TreeList]
+  declarations: [OrganizationsPage]
 })
 export class OrganizationsPageModule {}

@@ -7,15 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { StaffsPageRoutingModule } from './staffs-routing.module';
 
 import { StaffsPage } from './staffs.page';
-import { TreeList } from 'src/app/components/tree-list/tree-list';
+import { SharedModule } from 'src/app/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     StaffsPageRoutingModule
   ],
-  declarations: [StaffsPage, TreeList]
+  declarations: [StaffsPage]
 })
 export class StaffsPageModule {}
