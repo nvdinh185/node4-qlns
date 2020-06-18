@@ -800,7 +800,7 @@ let AppComponent = class AppComponent {
         this.init();
     }
     init() {
-        this.apiAuth.serviceUrls.RESOURCE_SERVER = 'http://localhost:9239/bsc-kpi/db';
+        this.apiAuth.serviceUrls.RESOURCE_SERVER = 'https://dinh-qlns.herokuapp.com/bsc-kpi/db';
     }
     ngOnInit() {
         this.treeMenu = [
