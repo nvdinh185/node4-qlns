@@ -5,7 +5,7 @@
   "homepage": "https://c3.mobifone.vn/bsc-kpi",
   "private": true,
   "scripts": {
-    "start": "node server"
+    "start": "nodemon server"
   },
   "license": "ISC",
   "dependencies": {
@@ -30,6 +30,7 @@
     "node-rsa": "^1.0.1",
     "node-server-screenshot": "^0.2.1",
     "nodemailer": "^6.4.4",
+    "nodemon": "^2.0.4",
     "os": "^0.1.1",
     "path": "^0.12.7",
     "pdfkit": "^0.10.0",
@@ -48,5 +49,9 @@
   },
   "devDependencies": {
     "typescript": "^3.7.2"
+  },
+  "engines": {
+    "node": "11.11.0",
+    "npm": "6.7.0"
   }
 }
