@@ -10,6 +10,8 @@ const adminHandler = require("../../handlers/bsc-kpi/admin-handler");
 
 const parameterHandler = require("../../handlers/bsc-kpi/parameters-handler");
 
+const fileHandler = require('../../handlers/bsc-kpi/file-handler');
+
 router.get('/get-user-report'
     , handlers.getUserReport
 );
@@ -31,5 +33,10 @@ router.get('/get-job-roles'
 router.get('/get-staffs'
     , handlers.getStaffs
 );
+
+
+router.get('/get-templates/*'
+    , fileHandler.getTemplates       // dựa vào giá trị req.user.username trả thông tin user
+)
 
 module.exports = router;

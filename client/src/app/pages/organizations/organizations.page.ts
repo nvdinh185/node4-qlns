@@ -1,5 +1,19 @@
 import { Component } from '@angular/core';
 import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePage } from 'ngxi4-dynamic-service';
+import { ApiDownloadService } from 'src/app/services/api-download.service';
+import { ApiStrategyMapService } from 'src/app/services/api-strategy-map.service';
+
+import * as Excel from "exceljs";
+
+let config = {
+  sheet_name: { type: "select", value: "organizations", options: [{ value: "organizations", name: "organizations" }], name: "Tên sheet bộ chỉ số KPI", validators: [{ required: true }] }
+  , id: { type: "text", value: "B", name: "id", validators: [{ required: true }] }
+  , name: { type: "text", value: "C", name: "name", validators: [{ required: true }] }
+  , description: { type: "text", value: "D", name: "description", validators: [{ required: true }] }
+  , short_name: { type: "text", value: "E", name: "short_name", validators: [{ required: true }] }
+  , created_time: { type: "text", value: "F", name: "created_time", validators: [{ required: true }] }
+  , updated_time: { type: "text", value: "G", name: "updated_time", validators: [{ required: true }] }
+}
 
 @Component({
   selector: 'app-organizations',
@@ -18,6 +32,8 @@ export class OrganizationsPage {
   constructor(
     private apiAuth: AuthService
     , private apiCommon: CommonsService
+    , private apiDownload: ApiDownloadService
+    , private apiStrategyMap: ApiStrategyMapService
   ) { }
 
   ngOnInit() {
@@ -62,7 +78,7 @@ export class OrganizationsPage {
         } else {
           this.organizationsTree = organizationsTree;
         }
-        // console.log(this.organizationsTree);
+        console.log(this.organizationsTree);
 
       }
 
@@ -319,5 +335,28 @@ export class OrganizationsPage {
       resolve({ next: "CLOSE" })
     })
   }
+
+  onClickDownload() {
+    let linkFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample-organizations.xlsx'
+    this.apiDownload.processFileDownload(linkFile
+      , config.sheet_name.value
+      , "excel"
+      , config
+      , this.callbackDowload)
+  }
+
+  callbackDowload = function (ws: Excel.Worksheet, config: any) {
+    return new Promise(async resolve => {
+      try {
+        // ghi lại bản đồ chiến lược xuống mẫu này
+        let result = await this.apiStrategyMap.processStrategyDinh(this.organizationsTree, ws, config)
+        resolve({ status: "OK", message: "Xử lý thành công", count: result.count })
+      } catch (e) {
+        console.log("Lỗi xử lý dữ liệu callback process", e);
+        resolve({ status: "NOK", error: e })
+      } finally {
+      }
+    })
+  }.bind(this);
 
 }
