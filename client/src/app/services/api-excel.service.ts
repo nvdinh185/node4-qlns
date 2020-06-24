@@ -4,29 +4,28 @@ import * as Excel from "exceljs";
 @Injectable({
   providedIn: 'root'
 })
-export class ApiStrategyMapService {
+export class ApiExcelService {
 
   constructor() { }
 
-  processStrategyDinh(data: object, ws: Excel.Worksheet, config: any) {
+  processWriteExcel(data: any, ws: Excel.Worksheet, config: any) {
     return new Promise((resolve, reject) => {
       try {
 
         let row = ws.getRow(1);
+        let index = 0;
         row.getCell("B").value = data[0].name;
 
         data[0].subs.forEach((el, idx) => {
           // console.log(el);
+          index++;
           row = ws.getRow(idx + 4);
-          row.getCell(config.id.value).value = el.id;
+          row.getCell(config.noId.value).value = idx + 1;
           row.getCell(config.name.value).value = el.name;
-          row.getCell(config.description.value).value = el.description;
-          row.getCell(config.short_name.value).value = el.short_name;
-          row.getCell(config.created_time.value).value = el.created_time;
-          row.getCell(config.updated_time.value).value = el.updated_time;
+          row.getCell(config.id.value).value = el.id;
         });
 
-        resolve({ status: "OK", count: 1 })
+        resolve({ status: "OK", count: index })
       } catch (e) {
         console.log(e);
         reject({ status: "NOK", error: e })
