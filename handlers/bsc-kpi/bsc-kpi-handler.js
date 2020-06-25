@@ -7,8 +7,6 @@ const db = require('../../db/sqlite3/db-pool');
 class Handler {
 
     async getUserReport(req, res, next) {
-        //lay duoc req.user.username
-        // console.log('username: ', req.user);
 
         let user = await db.getRst(`select c.name as organization_name, a.* 
                                     from users a
@@ -193,6 +191,26 @@ class Handler {
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify([]));
             });
+    }
+
+    /**
+     * Post danh sách tổ chức lưu vào csdl
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async postOrganizations(req, res, next) {
+        let dataJson = req.json_data;
+        // console.log(dataJson);
+        let insertSql = arrObj.convertSqlFromJson("organizations", dataJson);
+        try {
+            await db.insert(insertSql);
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ status: "OK", message: "cập nhật thành công!" }));
+        } catch (err) {
+            res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: err, message: "error update db" }));
+        }
     }
 
 }

@@ -14,23 +14,7 @@ class Handler {
     getOrganizations(req, res, next) {
         db.getRsts(`select * from organizations
                     where status = 1
-                    `+ (req.user && req.user.data && req.user.data.role === 99 ? `` : `
-                    and id in (
-                                WITH RECURSIVE under_tree AS(
-                                    select a.* from organizations a
-                            where status = 1
-                            and a.id in (1,
-                                    (select organization_id from users where username = '`+ (req.user ? req.user.username : '') + `')
-                            )
-                            UNION ALL
-                            SELECT b.*
-                                FROM organizations b JOIN under_tree
-                            ON b.parent_id = under_tree.id and b.status = 1
-                            ORDER BY order_1)
-                            select id from under_tree  
-                    )
-                        `) + `
-                        order by order_1`)
+                    order by order_1`)
             .then(results => {
                 // console.log(results);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

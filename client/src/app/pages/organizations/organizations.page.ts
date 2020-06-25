@@ -10,6 +10,7 @@ let config = {
   , noId: { type: "text", value: "B", name: "noId", validators: [{ required: true }] }
   , name: { type: "text", value: "C", name: "name", validators: [{ required: true }] }
   , id: { type: "text", value: "D", name: "id", validators: [{ required: true }] }
+  , parent_id: { type: "text", value: "E", name: "parent_id", validators: [{ required: true }] }
 }
 
 @Component({
@@ -41,33 +42,23 @@ export class OrganizationsPage {
 
     try {
 
-      //Lấy chu kỳ báo cáo + đơn vị + danh sách department
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-user-report", true);
       // console.log(this.userReport);
 
 
-      //Lấy danh sách đơn vị trong toàn bộ cây danh sách, 
-      //lọc lấy tách cây id=root_id và chỉ sử dụng nhánh cây mà user đang sở hữu thôi, không hiển thị các nhánh cây khác
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-organizations", true);
       // console.log(this.organizations);
       if (Array.isArray(this.organizations)) {
-        //lọc lấy cây id = root_id để làm gốc cây
-        //thiết lập parent_id=undefined cho gốc cây
-        //đã có cây thì ta reset parent_id
         this.organizations.forEach(el => {
-          //xử lý mở nút cây (biểu tượng click)
           el.click_type = 2;
-          //xóa các quan hệ cấp trên
           if (el.id === el.root_id) el.parent_id = undefined;
-          //mở cây trước đó
           if (this.itemOpen && (this.itemOpen.parent_id === el.id || this.itemOpen.id === el.id)) {
             el.visible = true;
           }
         });
 
-        // tạo cấu trúc hình cây để khai báo, chỉnh sửa cây tổ chức
         let organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
 
         if (this.userReport && Array.isArray(organizationsTree)) {
@@ -75,7 +66,7 @@ export class OrganizationsPage {
         } else {
           this.organizationsTree = organizationsTree;
         }
-        console.log(this.organizationsTree);
+        // console.log(this.organizationsTree);
 
       }
 
@@ -339,10 +330,10 @@ export class OrganizationsPage {
       , config.sheet_name.value
       , "excel"
       , config
-      , this.callbackDowload)
+      , this.callbackDownload)
   }
 
-  callbackDowload = function (ws: Excel.Worksheet, config: any) {
+  callbackDownload = function (ws: Excel.Worksheet, config: any) {
     return new Promise(async resolve => {
       try {
         let result = await this.apiExcel.processWriteExcel(this.organizationsTree, ws, config)
@@ -353,6 +344,84 @@ export class OrganizationsPage {
       } finally {
       }
     })
-  }.bind(this);
+  }.bind(this)
+
+  onClickUpload(ev) {
+    let file = ev.target.files;
+    // console.log(file);
+    let fr = new FileReader();
+    fr.readAsArrayBuffer(file[0]);
+    fr.onloadend = async (e) => {
+      let bufferData: any = fr.result;
+      let wb = new Excel.Workbook();
+      let workbook;
+      let worksheet;
+      try {
+        workbook = await wb.xlsx.load(bufferData)
+        worksheet = workbook.getWorksheet("organizations");
+        let results = []
+        worksheet.eachRow((row, rowIndex) => {
+          if (rowIndex > 3) {
+            let cols = {}
+            for (let key in config) {
+              let item = config[key];
+              if (key != "sheet_name") {
+                Object.defineProperty(cols
+                  , key
+                  , {
+                    value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)])
+                    , writable: true
+                    , enumerable: true
+                    , configurable: true
+                  })
+              }
+            }
+            results.push(cols);
+          }
+        })
+        // console.log(results);
+        let returnFinish = { count_success: 0, count_fail: 0 }
+        for (const el of results) {
+          let json_data = { name: el.name, id: el.id, parent_id: el.parent_id }
+          // console.log(json_data);
+          try {
+            await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
+              + '/post-organizations', json_data, true)
+            returnFinish.count_success++;
+          } catch (err) {
+            // console.log(err);
+            returnFinish.count_fail++;
+          }
+        }
+        console.log(returnFinish);
+        this.refreshNews();
+
+      } catch (err) {
+        console.log('Lỗi biên dịch excel', err);
+      } finally {
+      }
+
+    }
+
+  }
+
+  convertColExcel2Number = (val: string): number => {
+    var base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', i, j, result = 0;
+    for (i = 0, j = val.length - 1; i < val.length; i += 1, j -= 1) {
+      result += Math.pow(base.length, j) * (base.indexOf(val[i]) + 1);
+    }
+    return result;
+  }
+
+  getValueFormula(obj) {
+    if (obj === null || obj === undefined) return null
+    if (typeof obj === 'object') {
+      // xử lý chuyển đổi chỉ lấy text thôi
+      if (obj.richText) return obj.richText.map(o => o["text"]).join("")
+      // lấy giá trị bằng biểu thức function
+      return obj.result
+    }
+    return obj
+  }
 
 }

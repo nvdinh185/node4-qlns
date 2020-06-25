@@ -39,4 +39,9 @@ router.get('/get-templates/*'
     , fileHandler.getTemplates       // dựa vào giá trị req.user.username trả thông tin user
 )
 
+router.post('/post-organizations'
+    , postHandler.jsonProcess //lay json_data
+    , handlers.postOrganizations
+);
+
 module.exports = router;
