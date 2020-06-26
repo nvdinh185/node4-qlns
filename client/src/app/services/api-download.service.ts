@@ -32,7 +32,7 @@ export class ApiDownloadService {
           wb.xlsx.load(bufferData)
             .then(async workbook => {
               // console.log(bufferData)
-              workbook.eachSheet(async (sheet, id) => {
+              workbook.eachSheet(async (sheet) => {
                 if (sheet.name === sheet_name) {
                   try {
                     let ws: Excel.Worksheet = sheet;

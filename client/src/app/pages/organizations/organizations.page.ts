@@ -6,11 +6,11 @@ import { ApiExcelService } from 'src/app/services/api-excel.service';
 import * as Excel from "exceljs";
 
 let config = {
-  sheet_name: { type: "select", value: "organizations", options: [{ value: "organizations", name: "organizations" }], name: "Tên sheet bộ chỉ số KPI", validators: [{ required: true }] }
-  , noId: { type: "text", value: "B", name: "noId", validators: [{ required: true }] }
-  , name: { type: "text", value: "C", name: "name", validators: [{ required: true }] }
-  , id: { type: "text", value: "D", name: "id", validators: [{ required: true }] }
-  , parent_id: { type: "text", value: "E", name: "parent_id", validators: [{ required: true }] }
+  sheet_name: { value: "organizations" }
+  , noId: { value: "B" }
+  , name: { value: "C" }
+  , id: { value: "D" }
+  , parent_id: { value: "E" }
 }
 
 @Component({
@@ -24,8 +24,6 @@ export class OrganizationsPage {
 
   organizations: any;
   organizationsTree: any;
-
-  itemOpen: any;
 
   constructor(
     private apiAuth: AuthService
@@ -51,13 +49,6 @@ export class OrganizationsPage {
         + "/get-organizations", true);
       // console.log(this.organizations);
       if (Array.isArray(this.organizations)) {
-        this.organizations.forEach(el => {
-          el.click_type = 2;
-          if (el.id === el.root_id) el.parent_id = undefined;
-          if (this.itemOpen && (this.itemOpen.parent_id === el.id || this.itemOpen.id === el.id)) {
-            el.visible = true;
-          }
-        });
 
         let organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
 
@@ -124,9 +115,9 @@ export class OrganizationsPage {
   onClickTreeItem(event) {
 
     //Khi cây con có click_type>0 thì ta tự mở node ra để xem
-    if (event.item.click_type > 0) {
-      event.item.visible = true;
-    }
+    // if (event.item.click_type > 0) {
+    //   event.item.visible = true;
+    // }
 
     //Khai báo menu popup
     let menu = [
@@ -136,15 +127,6 @@ export class OrganizationsPage {
         icon: {
           name: "md-create",
           color: "primary",
-        }
-      }
-      ,
-      {
-        name: "Thêm đơn vị cấp con",
-        value: "add-child",
-        icon: {
-          name: "md-add",
-          color: "secondary",
         }
       }
       ,
@@ -187,8 +169,7 @@ export class OrganizationsPage {
 
     //thêm tham số
     if (cmd.value === 'add-child') {
-      this.itemOpen = item;
-      //item là một nhánh cây đang xét
+
       let itemNew = {
         id: -1, //Giả id để thêm vào
         parent_id: item.id, //kế thừa cấp cha của nó
@@ -202,7 +183,6 @@ export class OrganizationsPage {
 
     //sửa tham số
     if (cmd.value === 'edit-owner') {
-      this.itemOpen = item;
 
       item.table_name = 'organizations'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
@@ -211,10 +191,8 @@ export class OrganizationsPage {
       this.addNewItem(item, 'edit');
     }
 
-    //thêm kpi từ Chỉ tiêu
+    //tạm dừng tham số
     if (cmd.value === 'stop-owner') {
-
-      this.itemOpen = item;
 
       item.table_name = 'organizations'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
@@ -242,11 +220,8 @@ export class OrganizationsPage {
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
 
-        //hiển thị nội dung nhập vào cho Chỉ tiêu chỉ là tên và trọng số
-        //new Date().toISOString().slice(0, 10)
         , { type: "text", key: "name", value: item.name, name: "Tên đơn vị", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
         , { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" }
-        //, { type: "datetime", key: "start_date", value: item.start_date, name: "Chọn ngày hoạt động", hint: "Lựa chọn ngày", display: "DD/MM/YYYY", picker: "DD/MM/YYYY", validators: [{ required: true }] }
         , { type: "text_area", key: "description", value: item.description, name: "Mô tả thông tin của đơn vị", input_type: "text", icon: "md-alert", hint: "Nhập mô tả này để ghi nhớ" }
         , {
           type: "button"
@@ -288,7 +263,7 @@ export class OrganizationsPage {
           , options: [
             {
               name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true, signed: true
+                + "/post-parameters", token: true
             }
           ]
         }

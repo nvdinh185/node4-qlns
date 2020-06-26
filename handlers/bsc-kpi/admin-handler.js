@@ -13,8 +13,7 @@ class Handler {
      */
     getOrganizations(req, res, next) {
         db.getRsts(`select * from organizations
-                    where status = 1
-                    order by order_1`)
+                    where status = 1`)
             .then(results => {
                 // console.log(results);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });

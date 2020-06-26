@@ -16,7 +16,6 @@
     <ion-col class="ion-text-center" size="12" class="card-prospect" *ngFor="let item of organizationsTree"
       [style.background]="(item.background?item.background:'#fafafaf6')">
 
-      <!-- Chỉnh sửa thông tin của tổ chức độc lập Cấp id=root_id -->
       <ion-row (click)="onClickSpec($event, item)">
         <ion-col size="10" class="prospect-header" [style.color]="(item.color?item.color:'darkblue')">
           <ion-icon item-start *ngIf="item.click_type" style="font-size: 1em" [style.color]="'lightblue'"

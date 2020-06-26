@@ -10,16 +10,7 @@ const db = require('../../db/sqlite3/db-pool');
 class Handler {
 
     /**
-     * Hàm này sẽ đẩy dữ liệu json_data từ client API vào csdl
-     * 
-     * Yêu cầu:
-     * 1. quy ước bảng: json_data.table_name = Tên của bảng, 
-     * đưa lên và thực hiện xóa trước khi chuyển đổi
-     * 
-     * 2. quy ước insert,update: json_data.id<0 là chèn mới, json_data.id>0 là update
-     * 
-     * 3. quy ước trường update của mệnh đề where: wheres=["id","report_id"]
-     * 
+     * Hàm này sẽ đẩy dữ liệu json_data từ client vào csdl
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
@@ -37,9 +28,7 @@ class Handler {
             delete dataJson["table_name"]; //xóa trường giả này đi
             delete dataJson["wheres"]; //xóa trường giả này đi
 
-            //yêu cầu bảng phải có thêm 2 trường dữ liệu này
             dataJson.updated_time = Date.now();
-            // dataJson.signature = JSON.stringify({ username: req.user.username, time: Date.now(), ip: req.clientIp });
 
             // Chuyển đổi các dữ liệu thành string trước khi lưu vào csdl
             if (dataJson["organization_id"]) {
@@ -48,7 +37,6 @@ class Handler {
 
             if (dataJson["organization_list"]) {
                 dataJson["organization_list"] = dataJson["organization_list"].map(function (item) { return parseInt(item); });
-                //chuyen doi kieu json moi luu duoc
                 dataJson["organization_list"] = JSON.stringify(dataJson["organization_list"]);
             }
 
@@ -58,7 +46,6 @@ class Handler {
 
             if (dataJson["staff_list"]) {
                 dataJson["staff_list"] = dataJson["staff_list"].map(function (item) { return parseInt(item); });
-                //chuyen doi kieu json moi luu duoc
                 dataJson["staff_list"] = JSON.stringify(dataJson["staff_list"]);
             }
 
@@ -68,7 +55,6 @@ class Handler {
 
             if (dataJson["job_list"]) {
                 dataJson["job_list"] = dataJson["job_list"].map(function (item) { return parseInt(item); });
-                //chuyen doi kieu json moi luu duoc
                 dataJson["job_list"] = JSON.stringify(dataJson["job_list"]);
             }
 
@@ -88,7 +74,7 @@ class Handler {
                     delete dataJson["id"]; //xóa trường giả này đi
                     //yêu cầu bảng phải có trường dữ liệu này
                     dataJson.created_time = Date.now();
-                    await db.insert(arrObj.convertSqlFromJson(tableName, dataJson, []));
+                    await db.insert(arrObj.convertSqlFromJson(tableName, dataJson));
                 } else if (dataJson.id > 0) {
                     await db.update(arrObj.convertSqlFromJson(tableName, dataJson, wheres));
                 }
