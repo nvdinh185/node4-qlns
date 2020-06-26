@@ -36,28 +36,16 @@ class Handler {
      * @param {*} next 
      */
     getJobRoles(req, res, next) {
-        let organazationId = req.paramS.organization_id || 0;
+        
         db.getRsts(`select 
                     b.name as department_name
                     , a.*
                     from job_roles a
                     LEFT JOIN organizations b
                     on a.organization_id = b.id
-                    where a.status = 1
-                    and a.organization_id in 
-                    (WITH RECURSIVE under_tree AS (
-                        select a.* from organizations a
-                        where a.id = ${organazationId}
-                        UNION ALL
-                        SELECT b.*
-                            FROM organizations b
-                             JOIN under_tree
-                              ON b.parent_id = under_tree.id
-                        ORDER BY order_1
-                        )
-                        SELECT id FROM under_tree)
-                    `)
+                    where a.status = 1`)
             .then(results => {
+                // console.log(results);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(arrObj.getJsonStringify(results));
             })

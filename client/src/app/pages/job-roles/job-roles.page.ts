@@ -35,43 +35,19 @@ export class JobRolesPage implements OnInit {
   async refreshNews() {
 
     try {
-      //Lấy danh sách đơn vị trong toàn bộ cây danh sách, 
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-organizations", true);
-
-
-      //Lấy đơn vị + danh sách staff mà user đảm nhiệm + chu kỳ báo cáo (nếu có)
+      // console.log(this.organizations);
+      
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-user-report", true);
+      // console.log(this.userReport);
 
-      //gán mã công ty vào để kiểm soát sau này
       this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
 
     } catch (e) { }
-
-    //thay đổi chọn lựa
-    if (Array.isArray(this.organizations)) {
-
-      //xóa liên hệ cấp gốc
-      this.organizations.forEach(el => {
-        if (el.id === el.root_id) el.parent_id = undefined;
-      });
-
-      //lọc lấy tách cây id=root_id -- 
-      this.orgOptions = this.organizations.filter(x => x.id === x.root_id && x.status === 1);
-
-
-      //chuyển thành cây sắp xếp để xác định lá cây, gốc cây
-      this.organizations = this.apiCommon.createTreeOrder(this.organizations, 'id', 'parent_id');
-
-      //chuyển thành cây cấu trúc để ghép vào
-      //this.organizations = this.apiAuth.createTreeMenu(this.organizations,'id','parent_id');
-
-      this.onChangeSelect();
-
-    }
-
-
+    
+    this.onChangeSelect();
   }
 
   /**
@@ -79,96 +55,47 @@ export class JobRolesPage implements OnInit {
    */
   async onChangeSelect() {
 
-    //reset cây vai trò
     this.organizationsTree = [];
     this.jobRolesTree = [];
 
-    //lấy đơn vị được chọn tức là lấy gốc cây sau này
-    this.orgSelected = this.orgOptions.find(x => '' + x.id === '' + this.organizationId);
-
-
     try {
-      //lấy cây vai trò của đơn vị cấp cty/trung tâm
       this.jobRoles = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-job-roles?organization_id=" + (this.organizationId || 0), true);
+        + "/get-job-roles", true);
 
       // console.log(this.jobRoles);
 
       if (Array.isArray(this.jobRoles)) {
-        //mở lá cây khi có tác động ở gốc cây hoặc lá cây
-        this.jobRoles.forEach(el => {
-
-          el.click_type = 2; //cho phép tự mở cây, mở menu 
-
-          //mở lá cây được tác động
-          if (this.itemOpen && (this.itemOpen.organization_id === el.organization_id)) {
-            el.visible = true;
-          }
-
-        })
-
-        //console.log(this.jobRoles,this.jobRolesTree);
-
-        //tạo luôn cây vai trò (Giám đốc-->PGĐ--> Trưởng phòng --> Phó phòng -->Tổ trưởng--> Chuyên viên...)
         this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id');
-
       }
 
-      //this.jobRolesTree = this.jobRolesTree?this.jobRolesTree:[];
-
-      //console.log(this.jobRoles,this.jobRolesTree);
-
-      //Lọc lấy cây của đơn vị được chọn từ gốc
-      //chỉ lấy các đơn vị trạng thái đang hoạt động thôi
-      let orgTree = this.organizations.filter(x => '' + x.$root === '' + this.organizationId);
-
-      //console.log('cay goc',this.organizationId, orgTree);
-
-      orgTree.forEach(el => {
-
+      this.organizations.forEach(el => {
         el.click_type = 1; //cây chính cho click luôn
 
-        //ghép con vào các nhánh cây (bỏ qua gốc cây)
         if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
           el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng con được ghép vào
         }
-        //định nghĩa một tham số riêng để nhận biết cây đơn vị và cây vai trò
-        el.main_tree = 1; //cây chính
 
-        //mở cây hiển thị vùng tác động
-        if (this.itemOpen && (this.itemOpen.organization_id === el.id)) {
-          el.visible = true;
-        }
+        el.main_tree = 1; //cây chính
       });
 
-      //tạo cây để hiển thị lên form
-      this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
+      this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
 
-      //console.log(orgTree, this.organizationsTree, this.jobRolesTree);
+      console.log(this.organizationsTree);
 
 
-      //ghép thêm chức danh Giám đốc, Phó Giám đốc vào gốc cây
       this.organizationsTree.forEach(el => {
         if (this.jobRolesTree && el.id + '' === '' + this.organizationId) {
-          //lọc các chức danh giám đốc, phó giám đốc của tổ chức
           let rootSubs = this.jobRolesTree.filter(x => x.organization_id === el.id);
-          //trường hợp refresh thì không cần thêm vào
           if (!el.subs) el.subs = rootSubs;
 
-          //duyệt rootSubs nếu tìm thấy một đối tượng trong el.subs thì thôi thoát ra 
-          //nếu không tìm thấy thì push vào
           rootSubs.forEach(elsub => {
             let index = el.subs.findIndex(x => x.id === elsub.id && x.organization_id == elsub.organization_id);
             if (index >= 0) {
-              //không cần thêm vào nếu là lá cây
-              //trường hợp nó có subs thì phải thay thế nó
-              //if (elsub.subs) 
-              el.subs.splice(index, 1, elsub); //thay thế lại
+              el.subs.splice(index, 1, elsub);
             } else {
-              el.subs.unshift(elsub); //bổ sung vào đầu
+              el.subs.unshift(elsub);
             }
           })
-
         }
       })
 
