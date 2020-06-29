@@ -8,10 +8,7 @@ import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePag
 })
 export class JobRolesPage implements OnInit {
 
-  orgOptions: any = []; //cây tùy chọn để lựa chọn cấp công ty
   organizationId: any;  //cấp công ty được chọn
-  orgSelected: any;
-
 
   userReport: any;
 
@@ -20,8 +17,6 @@ export class JobRolesPage implements OnInit {
 
   jobRoles: any;        //cây của chức danh của đơn vị (cấp công ty - lấy toàn bộ chức danh của công ty đó)
   jobRolesTree: any;    //cây biến đổi của chức danh theo cấp đơn vị
-
-  itemOpen: any; //đối tượng mở cây để khi tạo lại sẽ tự mở ra
 
   constructor(
     private apiAuth: AuthService
@@ -149,17 +144,11 @@ export class JobRolesPage implements OnInit {
    */
   onClickTreeItem(event) {
 
-    //Khi cây con có click_type>0 thì ta tự mở node ra để xem
-    if (event.item.click_type > 0) {
-      event.item.visible = true;
-    }
-
     //Khai báo menu popup
     let menu;
 
-
     //cây chức danh thuần
-    // console.log(event.item.main_tree);
+    // console.log(event.item);
     if (!event.item.main_tree) {
 
       menu = [
@@ -191,7 +180,7 @@ export class JobRolesPage implements OnInit {
         }
       ];
 
-    } else if (event.item.$is_leaf === 1) {
+    } else {
       menu = [
         {
           icon: {
@@ -231,26 +220,20 @@ export class JobRolesPage implements OnInit {
 
     //thêm tham số
     if (cmd.value === 'add-child') {
-      this.itemOpen = item;
-      //item là một nhánh cây đang xét
       let itemNew = {
         id: -1, //Giả id để thêm vào
         parent_id: item.main_tree === 1 ? undefined : item.id, //kế thừa cấp cha của nó
         organization_id: item.organization_id ? item.organization_id : item.id,
-        //kế thừa cấp cha của nó nếu có tổ chức thì lấy luôn tổ chức, nếu không có tổ chức thì lấy id cấp cha
         table_name: 'job_roles', //tên bảng cần đưa vào
         wheres: [], //Mệnh đề wheres để update
         title_name: item.name //tên của cấp cha
       }
 
-      // console.log(cmd);
-      // console.log(item);
       this.addNewItem(itemNew, 'add');
     }
 
     //sửa tham số
     if (cmd.value === 'edit-owner') {
-      this.itemOpen = item;
 
       item.table_name = 'job_roles'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
@@ -259,11 +242,8 @@ export class JobRolesPage implements OnInit {
       this.addNewItem(item, 'edit');
     }
 
-
-    //thêm kpi từ Chỉ tiêu
+    //tạm dừng tham số
     if (cmd.value === 'stop-owner') {
-
-      this.itemOpen = item;
 
       item.table_name = 'job_roles'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
@@ -295,7 +275,7 @@ export class JobRolesPage implements OnInit {
           , options: [
             {
               name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true, signed: true
+                + "/post-parameters", token: true
             }
           ]
         }
@@ -310,7 +290,7 @@ export class JobRolesPage implements OnInit {
   }
 
   /**
-   * Thêm kpi mới có kpi_role là C và Tr từ cây
+   * Thêm hoặc sửa chức danh
    * @param item 
    */
   addNewItem(item, type) {
@@ -328,11 +308,8 @@ export class JobRolesPage implements OnInit {
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
 
-        //hiển thị nội dung nhập vào cho Chỉ tiêu chỉ là tên và trọng số
-        //new Date().toISOString().slice(0, 10)
         , { type: "text", key: "short_name", value: item.short_name, name: "Nhóm chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 2, max: 20 }], hint: "Mã nhóm viết tắt vd: TT-VT để nhóm cùng loại khác đơn vị" }
         , { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "ios-contact-outline", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
-        //, { type: "datetime", key: "start_date", value: item.start_date, name: "Chọn ngày hoạt động", hint: "Lựa chọn ngày", display: "DD/MM/YYYY", picker: "DD/MM/YYYY", validators: [{ required: true }] }
         , { type: "text_area", key: "description", value: item.description, name: "Mô tả công việc của chức danh này", input_type: "text", icon: "md-alert", hint: "Nhập mô tả chức danh này để ghi nhớ, công việc làm gì" }
         , {
           type: "button"
@@ -341,7 +318,7 @@ export class JobRolesPage implements OnInit {
             , {
               name: type === 'add' ? 'Tạo mới' : 'Chỉnh sửa', next: "CALLBACK"
               , url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true, signed: true
+                + "/post-parameters", token: true
             }
           ]
         }
@@ -364,7 +341,6 @@ export class JobRolesPage implements OnInit {
     //console.log(res);
 
     return new Promise((resolve, reject) => {
-
 
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));

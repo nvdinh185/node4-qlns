@@ -8,10 +8,7 @@ import { CommonsService, AuthService, PopoverCardComponent, DynamicFormMobilePag
 })
 export class StaffsPage implements OnInit {
 
-  orgOptions: any = []; //cây tùy chọn để lựa chọn cấp công ty
   organizationId: any;  //cấp công ty được chọn
-  orgSelected: any;
-
   userReport: any;
 
   organizations: any; //ghi bảng ghi gốc của tổ chức cấp độc lập (lấy id=root_id)
@@ -22,7 +19,6 @@ export class StaffsPage implements OnInit {
   staffs: any;        //cây của nhân sự của đơn vị (cấp công ty - lấy toàn bộ nhân sự của công ty đó)
   staffsTree: any;    //cây biến đổi của nhân sự theo cấp đơn vị
 
-  itemOpen: any; //đối tượng mở cây để khi tạo lại sẽ tự mở ra
   constructor(
     private apiAuth: AuthService
     , private apiCommon: CommonsService
@@ -63,25 +59,13 @@ export class StaffsPage implements OnInit {
 
     //thay đổi chọn lựa
     if (Array.isArray(this.organizations)) {
-
-      //xóa liên hệ cấp gốc
-      this.organizations.forEach(el => {
-        if (el.id === el.root_id) el.parent_id = undefined;
-      });
-
-      //lọc lấy tách cây id=root_id -- 
-      this.orgOptions = this.organizations.filter(x => x.id === x.root_id && x.status === 1);
-
-      //chuyển thành cây sắp xếp để xác định lá cây, gốc cây
       this.organizations = this.apiCommon.createTreeOrder(this.organizations, 'id', 'parent_id');
 
       // console.log('createTreeOrder', JSON.stringify(this.organizations));
 
-
       this.onChangeSelect();
 
     }
-
 
   }
 
@@ -93,44 +77,19 @@ export class StaffsPage implements OnInit {
     //reset cây vai trò
     this.organizationsTree = [];
 
-    //lấy đơn vị được chọn tức là lấy gốc cây sau này
-    this.orgSelected = this.orgOptions.find(x => '' + x.id === '' + this.organizationId);
-
-
     try {
       //lấy cây vai trò của đơn vị cấp cty/trung tâm
       this.staffs = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-staffs?organization_id=" + (this.organizationId ? this.organizationId : 0), true);
+        + "/get-staffs", true);
 
-      //console.log(this.staffs);
+      // console.log(this.staffs);
 
       if (Array.isArray(this.staffs)) {
-        //mở lá cây khi có tác động ở gốc cây hoặc lá cây
-        this.staffs.forEach(el => {
-
-          el.click_type = 2; //cho phép tự mở cây, mở menu 
-
-          //mở lá cây được tác động
-          if (this.itemOpen && (this.itemOpen.organization_id === el.organization_id)) {
-            el.visible = true;
-          }
-
-        })
-
-        //tạo luôn cây vai trò (Giám đốc-->PGĐ--> Trưởng phòng --> Phó phòng -->Tổ trưởng--> Chuyên viên...)
         this.staffsTree = this.apiCommon.createTreeMenu(this.staffs, 'id', 'parent_id');
 
         //console.log(this.staffsTree);
 
-        //Lọc lấy cây của đơn vị được chọn từ gốc
-        //chỉ lấy các đơn vị trạng thái đang hoạt động thôi
-        let orgTree = this.organizations.filter(x => '' + x.$root === '' + this.organizationId
-          //&&x.status===1
-        );
-
-        //console.log(orgTree);
-
-        orgTree.forEach(el => {
+        this.organizations.forEach(el => {
 
           el.click_type = 1; //cây chính cho click luôn
 
@@ -138,17 +97,12 @@ export class StaffsPage implements OnInit {
           if (this.staffsTree && el.id + '' !== '' + this.organizationId) {
             el.subs = this.staffsTree.filter(x => x.organization_id === el.id); //mảng con được ghép vào
           }
-          //định nghĩa một tham số riêng để nhận biết cây đơn vị và cây vai trò
           el.main_tree = 1; //cây chính
 
-          //mở cây hiển thị vùng tác động
-          if (this.itemOpen && (this.itemOpen.organization_id === el.id)) {
-            el.visible = true;
-          }
         });
 
         //tạo cây để hiển thị lên form
-        this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
+        this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
 
         //ghép thêm nhân sự Giám đốc, Phó Giám đốc vào gốc cây
         this.organizationsTree.forEach(el => {
@@ -175,7 +129,8 @@ export class StaffsPage implements OnInit {
 
           }
         })
-
+        
+        // console.log(this.organizationsTree);
       }
     } catch (e) {
       console.log('Err:', e);
@@ -299,8 +254,6 @@ export class StaffsPage implements OnInit {
 
     //thêm tham số
     if (cmd.value === 'add-child') {
-      this.itemOpen = item;
-      //item là một nhánh cây đang xét
       let itemNew = {
         id: -1, //Giả id để thêm vào
         parent_id: item.main_tree === 1 ? undefined : item.id, //kế thừa cấp cha của nó nếu là cây con
@@ -316,8 +269,6 @@ export class StaffsPage implements OnInit {
 
     //sửa tham số
     if (cmd.value === 'edit-owner') {
-      this.itemOpen = item;
-
       item.table_name = 'staffs'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
       item.title_name = 'NHÂN SỰ CỦA TỔ CHỨC';
@@ -328,8 +279,6 @@ export class StaffsPage implements OnInit {
 
     //thêm kpi từ Chỉ tiêu
     if (cmd.value === 'stop-owner') {
-
-      this.itemOpen = item;
 
       item.table_name = 'staffs'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
