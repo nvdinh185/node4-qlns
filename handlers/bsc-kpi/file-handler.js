@@ -1,8 +1,5 @@
 "use strict"
-/**
- * Bộ xử lý đọc file trả về
- * 
- */
+
 const fs = require('fs');
 const mime = require('mime-types');
 

@@ -33,7 +33,7 @@ export class JobRolesPage implements OnInit {
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-organizations", true);
       // console.log(this.organizations);
-      
+
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-user-report", true);
       // console.log(this.userReport);
@@ -41,7 +41,7 @@ export class JobRolesPage implements OnInit {
       this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
 
     } catch (e) { }
-    
+
     this.onChangeSelect();
   }
 
@@ -54,15 +54,18 @@ export class JobRolesPage implements OnInit {
     this.jobRolesTree = [];
 
     try {
+      // lấy danh sách chức danh trong csdl
       this.jobRoles = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-job-roles", true);
+        + "/get-job-roles");
 
       // console.log(this.jobRoles);
-
+      // Chuyển thành cây chức danh
       if (Array.isArray(this.jobRoles)) {
         this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id');
+        // console.log(this.jobRolesTree);
       }
 
+      // thêm thuộc tính click_type và main_tree cho cây chính
       this.organizations.forEach(el => {
         el.click_type = 1; //cây chính cho click luôn
 
@@ -72,12 +75,14 @@ export class JobRolesPage implements OnInit {
 
         el.main_tree = 1; //cây chính
       });
+      // console.log(this.organizations);
 
+      // chuyển thành cây tổ chức và chức danh
       this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
 
       console.log(this.organizationsTree);
 
-
+      // ghép chức danh giám đốc vào
       this.organizationsTree.forEach(el => {
         if (this.jobRolesTree && el.id + '' === '' + this.organizationId) {
           let rootSubs = this.jobRolesTree.filter(x => x.organization_id === el.id);
@@ -138,8 +143,7 @@ export class JobRolesPage implements OnInit {
   }
 
   /**
-   * Click vào cell Chỉ tiêu hoặc Cell Kpi 
-   * depth = 2,3
+   * Click vào đơn vị cấp con
    * @param event 
    */
   onClickTreeItem(event) {
@@ -150,7 +154,6 @@ export class JobRolesPage implements OnInit {
     //cây chức danh thuần
     // console.log(event.item);
     if (!event.item.main_tree) {
-
       menu = [
         {
           icon: {
@@ -179,7 +182,6 @@ export class JobRolesPage implements OnInit {
           value: "stop-owner"
         }
       ];
-
     } else {
       menu = [
         {
@@ -246,7 +248,7 @@ export class JobRolesPage implements OnInit {
     if (cmd.value === 'stop-owner') {
 
       item.table_name = 'job_roles'; //tên bảng cần đưa vào
-      item.wheres = ['id'];              //Mệnh đề wheres để update = '';
+      item.wheres = ['id'];         //Mệnh đề wheres để update = '';
 
       this.stopItem(item);
     }
@@ -275,7 +277,7 @@ export class JobRolesPage implements OnInit {
           , options: [
             {
               name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true
+                + "/post-parameters"
             }
           ]
         }
@@ -309,7 +311,7 @@ export class JobRolesPage implements OnInit {
         , { type: "hidden", key: "wheres", value: item.wheres }
 
         , { type: "text", key: "short_name", value: item.short_name, name: "Nhóm chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 2, max: 20 }], hint: "Mã nhóm viết tắt vd: TT-VT để nhóm cùng loại khác đơn vị" }
-        , { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "ios-contact-outline", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
+        , { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
         , { type: "text_area", key: "description", value: item.description, name: "Mô tả công việc của chức danh này", input_type: "text", icon: "md-alert", hint: "Nhập mô tả chức danh này để ghi nhớ, công việc làm gì" }
         , {
           type: "button"
@@ -318,7 +320,7 @@ export class JobRolesPage implements OnInit {
             , {
               name: type === 'add' ? 'Tạo mới' : 'Chỉnh sửa', next: "CALLBACK"
               , url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true
+                + "/post-parameters"
             }
           ]
         }

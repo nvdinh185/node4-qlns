@@ -30,6 +30,26 @@ class Handler {
     }
 
     /**
+     * Lấy danh sách tổ chức
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    getOrganizations(req, res, next) {
+        db.getRsts(`select * from organizations
+                    where status = 1`)
+            .then(results => {
+                // console.log(results);
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(arrObj.getJsonStringify(results));
+            })
+            .catch(err => {
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify([]));
+            });
+    }
+
+    /**
      * Lấy cây chức danh của tổ chức cấp Công ty/Trung tâm
      * @param {*} req 
      * @param {*} res 
@@ -38,7 +58,7 @@ class Handler {
     getJobRoles(req, res, next) {
         
         db.getRsts(`select 
-                    b.name as department_name
+                    b.name as organization_name
                     , a.*
                     from job_roles a
                     LEFT JOIN organizations b

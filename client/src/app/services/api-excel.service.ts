@@ -13,9 +13,9 @@ export class ApiExcelService {
       try {
 
         let row = ws.getRow(1);
-        let index = 0;
         row.getCell("B").value = data[0].name;
-
+        
+        let index = 0;
         data[0].subs.forEach((el, idx) => {
           // console.log(el);
           index++;

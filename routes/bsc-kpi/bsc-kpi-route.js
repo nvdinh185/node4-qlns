@@ -6,8 +6,6 @@ const postHandler = require('../../utils/post-handler');
 
 const handlers = require('../../handlers/bsc-kpi/bsc-kpi-handler');
 
-const adminHandler = require("../../handlers/bsc-kpi/admin-handler");
-
 const parameterHandler = require("../../handlers/bsc-kpi/parameters-handler");
 
 const fileHandler = require('../../handlers/bsc-kpi/file-handler');
@@ -17,12 +15,11 @@ router.get('/get-user-report'
 );
 
 router.get('/get-organizations'
-    , adminHandler.getOrganizations
+    , handlers.getOrganizations
 );
 
 router.post('/post-parameters'
     , postHandler.jsonProcess //lay json_data
-    //thực hiện chèn và sửa thông tin
     , parameterHandler.postTable
 );
 

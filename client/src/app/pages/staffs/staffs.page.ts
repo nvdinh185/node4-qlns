@@ -17,7 +17,6 @@ export class StaffsPage implements OnInit {
   jobRoles: any; //cây danh mục chức danh của tổ chức (lọc theo tổ chức để lấy)
 
   staffs: any;        //cây của nhân sự của đơn vị (cấp công ty - lấy toàn bộ nhân sự của công ty đó)
-  staffsTree: any;    //cây biến đổi của nhân sự theo cấp đơn vị
 
   constructor(
     private apiAuth: AuthService
@@ -33,23 +32,23 @@ export class StaffsPage implements OnInit {
     try {
       //Lấy danh sách đơn vị trong toàn bộ cây danh sách, 
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-organizations", true);
+        + "/get-organizations");
 
       // console.log('Organization', this.organizations);
 
 
-      //Lấy đơn vị + danh sách staff mà user đảm nhiệm + chu kỳ báo cáo (nếu có)
+      //lấy mã tổ chức của username: 0766777123
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-user-report", true);
+        + "/get-user-report");
 
       // console.log('get-user-report', this.userReport);
 
       //gán mã công ty vào để kiểm soát sau này
       this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
 
-      //lấy cây vai trò của đơn vị cấp cty/trung tâm
+      //lấy cây chức danh của đơn vị cấp cty/trung tâm
       this.jobRoles = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-job-roles?organization_id=" + (this.organizationId ? this.organizationId : 0), true);
+        + "/get-job-roles");
 
       // console.log('get-job-roles', this.jobRoles);
 
@@ -58,15 +57,7 @@ export class StaffsPage implements OnInit {
     }
 
     //thay đổi chọn lựa
-    if (Array.isArray(this.organizations)) {
-      this.organizations = this.apiCommon.createTreeOrder(this.organizations, 'id', 'parent_id');
-
-      // console.log('createTreeOrder', JSON.stringify(this.organizations));
-
-      this.onChangeSelect();
-
-    }
-
+    this.onChangeSelect();
   }
 
   /**
@@ -78,37 +69,36 @@ export class StaffsPage implements OnInit {
     this.organizationsTree = [];
 
     try {
-      //lấy cây vai trò của đơn vị cấp cty/trung tâm
+      //lấy danh sách chức danh
       this.staffs = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-staffs", true);
+        + "/get-staffs");
 
       // console.log(this.staffs);
 
       if (Array.isArray(this.staffs)) {
-        this.staffsTree = this.apiCommon.createTreeMenu(this.staffs, 'id', 'parent_id');
-
-        //console.log(this.staffsTree);
 
         this.organizations.forEach(el => {
 
           el.click_type = 1; //cây chính cho click luôn
 
           //ghép con vào các nhánh cây (bỏ qua gốc cây)
-          if (this.staffsTree && el.id + '' !== '' + this.organizationId) {
-            el.subs = this.staffsTree.filter(x => x.organization_id === el.id); //mảng con được ghép vào
+          if (this.staffs && el.id + '' !== '' + this.organizationId) {
+            el.subs = this.staffs.filter(x => x.organization_id === el.id); //mảng con được ghép vào
           }
           el.main_tree = 1; //cây chính
 
         });
+        // console.log(this.organizations);
 
         //tạo cây để hiển thị lên form
         this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
+        console.log(this.organizationsTree);
 
         //ghép thêm nhân sự Giám đốc, Phó Giám đốc vào gốc cây
         this.organizationsTree.forEach(el => {
           //lọc các nhân sự giám đốc, phó giám đốc của tổ chức
-          if (this.staffsTree && el.id + '' === '' + this.organizationId) {
-            let rootSubs = this.staffsTree.filter(x => x.organization_id === el.id);
+          if (this.staffs && el.id + '' === '' + this.organizationId) {
+            let rootSubs = this.staffs.filter(x => x.organization_id === el.id);
             //trường hợp refresh thì không cần thêm vào
             if (!el.subs) el.subs = rootSubs;
 
@@ -129,8 +119,7 @@ export class StaffsPage implements OnInit {
 
           }
         })
-        
-        // console.log(this.organizationsTree);
+
       }
     } catch (e) {
       console.log('Err:', e);
@@ -176,24 +165,16 @@ export class StaffsPage implements OnInit {
   }
 
   /**
-   * Click vào cell Chỉ tiêu hoặc Cell Kpi 
-   * depth = 2,3
+   * Click vào đơn vị cấp con
    * @param event 
    */
   onClickTreeItem(event) {
 
-    //Khi cây con có click_type>0 thì ta tự mở node ra để xem
-    if (event.item.click_type > 0) {
-      event.item.visible = true;
-    }
-
     //Khai báo menu popup
     let menu;
 
-
     //cây nhân sự thuần
     if (!event.item.main_tree) {
-
       menu = [
         {
           icon: {
@@ -213,8 +194,7 @@ export class StaffsPage implements OnInit {
           value: "stop-owner"
         }
       ];
-
-    } else if (event.item.$is_leaf === 1) {
+    } else {
       menu = [
         {
           icon: {
@@ -258,7 +238,6 @@ export class StaffsPage implements OnInit {
         id: -1, //Giả id để thêm vào
         parent_id: item.main_tree === 1 ? undefined : item.id, //kế thừa cấp cha của nó nếu là cây con
         organization_id: item.organization_id ? item.organization_id : item.id,
-        //kế thừa cấp cha của nó nếu có tổ chức thì lấy luôn tổ chức, nếu không có tổ chức thì lấy id cấp cha
         table_name: 'staffs', //tên bảng cần đưa vào
         wheres: [], //Mệnh đề wheres để update
         title_name: item.name //tên của cấp cha
@@ -269,9 +248,9 @@ export class StaffsPage implements OnInit {
 
     //sửa tham số
     if (cmd.value === 'edit-owner') {
-      item.table_name = 'staffs'; //tên bảng cần đưa vào
+      item.table_name = 'staffs';         //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
-      item.title_name = 'NHÂN SỰ CỦA TỔ CHỨC';
+      item.title_name = item.organization_name;
 
       this.addNewItem(item, 'edit');
     }
@@ -289,39 +268,32 @@ export class StaffsPage implements OnInit {
   }
 
   /**
-     * Thêm kpi mới có kpi_role là C và Tr từ cây
+     *Thêm hoặc sửa nhân sự
      * @param item 
      */
   addNewItem(item, type) {
 
-    // console.log('item', item);
+    console.log('item', item);
 
-    //danh mục đơn vị phòng ban
     let orgOptions = [];
-    //lấy từ cây đơn vị mà trong đó parent_id là gốc cây của đơn vị
+    //lấy danh sách đơn vị
     if (Array.isArray(this.organizations)) {
       this.organizations.forEach(el => {
-        //Chỉ lọc những đơn vị con dưới 1 cấp để gán đơn vị thôi
-        //thêm đơn vị cấp Cty/Trung tâm để gán nhân sự chức Giám đốc, Phó giám đốc
-        if ('' + el.id === '' + this.organizationId || '' + el.parent_id === '' + this.organizationId) {
-          //lấy tất cả nh sach don vi
-          orgOptions.push(
-            { name: el.name, value: parseInt(el.id) }
-          )
-        }
-
+        orgOptions.push(
+          { name: el.name, value: parseInt(el.id) }
+        )
       });
     }
 
-    //danh mục chức danh của phòng ban đó
+    //danh mục chức danh của tổ chức đó
     let jobOptions = [];
-    //danh mục chức danh của phòng ban đó nhưng bỏ chức danh chính đi
+    //danh mục chức danh của tổ chức đó nhưng bỏ chức danh chính đi
     let jobListOptions = [];
 
     //lấy từ cây đơn vị mà trong đó parent_id là gốc cây của đơn vị
     if (Array.isArray(this.jobRoles)) {
       this.jobRoles.forEach(el => {
-        //chỉ lọc vai trò của tổ chức nhân sự thôi
+        //chỉ lọc các chức danh trong tổ chức đó thôi
         if ('' + el.organization_id === '' + item.organization_id) {
 
           //lấy danh sách chức danh
@@ -356,9 +328,9 @@ export class StaffsPage implements OnInit {
 
         //hiển thị các thông tin của nhân sự
         , { type: "text", key: "name", value: item.name, name: "Họ và tên", input_type: "text", icon: "contact", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
-        , { type: "select-origin", key: "organization_id", name: "Thuộc đơn vị", value: item.organization_id, options: orgOptions, icon: "logo-windows", validators: [{ required: true }], hint: "Chọn một đơn vị trực thuộc" }
-        , { type: "select-origin", key: "job_id", name: "Chức danh", value: item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" }
-        , { type: "select-multiple-origin", key: "job_list", name: "Chức danh kiêm nhiệm", value: item.job_list ? item.job_list : [], options: jobListOptions, icon: "logo-buffer", hint: "Chọn các công việc kiêm nhiệm của cá nhân đó" }
+        , { type: "select-origin", key: "organization_id", name: "Thuộc đơn vị", value: "" + item.organization_id, options: orgOptions, icon: "logo-windows", validators: [{ required: true }], hint: "Chọn một đơn vị trực thuộc" }
+        , { type: "select-origin", key: "job_id", name: "Chức danh", value: "" + item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" }
+        , { type: "select-multiple-origin", key: "job_list", name: "Chức danh kiêm nhiệm", value: [], options: jobListOptions, icon: "logo-buffer", hint: "Chọn các công việc kiêm nhiệm của cá nhân đó" }
         , {
           type: "button"
           , options: [
@@ -366,7 +338,7 @@ export class StaffsPage implements OnInit {
             , {
               name: type === 'add' ? 'Tạo mới' : 'Chỉnh sửa', next: "CALLBACK"
               , url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true, signed: true
+                + "/post-parameters"
             }
           ]
         }
@@ -434,16 +406,16 @@ export class StaffsPage implements OnInit {
         //res.ajax.value là giá trị thay đổi ở trường có tên ở trên
         if (res.ajax.key === 'organization_id' && res.ajax.value) {
 
-          //danh mục chức danh của phòng ban đó
+          //danh mục chức danh của tổ chức đó
           let jobOptions = [];
 
-          //danh mục chức danh của phòng ban đó nhưng bỏ chức danh chính đi
+          //danh mục chức danh của tổ chức đó nhưng bỏ chức danh chính đi
           let jobListOptions = [];
 
-          //lấy từ cây đơn vị mà trong đó parent_id là gốc cây của đơn vị
+          //lấy danh sách chức danh tùy chọn
           if (Array.isArray(this.jobRoles)) {
             this.jobRoles.forEach(el => {
-              //chỉ lọc vai trò của tổ chức được chọn thôi
+              //chỉ lọc chức danh của tổ chức được chọn thôi
               if ('' + el.organization_id === '' + res.ajax.value) {
 
                 //lấy danh sách chức danh
@@ -459,8 +431,8 @@ export class StaffsPage implements OnInit {
 
             });
           }
+
           //báo cho form động biết cần thay đổi trường dữ liệu ajax nào
-          console.log(jobListOptions);
           resolve([
             {
               key: "job_id" //tìm item có key là trường này
@@ -476,33 +448,29 @@ export class StaffsPage implements OnInit {
           ])
 
         } else if (res.ajax.key === 'job_id' && res.ajax.value) {
-          //vì thay đổi công việc chính nên-->
-          //Thay đổi công việc kiêm nhiệm là trừ công việc chính đi
+          //vì thay đổi công việc chính nên
+          //thay đổi công việc kiêm nhiệm là trừ công việc chính đi
           let jobListOptions = [];
 
           if (Array.isArray(this.jobRoles)) {
 
             //lấy công việc chính đã chọn
-            let elSelected = this.jobRoles.find(x => x.id === res.ajax.value);
-
+            let elSelected = this.jobRoles.find(x => x.id == res.ajax.value);
+            
             if (elSelected) {
               this.jobRoles.forEach(el => {
-                //chỉ lọc vai trò của tổ chức được chọn thôi
-                //loại trừ item được chọn
+                //chỉ lọc chức danh của tổ chức được chọn thôi
+                //loại trừ chức danh được chọn
                 if ('' + el.organization_id === '' + elSelected.organization_id && '' + el.id !== '' + res.ajax.value) {
-
-                  //vì không biết chọn chức danh nào nên vẫn trả đủ danh sách chức danh cho nó
                   jobListOptions.push(
                     { name: el.name, value: parseInt(el.id) }
                   )
                 }
-
               });
-
             }
 
             //báo cho form động biết cần thay đổi trường dữ liệu ajax nào
-            console.log(jobListOptions);
+            // console.log(jobListOptions);
             resolve(
               {
                 key: "job_list" //tìm item có key là trường này

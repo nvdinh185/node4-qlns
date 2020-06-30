@@ -39,19 +39,22 @@ export class OrganizationsPage {
   async refreshNews() {
 
     try {
-
+      // lấy mã tổ chức của username: 0766777123
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-user-report", true);
+        + "/get-user-report");
       // console.log(this.userReport);
 
-
+      // Lấy danh sách tổ chức
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-organizations", true);
+        + "/get-organizations");
       // console.log(this.organizations);
       if (Array.isArray(this.organizations)) {
 
+        // Dùng service để chuyển thành cây tổ chức
         let organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
+        // console.log(organizationsTree);
 
+        // Lấy cây tổ chức theo userReport.organization_id
         if (this.userReport && Array.isArray(organizationsTree)) {
           this.organizationsTree = organizationsTree.filter(x => x.id === this.userReport.organization_id);
         } else {
@@ -62,7 +65,6 @@ export class OrganizationsPage {
       }
 
     } catch (e) { }
-
   }
 
   /**
@@ -112,12 +114,11 @@ export class OrganizationsPage {
 
   }
 
+  /**
+   * Kích vào nội dung cấp con (tổ chức)
+   * @param event 
+   */
   onClickTreeItem(event) {
-
-    //Khi cây con có click_type>0 thì ta tự mở node ra để xem
-    // if (event.item.click_type > 0) {
-    //   event.item.visible = true;
-    // }
 
     //Khai báo menu popup
     let menu = [
@@ -131,7 +132,7 @@ export class OrganizationsPage {
       }
       ,
       {
-        name: event.item.status === 1 ? "Loại bỏ đơn vị" : "Mở hoạt động đơn vị",
+        name: "Loại bỏ đơn vị",
         value: "stop-owner",
         icon: {
           name: "trash",
@@ -203,7 +204,7 @@ export class OrganizationsPage {
   }
 
   /**
-   * Thêm kpi mới có kpi_role là C và Tr từ cây
+   * Thêm hoặc sửa tham số
    * @param item 
    */
   addNewItem(item, type) {
@@ -220,7 +221,7 @@ export class OrganizationsPage {
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
 
-        , { type: "text", key: "name", value: item.name, name: "Tên đơn vị", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
+        , { type: "text", key: "name", value: item.name, name: "Tên đơn vị", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
         , { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" }
         , { type: "text_area", key: "description", value: item.description, name: "Mô tả thông tin của đơn vị", input_type: "text", icon: "md-alert", hint: "Nhập mô tả này để ghi nhớ" }
         , {
@@ -230,7 +231,7 @@ export class OrganizationsPage {
             , {
               name: type === 'add' ? 'Tạo mới' : 'Chỉnh sửa', next: "CALLBACK"
               , url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true
+                + "/post-parameters"
             }
           ]
         }
@@ -245,6 +246,10 @@ export class OrganizationsPage {
 
   }
 
+  /**
+   * Hàm loại bỏ đơn vị
+   * @param item 
+   */
   stopItem(item) {
     let form = {
       title: "Thay đổi trạng thái"
@@ -263,7 +268,7 @@ export class OrganizationsPage {
           , options: [
             {
               name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true
+                + "/post-parameters"
             }
           ]
         }
@@ -361,7 +366,7 @@ export class OrganizationsPage {
           // console.log(json_data);
           try {
             await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-organizations', json_data, true)
+              + '/post-organizations', json_data)
             returnFinish.count_success++;
           } catch (err) {
             // console.log(err);
