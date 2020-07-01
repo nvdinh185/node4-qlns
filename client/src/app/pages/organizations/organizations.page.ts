@@ -7,10 +7,12 @@ import * as Excel from "exceljs";
 
 let config = {
   sheet_name: { value: "organizations" }
-  , noId: { value: "B" }
-  , name: { value: "C" }
-  , id: { value: "D" }
-  , parent_id: { value: "E" }
+  , nId: { value: "A" }
+  , name: { value: "B" }
+  , short_name: { value: "C" }
+  , description: { value: "D" }
+  , id: { value: "E" }
+  , parent_id: { value: "F" }
 }
 
 @Component({
@@ -362,7 +364,7 @@ export class OrganizationsPage {
         // console.log(results);
         let returnFinish = { count_success: 0, count_fail: 0 }
         for (const el of results) {
-          let json_data = { name: el.name, id: el.id, parent_id: el.parent_id }
+          let json_data = { name: el.name, short_name: el.short_name, description: el.description, id: el.id, parent_id: el.parent_id }
           // console.log(json_data);
           try {
             await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
@@ -377,7 +379,7 @@ export class OrganizationsPage {
         this.refreshNews();
 
       } catch (err) {
-        console.log('Lỗi biên dịch excel', err);
+        console.log('Lỗi đọc file excel nguồn!', err);
       } finally {
       }
 

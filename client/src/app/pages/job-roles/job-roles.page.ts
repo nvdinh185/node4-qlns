@@ -80,7 +80,7 @@ export class JobRolesPage implements OnInit {
       // chuyển thành cây tổ chức và chức danh
       this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
 
-      console.log(this.organizationsTree);
+      // console.log(this.organizationsTree);
 
       // ghép chức danh giám đốc vào
       this.organizationsTree.forEach(el => {

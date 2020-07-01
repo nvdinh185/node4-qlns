@@ -56,7 +56,7 @@ class Handler {
      * @param {*} next 
      */
     getJobRoles(req, res, next) {
-        
+
         db.getRsts(`select 
                     b.name as organization_name
                     , a.*
@@ -114,14 +114,28 @@ class Handler {
     async postOrganizations(req, res, next) {
         let dataJson = req.json_data;
         // console.log(dataJson);
-        let insertSql = arrObj.convertSqlFromJson("organizations", dataJson);
         try {
+            dataJson.created_time = Date.now();
+            let insertSql = arrObj.convertSqlFromJson("organizations", dataJson);
             await db.insert(insertSql);
+        } catch (err) {
+            if (err.code == "SQLITE_CONSTRAINT") {
+                delete dataJson["created_time"];//Xóa trường này đi
+                dataJson.updated_time = Date.now();
+                try {
+                    let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["id"]);
+                    await db.update(updateSql);
+                } catch (e) {//lỗi trùng tên nên update theo id cũng không được luôn
+                    let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["name"]);
+                    await db.update(updateSql);
+                }
+            } else {
+                res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: err, message: "error update db" }));
+            }
+        } finally {
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ status: "OK", message: "cập nhật thành công!" }));
-        } catch (err) {
-            res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: err, message: "error update db" }));
         }
     }
 

@@ -92,7 +92,7 @@ export class StaffsPage implements OnInit {
 
         //tạo cây để hiển thị lên form
         this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
-        console.log(this.organizationsTree);
+        // console.log(this.organizationsTree);
 
         //ghép thêm nhân sự Giám đốc, Phó Giám đốc vào gốc cây
         this.organizationsTree.forEach(el => {
@@ -273,7 +273,7 @@ export class StaffsPage implements OnInit {
      */
   addNewItem(item, type) {
 
-    console.log('item', item);
+    // console.log('item', item);
 
     let orgOptions = [];
     //lấy danh sách đơn vị
