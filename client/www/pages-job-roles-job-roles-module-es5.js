@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar color=\"primary\">\n\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n\n    <ion-title>CÂY CHỨC DANH</ion-title>\n\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-no-padding\">\n  <ion-row>\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\n\n      <!-- Chỉnh sửa thông tin của tổ chức độc lập Cấp id=root_id -->\n      <ion-row (click)=\"onClickSpec($event, item)\">\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\n        </ion-col>\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\n          {{item.status}}\n        </ion-col>\n      </ion-row>\n\n      <!-- Bộ cây tổ chức của tổ chức độc lập cấp phòng ban, cấp tổ/đội, vùng -->\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\n\n    </ion-col>\n\n  </ion-row>\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>";
     /***/
   },
 
@@ -228,8 +228,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.apiAuth = apiAuth;
         this.apiCommon = apiCommon;
-        this.orgOptions = []; //cây tùy chọn để lựa chọn cấp công ty
-
         /**
          * Hàm xử lý kết quả post sửa thêm
          */
@@ -279,7 +277,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                   case 6:
                     this.userReport = _context.sent;
-                    //gán mã công ty vào để kiểm soát sau này
+                    // console.log(this.userReport);
                     this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
                     _context.next = 12;
                     break;
@@ -289,22 +287,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     _context.t0 = _context["catch"](0);
 
                   case 12:
-                    //thay đổi chọn lựa
-                    if (Array.isArray(this.organizations)) {
-                      //xóa liên hệ cấp gốc
-                      this.organizations.forEach(function (el) {
-                        if (el.id === el.root_id) el.parent_id = undefined;
-                      }); //lọc lấy tách cây id=root_id -- 
-
-                      this.orgOptions = this.organizations.filter(function (x) {
-                        return x.id === x.root_id && x.status === 1;
-                      }); //chuyển thành cây sắp xếp để xác định lá cây, gốc cây
-
-                      this.organizations = this.apiCommon.createTreeOrder(this.organizations, 'id', 'parent_id'); //chuyển thành cây cấu trúc để ghép vào
-                      //this.organizations = this.apiAuth.createTreeMenu(this.organizations,'id','parent_id');
-
-                      this.onChangeSelect();
-                    }
+                    this.onChangeSelect();
 
                   case 13:
                   case "end":
@@ -324,112 +307,76 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
             var _this2 = this;
 
-            var orgTree;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
               while (1) {
                 switch (_context2.prev = _context2.next) {
                   case 0:
-                    //reset cây vai trò
                     this.organizationsTree = [];
-                    this.jobRolesTree = []; //lấy đơn vị được chọn tức là lấy gốc cây sau này
+                    this.jobRolesTree = [];
+                    _context2.prev = 2;
+                    _context2.next = 5;
+                    return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-job-roles");
 
-                    this.orgSelected = this.orgOptions.find(function (x) {
-                      return '' + x.id === '' + _this2.organizationId;
-                    });
-                    _context2.prev = 3;
-                    _context2.next = 6;
-                    return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-job-roles?organization_id=" + (this.organizationId || 0), true);
-
-                  case 6:
+                  case 5:
                     this.jobRoles = _context2.sent;
 
                     // console.log(this.jobRoles);
+                    // Chuyển thành cây chức danh
                     if (Array.isArray(this.jobRoles)) {
-                      //mở lá cây khi có tác động ở gốc cây hoặc lá cây
-                      this.jobRoles.forEach(function (el) {
-                        el.click_type = 2; //cho phép tự mở cây, mở menu 
-                        //mở lá cây được tác động
-
-                        if (_this2.itemOpen && _this2.itemOpen.organization_id === el.organization_id) {
-                          el.visible = true;
-                        }
-                      }); //console.log(this.jobRoles,this.jobRolesTree);
-                      //tạo luôn cây vai trò (Giám đốc-->PGĐ--> Trưởng phòng --> Phó phòng -->Tổ trưởng--> Chuyên viên...)
-
-                      this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id');
-                    } //this.jobRolesTree = this.jobRolesTree?this.jobRolesTree:[];
-                    //console.log(this.jobRoles,this.jobRolesTree);
-                    //Lọc lấy cây của đơn vị được chọn từ gốc
-                    //chỉ lấy các đơn vị trạng thái đang hoạt động thôi
+                      this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id'); // console.log(this.jobRolesTree);
+                    } // thêm thuộc tính click_type và main_tree cho cây chính
 
 
-                    orgTree = this.organizations.filter(function (x) {
-                      return '' + x.$root === '' + _this2.organizationId;
-                    }); //console.log('cay goc',this.organizationId, orgTree);
-
-                    orgTree.forEach(function (el) {
+                    this.organizations.forEach(function (el) {
                       el.click_type = 1; //cây chính cho click luôn
-                      //ghép con vào các nhánh cây (bỏ qua gốc cây)
 
                       if (_this2.jobRolesTree && el.id + '' !== '' + _this2.organizationId) {
                         el.subs = _this2.jobRolesTree.filter(function (x) {
                           return x.organization_id === el.id;
                         }); //mảng con được ghép vào
-                      } //định nghĩa một tham số riêng để nhận biết cây đơn vị và cây vai trò
-
+                      }
 
                       el.main_tree = 1; //cây chính
-                      //mở cây hiển thị vùng tác động
+                    }); // console.log(this.organizations);
+                    // chuyển thành cây tổ chức và chức danh
 
-                      if (_this2.itemOpen && _this2.itemOpen.organization_id === el.id) {
-                        el.visible = true;
-                      }
-                    }); //tạo cây để hiển thị lên form
-
-                    this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id'); //console.log(orgTree, this.organizationsTree, this.jobRolesTree);
-                    //ghép thêm chức danh Giám đốc, Phó Giám đốc vào gốc cây
+                    this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id'); // console.log(this.organizationsTree);
+                    // ghép chức danh giám đốc vào
 
                     this.organizationsTree.forEach(function (el) {
                       if (_this2.jobRolesTree && el.id + '' === '' + _this2.organizationId) {
-                        //lọc các chức danh giám đốc, phó giám đốc của tổ chức
                         var rootSubs = _this2.jobRolesTree.filter(function (x) {
                           return x.organization_id === el.id;
-                        }); //trường hợp refresh thì không cần thêm vào
+                        });
 
-
-                        if (!el.subs) el.subs = rootSubs; //duyệt rootSubs nếu tìm thấy một đối tượng trong el.subs thì thôi thoát ra 
-                        //nếu không tìm thấy thì push vào
-
+                        if (!el.subs) el.subs = rootSubs;
                         rootSubs.forEach(function (elsub) {
                           var index = el.subs.findIndex(function (x) {
                             return x.id === elsub.id && x.organization_id == elsub.organization_id;
                           });
 
                           if (index >= 0) {
-                            //không cần thêm vào nếu là lá cây
-                            //trường hợp nó có subs thì phải thay thế nó
-                            //if (elsub.subs) 
-                            el.subs.splice(index, 1, elsub); //thay thế lại
+                            el.subs.splice(index, 1, elsub);
                           } else {
-                            el.subs.unshift(elsub); //bổ sung vào đầu
+                            el.subs.unshift(elsub);
                           }
                         });
                       }
                     });
-                    _context2.next = 17;
+                    _context2.next = 15;
                     break;
 
-                  case 14:
-                    _context2.prev = 14;
-                    _context2.t0 = _context2["catch"](3);
+                  case 12:
+                    _context2.prev = 12;
+                    _context2.t0 = _context2["catch"](2);
                     console.log('Error:', _context2.t0);
 
-                  case 17:
+                  case 15:
                   case "end":
                     return _context2.stop();
                 }
               }
-            }, _callee2, this, [[3, 14]]);
+            }, _callee2, this, [[2, 12]]);
           }));
         }
         /**
@@ -466,8 +413,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
         }
         /**
-         * Click vào cell Chỉ tiêu hoặc Cell Kpi
-         * depth = 2,3
+         * Click vào đơn vị cấp con
          * @param event
          */
 
@@ -476,14 +422,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function onClickTreeItem(event) {
           var _this4 = this;
 
-          //Khi cây con có click_type>0 thì ta tự mở node ra để xem
-          if (event.item.click_type > 0) {
-            event.item.visible = true;
-          } //Khai báo menu popup
-
-
+          //Khai báo menu popup
           var menu; //cây chức danh thuần
-          // console.log(event.item.main_tree);
+          // console.log(event.item);
 
           if (!event.item.main_tree) {
             menu = [{
@@ -508,7 +449,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               name: event.item.status === 1 ? "Khóa bỏ chức danh" : "Kích hoạt chức danh",
               value: "stop-owner"
             }];
-          } else if (event.item.$is_leaf === 1) {
+          } else {
             menu = [{
               icon: {
                 name: "md-add",
@@ -543,37 +484,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function processKpiDetails(cmd, item) {
           //thêm tham số
           if (cmd.value === 'add-child') {
-            this.itemOpen = item; //item là một nhánh cây đang xét
-
             var itemNew = {
               id: -1,
               parent_id: item.main_tree === 1 ? undefined : item.id,
               organization_id: item.organization_id ? item.organization_id : item.id,
-              //kế thừa cấp cha của nó nếu có tổ chức thì lấy luôn tổ chức, nếu không có tổ chức thì lấy id cấp cha
               table_name: 'job_roles',
               wheres: [],
               title_name: item.name //tên của cấp cha
 
-            }; // console.log(cmd);
-            // console.log(item);
-
+            };
             this.addNewItem(itemNew, 'add');
           } //sửa tham số
 
 
           if (cmd.value === 'edit-owner') {
-            this.itemOpen = item;
             item.table_name = 'job_roles'; //tên bảng cần đưa vào
 
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
 
             item.title_name = 'Chức danh';
             this.addNewItem(item, 'edit');
-          } //thêm kpi từ Chỉ tiêu
+          } //tạm dừng tham số
 
 
           if (cmd.value === 'stop-owner') {
-            this.itemOpen = item;
             item.table_name = 'job_roles'; //tên bảng cần đưa vào
 
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
@@ -631,9 +565,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               options: [{
                 name: 'Cập nhập',
                 next: "CALLBACK",
-                url: this.apiAuth.serviceUrls.RESOURCE_SERVER + "/post-parameters",
-                token: true,
-                signed: true
+                url: this.apiAuth.serviceUrls.RESOURCE_SERVER + "/post-parameters"
               }]
             }]
           };
@@ -644,7 +576,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
         }
         /**
-         * Thêm kpi mới có kpi_role là C và Tr từ cây
+         * Thêm hoặc sửa chức danh
          * @param item
          */
 
@@ -681,9 +613,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               type: "hidden",
               key: "wheres",
               value: item.wheres
-            } //hiển thị nội dung nhập vào cho Chỉ tiêu chỉ là tên và trọng số
-            //new Date().toISOString().slice(0, 10)
-            , {
+            }, {
               type: "text",
               key: "short_name",
               value: item.short_name,
@@ -702,15 +632,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               value: item.name,
               name: "Tên chức danh",
               input_type: "text",
-              icon: "ios-contact-outline",
+              icon: "ios-people",
               validators: [{
                 required: true,
-                min: 3,
+                min: 5,
                 max: 100
               }],
               hint: "Độ dài tên cho phép từ 5 đến 100 ký tự"
-            } //, { type: "datetime", key: "start_date", value: item.start_date, name: "Chọn ngày hoạt động", hint: "Lựa chọn ngày", display: "DD/MM/YYYY", picker: "DD/MM/YYYY", validators: [{ required: true }] }
-            , {
+            }, {
               type: "text_area",
               key: "description",
               value: item.description,
@@ -726,9 +655,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               }, {
                 name: type === 'add' ? 'Tạo mới' : 'Chỉnh sửa',
                 next: "CALLBACK",
-                url: this.apiAuth.serviceUrls.RESOURCE_SERVER + "/post-parameters",
-                token: true,
-                signed: true
+                url: this.apiAuth.serviceUrls.RESOURCE_SERVER + "/post-parameters"
               }]
             }]
           };

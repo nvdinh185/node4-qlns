@@ -5,10 +5,8 @@ function main(isHttp) {
 
   // Web khai báo tĩnh - test local
   app.use(express.static(__dirname + '/client/www'));
-  app.use("/documents", express.static(__dirname + '/documents'));
   // đường dẫn chính
   app.use("/bsc-kpi", express.static(__dirname + '/client/www'));
-  app.use("/bsc-kpi/documents", express.static(__dirname + '/documents'));
 
   // xử lý CORS handle
   app.use(require('./handlers/cors-handler').cors);
@@ -25,7 +23,7 @@ function main(isHttp) {
 
   if (isHttp) {
     const httpServer = require('http').createServer(app);
-    const portHttp = process.env.PORT || isHttp;
+    const portHttp = isHttp;
     httpServer.listen(portHttp, () => {
       console.log("Server HTTP is started with PORT: "
         + portHttp);
