@@ -8,15 +8,15 @@ import { CommonsService, AuthService, PopoverCardComponent, DynamicFormMobilePag
 })
 export class StaffsPage implements OnInit {
 
-  organizationId: any;  //cấp công ty được chọn
+  organizationId: any;  //mã tổ chức của user
   userReport: any;
 
-  organizations: any; //ghi bảng ghi gốc của tổ chức cấp độc lập (lấy id=root_id)
-  organizationsTree: any; //ghi cây của các tổ chức độc lập đến subs
+  organizations: any; //danh sách tổ chức lấy từ csdl
+  organizationsTree: any; //cây tổ chức hiển thị
 
-  jobRoles: any; //cây danh mục chức danh của tổ chức (lọc theo tổ chức để lấy)
+  jobRoles: any; //danh sách chức danh lấy từ csdl
 
-  staffs: any;        //cây của nhân sự của đơn vị (cấp công ty - lấy toàn bộ nhân sự của công ty đó)
+  staffs: any;//danh sách nhân sự lấy từ csdl
 
   constructor(
     private apiAuth: AuthService
@@ -30,7 +30,7 @@ export class StaffsPage implements OnInit {
   async refreshNews() {
 
     try {
-      //Lấy danh sách đơn vị trong toàn bộ cây danh sách, 
+      //Lấy danh sách tổ chức có trong csdl, 
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-organizations");
 
@@ -43,10 +43,10 @@ export class StaffsPage implements OnInit {
 
       // console.log('get-user-report', this.userReport);
 
-      //gán mã công ty vào để kiểm soát sau này
+      //mã tổ chức của user
       this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
 
-      //lấy cây chức danh của đơn vị cấp cty/trung tâm
+      //lấy danh sách chức danh từ csdl
       this.jobRoles = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-job-roles");
 
@@ -61,15 +61,15 @@ export class StaffsPage implements OnInit {
   }
 
   /**
-   * Khi có thay đổi chọn đơn vị cấp Cty
+   * Khi có thay đổi thêm/sửa/xóa
    */
   async onChangeSelect() {
 
-    //reset cây vai trò
+    //reset cây tổ chức
     this.organizationsTree = [];
 
     try {
-      //lấy danh sách chức danh
+      //lấy danh sách nhân sự
       this.staffs = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-staffs");
 
@@ -80,17 +80,17 @@ export class StaffsPage implements OnInit {
         this.organizations.forEach(el => {
 
           el.click_type = 1; //cây chính cho click luôn
+          el.main_tree = 1; //là cây chính
 
-          //ghép con vào các nhánh cây (bỏ qua gốc cây)
+          //ghép nhân sự vào gốc cây
           if (this.staffs && el.id + '' !== '' + this.organizationId) {
-            el.subs = this.staffs.filter(x => x.organization_id === el.id); //mảng con được ghép vào
+            el.subs = this.staffs.filter(x => x.organization_id === el.id); //mảng nhân sự được ghép vào
           }
-          el.main_tree = 1; //cây chính
 
         });
         // console.log(this.organizations);
 
-        //tạo cây để hiển thị lên form
+        //tạo cây tổ chức để hiển thị lên form
         this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
         // console.log(this.organizationsTree);
 
@@ -369,14 +369,14 @@ export class StaffsPage implements OnInit {
         , { type: "hidden", key: "id", value: item.id } //đối tượng để update
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
-        , { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
-        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" }
+        , { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
+        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "hand" }
         , {
           type: "button"
           , options: [
             {
               name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                + "/post-parameters", token: true, signed: true
+                + "/post-parameters"
             }
           ]
         }
@@ -456,7 +456,7 @@ export class StaffsPage implements OnInit {
 
             //lấy công việc chính đã chọn
             let elSelected = this.jobRoles.find(x => x.id == res.ajax.value);
-            
+
             if (elSelected) {
               this.jobRoles.forEach(el => {
                 //chỉ lọc chức danh của tổ chức được chọn thôi

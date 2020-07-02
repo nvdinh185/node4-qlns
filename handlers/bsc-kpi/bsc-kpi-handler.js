@@ -36,8 +36,7 @@ class Handler {
      * @param {*} next 
      */
     getOrganizations(req, res, next) {
-        db.getRsts(`select * from organizations
-                    where status = 1`)
+        db.getRsts(`select * from organizations`)
             .then(results => {
                 // console.log(results);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -63,7 +62,7 @@ class Handler {
                     from job_roles a
                     LEFT JOIN organizations b
                     on a.organization_id = b.id
-                    where a.status = 1`)
+                    `)
             .then(results => {
                 // console.log(results);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -114,28 +113,30 @@ class Handler {
     async postOrganizations(req, res, next) {
         let dataJson = req.json_data;
         // console.log(dataJson);
+
         try {
-            dataJson.created_time = Date.now();
-            let insertSql = arrObj.convertSqlFromJson("organizations", dataJson);
-            await db.insert(insertSql);
-        } catch (err) {
-            if (err.code == "SQLITE_CONSTRAINT") {
-                delete dataJson["created_time"];//Xóa trường này đi
+            if (dataJson.id) {//Nếu có id
                 dataJson.updated_time = Date.now();
-                try {
-                    let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["id"]);
-                    await db.update(updateSql);
-                } catch (e) {//lỗi trùng tên nên update theo id cũng không được luôn
+                let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["id"]);
+                await db.update(updateSql);
+            } else {//không có id
+                let data = await db.getRsts(`select * from organizations where name = '${dataJson.name}'`);
+                if (data.length > 0) {//Nếu có name thì update theo name
+                    dataJson.updated_time = Date.now();
                     let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["name"]);
                     await db.update(updateSql);
+                } else {//Nếu không có name thì chèn mới
+                    dataJson.created_time = Date.now();
+                    let insertSql = arrObj.convertSqlFromJson("organizations", dataJson);
+                    await db.insert(insertSql);
                 }
-            } else {
-                res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ error: err, message: "error update db" }));
             }
-        } finally {
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ status: "OK", message: "cập nhật thành công!" }));
+        } catch (e) {
+            console.log(e);
+            res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: e, message: "error update db" }));
         }
     }
 

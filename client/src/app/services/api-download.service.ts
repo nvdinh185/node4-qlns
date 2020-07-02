@@ -26,7 +26,7 @@ export class ApiDownloadService {
         let arrayOutput = [];
         let fr = new FileReader();
         fr.readAsArrayBuffer(blobData);
-        fr.onloadend = (e) => {
+        fr.onloadend = () => {
           let bufferData: any = fr.result;
           let wb = new Excel.Workbook();
           wb.xlsx.load(bufferData)

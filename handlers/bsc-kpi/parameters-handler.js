@@ -30,29 +30,6 @@ class Handler {
 
             dataJson.updated_time = Date.now();
 
-            // Chuyển đổi các dữ liệu thành string trước khi lưu vào csdl
-            if (dataJson["organization_id"]) {
-                dataJson["organization_id"] = parseInt(dataJson["organization_id"]);
-            }
-
-            if (dataJson["organization_list"]) {
-                dataJson["organization_list"] = dataJson["organization_list"].map(function (item) { return parseInt(item); });
-                dataJson["organization_list"] = JSON.stringify(dataJson["organization_list"]);
-            }
-
-            if (dataJson["staff_id"]) {
-                dataJson["staff_id"] = parseInt(dataJson["staff_id"]);
-            }
-
-            if (dataJson["staff_list"]) {
-                dataJson["staff_list"] = dataJson["staff_list"].map(function (item) { return parseInt(item); });
-                dataJson["staff_list"] = JSON.stringify(dataJson["staff_list"]);
-            }
-
-            if (dataJson["job_id"]) {
-                dataJson["job_id"] = parseInt(dataJson["job_id"]);
-            }
-
             if (dataJson["job_list"]) {
                 dataJson["job_list"] = dataJson["job_list"].map(function (item) { return parseInt(item); });
                 dataJson["job_list"] = JSON.stringify(dataJson["job_list"]);
@@ -87,7 +64,7 @@ class Handler {
             }
         } else {
             res.writeHead(435, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: err, message: "no structure for cuongdq" }));
+            res.end(JSON.stringify({ error: "Lỗi", message: "no structure for cuongdq" }));
         }
 
     }

@@ -24,8 +24,8 @@ export class OrganizationsPage {
 
   userReport: any;
 
-  organizations: any;
-  organizationsTree: any;
+  organizations: any; //danh sách tổ chức từ csdl
+  organizationsTree: any; //cây tổ chức để hiển thị
 
   constructor(
     private apiAuth: AuthService
@@ -51,6 +51,9 @@ export class OrganizationsPage {
         + "/get-organizations");
       // console.log(this.organizations);
       if (Array.isArray(this.organizations)) {
+        this.organizations.forEach(el => {
+          el.click_type = 2;
+        });
 
         // Dùng service để chuyển thành cây tổ chức
         let organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
@@ -134,7 +137,7 @@ export class OrganizationsPage {
       }
       ,
       {
-        name: "Loại bỏ đơn vị",
+        name: event.item.status === 1 ? "Loại bỏ đơn vị" : "Kích hoạt đơn vị",
         value: "stop-owner",
         icon: {
           name: "trash",
@@ -189,7 +192,7 @@ export class OrganizationsPage {
 
       item.table_name = 'organizations'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
-      item.title_name = 'Tổ chức';
+      item.title_name = item.name;
 
       this.addNewItem(item, 'edit');
     }
@@ -224,7 +227,7 @@ export class OrganizationsPage {
         , { type: "hidden", key: "wheres", value: item.wheres }
 
         , { type: "text", key: "name", value: item.name, name: "Tên đơn vị", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
-        , { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" }
+        , { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "at", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" }
         , { type: "text_area", key: "description", value: item.description, name: "Mô tả thông tin của đơn vị", input_type: "text", icon: "md-alert", hint: "Nhập mô tả này để ghi nhớ" }
         , {
           type: "button"
@@ -263,8 +266,8 @@ export class OrganizationsPage {
         , { type: "hidden", key: "id", value: item.id } //đối tượng để update
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
-        , { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
-        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" }
+        , { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
+        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "hand" }
         , {
           type: "button"
           , options: [
@@ -306,6 +309,9 @@ export class OrganizationsPage {
     })
   }
 
+  /**
+   * Download file excel xuống máy
+   */
   onClickDownload() {
     let linkFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample.xlsx'
     this.apiDownload.processFileDownload(linkFile
@@ -329,18 +335,16 @@ export class OrganizationsPage {
   }.bind(this)
 
   onClickUpload(ev) {
-    let file = ev.target.files;
+    let arFile = ev.target.files;
     // console.log(file);
     let fr = new FileReader();
-    fr.readAsArrayBuffer(file[0]);
-    fr.onloadend = async (e) => {
+    fr.readAsArrayBuffer(arFile[0]);
+    fr.onloadend = async () => {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
-      let workbook;
-      let worksheet;
       try {
-        workbook = await wb.xlsx.load(bufferData)
-        worksheet = workbook.getWorksheet("organizations");
+        let workbook = await wb.xlsx.load(bufferData)
+        let worksheet = workbook.getWorksheet("organizations");
         let results = []
         worksheet.eachRow((row, rowIndex) => {
           if (rowIndex > 3) {

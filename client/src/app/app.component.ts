@@ -12,18 +12,27 @@ export class AppComponent {
   constructor(private apiAuth: AuthService) { this.init(); }
 
   init() {
-    this.apiAuth.serviceUrls.RESOURCE_SERVER = 'https://dinh-qlns.herokuapp.com/bsc-kpi/db'
+    this.apiAuth.serviceUrls.RESOURCE_SERVER = 'http://localhost:9239/bsc-kpi/db'
   }
 
   ngOnInit(){
     this.treeMenu = [
       {
         id: 1,
+        name: 'Trang chủ',
+        size: '1.1em',
+        type: 'route',
+        url: '/home',
+        icon: 'home'
+      }
+      ,
+      {
+        id: 1,
         name: 'Mô hình tổ chức',
         size: '1.1em',
         type: 'route',
         url: '/organizations',
-        icon: 'home'
+        icon: 'globe'
       }
       ,
       {
@@ -31,7 +40,7 @@ export class AppComponent {
         name: 'Cây chức danh',
         type: 'route',
         url: '/job-roles',
-        icon: 'log-in'
+        icon: 'card'
       }
       ,
       {
@@ -39,7 +48,7 @@ export class AppComponent {
         name: 'Cây nhân sự',
         type: 'route',
         url: '/staffs',
-        icon: 'log-in'
+        icon: 'contacts'
       }
     ];
 

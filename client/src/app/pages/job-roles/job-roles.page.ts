@@ -8,15 +8,15 @@ import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePag
 })
 export class JobRolesPage implements OnInit {
 
-  organizationId: any;  //cấp công ty được chọn
+  organizationId: any; //mã tổ chức của user
 
   userReport: any;
 
-  organizations: any; //ghi bảng ghi gốc của tổ chức cấp độc lập (lấy id=root_id)
-  organizationsTree: any; //ghi cây của các tổ chức độc lập đến subs
+  organizations: any; //danh sách tổ chức lấy từ csdl
+  organizationsTree: any; //cây tổ chức hiển thị
 
-  jobRoles: any;        //cây của chức danh của đơn vị (cấp công ty - lấy toàn bộ chức danh của công ty đó)
-  jobRolesTree: any;    //cây biến đổi của chức danh theo cấp đơn vị
+  jobRoles: any; //danh sách chức danh lấy từ csdl
+  jobRolesTree: any; // cây chức danh
 
   constructor(
     private apiAuth: AuthService
@@ -46,7 +46,7 @@ export class JobRolesPage implements OnInit {
   }
 
   /**
-   * Khi có thay đổi chọn đơn vị cấp Cty
+   * Khi có thay đổi thêm mới/cập nhật/xóa
    */
   async onChangeSelect() {
 
@@ -57,8 +57,8 @@ export class JobRolesPage implements OnInit {
       // lấy danh sách chức danh trong csdl
       this.jobRoles = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-job-roles");
+        // console.log(this.jobRoles);
 
-      // console.log(this.jobRoles);
       // Chuyển thành cây chức danh
       if (Array.isArray(this.jobRoles)) {
         this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id');
@@ -66,14 +66,15 @@ export class JobRolesPage implements OnInit {
       }
 
       // thêm thuộc tính click_type và main_tree cho cây chính
+      // ghép cây chức danh vào cây chính
       this.organizations.forEach(el => {
         el.click_type = 1; //cây chính cho click luôn
+        el.main_tree = 1; //là cây chính
 
         if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
-          el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng con được ghép vào
+          el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng chức danh được ghép vào
         }
 
-        el.main_tree = 1; //cây chính
       });
       // console.log(this.organizations);
 
@@ -239,7 +240,7 @@ export class JobRolesPage implements OnInit {
 
       item.table_name = 'job_roles'; //tên bảng cần đưa vào
       item.wheres = ['id'];              //Mệnh đề wheres để update = '';
-      item.title_name = 'Chức danh';
+      item.title_name = item.name;
 
       this.addNewItem(item, 'edit');
     }
@@ -270,8 +271,8 @@ export class JobRolesPage implements OnInit {
         , { type: "hidden", key: "id", value: item.id } //đối tượng để update
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
-        , { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
-        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" }
+        , { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
+        , { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "hand" }
         , {
           type: "button"
           , options: [
@@ -311,7 +312,7 @@ export class JobRolesPage implements OnInit {
         , { type: "hidden", key: "wheres", value: item.wheres }
 
         , { type: "text", key: "short_name", value: item.short_name, name: "Nhóm chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 2, max: 20 }], hint: "Mã nhóm viết tắt vd: TT-VT để nhóm cùng loại khác đơn vị" }
-        , { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
+        , { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "calendar", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
         , { type: "text_area", key: "description", value: item.description, name: "Mô tả công việc của chức danh này", input_type: "text", icon: "md-alert", hint: "Nhập mô tả chức danh này để ghi nhớ, công việc làm gì" }
         , {
           type: "button"
@@ -336,7 +337,7 @@ export class JobRolesPage implements OnInit {
   }
 
   /**
-   * Hàm xử lý kết quả post sửa thêm
+   * Hàm xử lý kết quả post sửa thêm xóa
    */
   callbackKpi = function (res) {
 
