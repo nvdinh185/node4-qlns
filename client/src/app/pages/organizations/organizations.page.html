@@ -12,20 +12,22 @@
     </ion-buttons>
 
     <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>
+
     <ion-buttons slot="end">
       <ion-button (click)="onClickDownload()">
         <ion-icon name="cloud-download"></ion-icon>
       </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-row>
     <ion-col class="ion-text-center" size="12" class="card-prospect" *ngFor="let item of organizationsTree"
-      [style.background]="(item.background?item.background:'#fafafaf6')">
+      [style.background]="'green'">
       <ion-row (click)="onClickSpec($event, item)">
-        <ion-col size="10" class="prospect-header" [style.color]="(item.color?item.color:'darkblue')">
+        <ion-col size="10" class="prospect-header" [style.color]="'yellow'">
           <ion-icon *ngIf="item.click_type" style="font-size: 1em" [style.color]="'lightblue'" name="md-cloud-upload">
           </ion-icon>{{item.name}}
         </ion-col>

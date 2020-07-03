@@ -146,7 +146,6 @@ export class OrganizationsPage {
       }
     ];
 
-
     //Thực hiện hiển thị menu
     this.apiCommon.presentPopover(
       event.event, PopoverCardComponent
@@ -252,7 +251,7 @@ export class OrganizationsPage {
   }
 
   /**
-   * Hàm loại bỏ đơn vị
+   * Hàm loại bỏ/kích hoạt đơn vị
    * @param item 
    */
   stopItem(item) {
@@ -344,7 +343,7 @@ export class OrganizationsPage {
       let wb = new Excel.Workbook();
       try {
         let workbook = await wb.xlsx.load(bufferData)
-        let worksheet = workbook.getWorksheet("organizations");
+        let worksheet = workbook.getWorksheet(config.sheet_name.value);
         let results = []
         worksheet.eachRow((row, rowIndex) => {
           if (rowIndex > 3) {

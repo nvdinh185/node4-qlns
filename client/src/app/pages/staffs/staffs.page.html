@@ -14,14 +14,14 @@
 <ion-content class="ion-no-padding">
   <ion-row>
     <ion-col class="ion-text-center" size="12" class="card-prospect" *ngFor="let item of organizationsTree"
-      [style.background]="(item.background?item.background:'#fafafaf6')">
+      [style.background]="'green'">
 
       <ion-row (click)="onClickSpec($event, item)">
-        <ion-col size="10" class="prospect-header" [style.color]="(item.color?item.color:'darkblue')">
+        <ion-col size="10" class="prospect-header" [style.color]="'yellow'">
           <ion-icon item-start *ngIf="item.click_type" style="font-size: 1em" [style.color]="'lightblue'"
             name="md-cloud-upload"></ion-icon>{{item.name}}
         </ion-col>
-        <ion-col size="2" class="prospect-header" [style.color]="(item.color?item.color:'darkblue')">
+        <ion-col size="2" class="prospect-header" [style.color]="'darkblue'">
           {{item.status}}
         </ion-col>
       </ion-row>

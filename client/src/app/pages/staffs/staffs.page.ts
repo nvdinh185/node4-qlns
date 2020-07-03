@@ -276,7 +276,7 @@ export class StaffsPage implements OnInit {
     // console.log('item', item);
 
     let orgOptions = [];
-    //lấy danh sách đơn vị
+    //lấy tùy chọn đơn vị
     if (Array.isArray(this.organizations)) {
       this.organizations.forEach(el => {
         orgOptions.push(
@@ -285,27 +285,22 @@ export class StaffsPage implements OnInit {
       });
     }
 
-    //danh mục chức danh của tổ chức đó
+    //tùy chọn chức danh
     let jobOptions = [];
-    //danh mục chức danh của tổ chức đó nhưng bỏ chức danh chính đi
+    //tùy chọn chức danh kiêm nhiệm (bỏ chức danh chính đi)
     let jobListOptions = [];
 
-    //lấy từ cây đơn vị mà trong đó parent_id là gốc cây của đơn vị
     if (Array.isArray(this.jobRoles)) {
       this.jobRoles.forEach(el => {
         //chỉ lọc các chức danh trong tổ chức đó thôi
         if ('' + el.organization_id === '' + item.organization_id) {
 
-          //lấy danh sách chức danh
-          jobOptions.push(
-            { name: el.name, value: parseInt(el.id) }
-          )
+          //lấy tùy chọn chức danh
+          jobOptions.push({ name: el.name, value: parseInt(el.id) })
 
-          //lấy danh sách chức danh kiêm nhiệm - bỏ chức danh đang đảm nhiệm
+          //lấy danh sách tùy chọn chức danh kiêm nhiệm - bỏ chức danh đang đảm nhiệm
           if ('' + el.id !== '' + item.job_id) {
-            jobListOptions.push(
-              { name: el.name, value: parseInt(el.id) }
-            )
+            jobListOptions.push({ name: el.name, value: parseInt(el.id) })
           }
         }
 
@@ -406,10 +401,10 @@ export class StaffsPage implements OnInit {
         //res.ajax.value là giá trị thay đổi ở trường có tên ở trên
         if (res.ajax.key === 'organization_id' && res.ajax.value) {
 
-          //danh mục chức danh của tổ chức đó
+          //tùy chọn chức danh
           let jobOptions = [];
 
-          //danh mục chức danh của tổ chức đó nhưng bỏ chức danh chính đi
+          //tùy chọn chức danh kiêm nhiệm (bỏ chức danh chính đi)
           let jobListOptions = [];
 
           //lấy danh sách chức danh tùy chọn
@@ -418,15 +413,11 @@ export class StaffsPage implements OnInit {
               //chỉ lọc chức danh của tổ chức được chọn thôi
               if ('' + el.organization_id === '' + res.ajax.value) {
 
-                //lấy danh sách chức danh
-                jobOptions.push(
-                  { name: el.name, value: parseInt(el.id) }
-                )
+                //lấy tùy chọn chức danh
+                jobOptions.push({ name: el.name, value: parseInt(el.id) })
 
                 //vì không biết chọn chức danh nào nên vẫn trả đủ danh sách chức danh cho nó
-                jobListOptions.push(
-                  { name: el.name, value: parseInt(el.id) }
-                )
+                jobListOptions.push({ name: el.name, value: parseInt(el.id) })
               }
 
             });
@@ -448,8 +439,8 @@ export class StaffsPage implements OnInit {
           ])
 
         } else if (res.ajax.key === 'job_id' && res.ajax.value) {
-          //vì thay đổi công việc chính nên
-          //thay đổi công việc kiêm nhiệm là trừ công việc chính đi
+          //vì thay đổi chức danh chính nên
+          //thay đổi chức danh kiêm nhiệm là trừ công việc chính đi
           let jobListOptions = [];
 
           if (Array.isArray(this.jobRoles)) {
@@ -462,9 +453,7 @@ export class StaffsPage implements OnInit {
                 //chỉ lọc chức danh của tổ chức được chọn thôi
                 //loại trừ chức danh được chọn
                 if ('' + el.organization_id === '' + elSelected.organization_id && '' + el.id !== '' + res.ajax.value) {
-                  jobListOptions.push(
-                    { name: el.name, value: parseInt(el.id) }
-                  )
+                  jobListOptions.push({ name: el.name, value: parseInt(el.id) })
                 }
               });
             }

@@ -71,6 +71,7 @@ export class JobRolesPage implements OnInit {
         el.click_type = 1; //cây chính cho click luôn
         el.main_tree = 1; //là cây chính
 
+        // Ghép nhánh chức danh vào cây chính
         if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
           el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng chức danh được ghép vào
         }

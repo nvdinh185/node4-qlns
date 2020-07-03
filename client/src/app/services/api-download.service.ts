@@ -23,7 +23,6 @@ export class ApiDownloadService {
     this.apiAuth.getDynamicUrl(urlTemplateFile, '', { responseType: 'blob' })
       .then(blobData => {
         // console.log(blobData);
-        let arrayOutput = [];
         let fr = new FileReader();
         fr.readAsArrayBuffer(blobData);
         fr.onloadend = () => {
@@ -32,6 +31,7 @@ export class ApiDownloadService {
           wb.xlsx.load(bufferData)
             .then(async workbook => {
               // console.log(bufferData)
+              let arrayOutput = [];
               workbook.eachSheet(async (sheet) => {
                 if (sheet.name === sheet_name) {
                   try {
