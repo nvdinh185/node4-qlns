@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePage } from 'ngxi4-dynamic-service';
 
+import * as Excel from "exceljs";
+import * as fs from 'file-saver';
 @Component({
   selector: 'app-job-roles',
   templateUrl: './job-roles.page.html',
@@ -57,7 +59,7 @@ export class JobRolesPage implements OnInit {
       // lấy danh sách chức danh trong csdl
       this.jobRoles = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-job-roles");
-        // console.log(this.jobRoles);
+      // console.log(this.jobRoles);
 
       // Chuyển thành cây chức danh
       if (Array.isArray(this.jobRoles)) {
@@ -359,4 +361,37 @@ export class JobRolesPage implements OnInit {
     })
   }.bind(this)
 
+  async onClickDownload() {
+    let templateFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample-danhmuc-tochuc.xlsx'
+    let blobData = await this.apiAuth.getDynamicUrl(templateFile, '', { responseType: 'blob' });
+    let fr = new FileReader();
+    fr.readAsArrayBuffer(blobData);
+    fr.onloadend = async () => {
+      let bufferData: any = fr.result;
+      let wb = new Excel.Workbook();
+      let workbook = await wb.xlsx.load(bufferData);
+      let worksheet = workbook.getWorksheet('job_roles');
+
+      let idx = 6;
+      let row;
+      this.jobRoles.forEach(el => {
+        row = worksheet.getRow(idx);
+        row.getCell("A").value = idx - 5;
+        row.getCell("B").value = el.name;
+        row.getCell("C").value = el.short_name;
+        row.getCell("D").value = el.description;
+        row.getCell("E").value = el.id;
+        row.getCell("F").value = el.parent_id;
+        row.getCell("G").value = el.organization_id;
+        row.getCell("H").value = el.organization_name;
+        // console.log(el);
+        idx++;
+      });
+      //Ghi file excel
+      workbook.xlsx.writeBuffer().then((data) => {
+        let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        fs.saveAs(blob, `excel-123.xlsx`);
+      })
+    }
+  }
 }
