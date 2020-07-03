@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'green'\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>";
     /***/
   },
 
@@ -229,7 +229,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.apiAuth = apiAuth;
         this.apiCommon = apiCommon;
         /**
-         * Hàm xử lý kết quả post sửa thêm
+         * Hàm xử lý kết quả post sửa thêm xóa
          */
 
         this.callbackKpi = function (res) {
@@ -298,7 +298,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           }));
         }
         /**
-         * Khi có thay đổi chọn đơn vị cấp Cty
+         * Khi có thay đổi thêm mới/cập nhật/xóa
          */
 
       }, {
@@ -325,18 +325,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     if (Array.isArray(this.jobRoles)) {
                       this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id'); // console.log(this.jobRolesTree);
                     } // thêm thuộc tính click_type và main_tree cho cây chính
+                    // ghép cây chức danh vào cây chính
 
 
                     this.organizations.forEach(function (el) {
                       el.click_type = 1; //cây chính cho click luôn
 
+                      el.main_tree = 1; //là cây chính
+                      // Ghép nhánh chức danh vào cây chính
+
                       if (_this2.jobRolesTree && el.id + '' !== '' + _this2.organizationId) {
                         el.subs = _this2.jobRolesTree.filter(function (x) {
                           return x.organization_id === el.id;
-                        }); //mảng con được ghép vào
+                        }); //mảng chức danh được ghép vào
                       }
-
-                      el.main_tree = 1; //cây chính
                     }); // console.log(this.organizations);
                     // chuyển thành cây tổ chức và chức danh
 
@@ -502,7 +504,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
 
-            item.title_name = 'Chức danh';
+            item.title_name = item.name;
             this.addNewItem(item, 'edit');
           } //tạm dừng tham số
 
@@ -548,9 +550,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               value: item.wheres
             }, {
               type: "datetime",
-              key: "end_date",
-              value: item.end_date,
-              name: "Chọn ngày kết thúc",
+              key: "changed_date",
+              value: item.changed_date,
+              name: "Chọn ngày thay đổi trạng thái",
               display: "DD/MM/YYYY",
               picker: "DD/MM/YYYY"
             }, {
@@ -559,7 +561,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               name: item.status ? "Tạm ngưng?" : "Kích hoạt?",
               value: item.status,
               color: "secondary",
-              icon: "ios-hand-outline"
+              icon: "hand"
             }, {
               type: "button",
               options: [{
@@ -632,7 +634,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               value: item.name,
               name: "Tên chức danh",
               input_type: "text",
-              icon: "ios-people",
+              icon: "calendar",
               validators: [{
                 required: true,
                 min: 5,

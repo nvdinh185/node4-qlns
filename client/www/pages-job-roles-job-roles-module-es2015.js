@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'green'\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>");
 
 /***/ }),
 
@@ -129,7 +129,7 @@ let JobRolesPage = class JobRolesPage {
         this.apiAuth = apiAuth;
         this.apiCommon = apiCommon;
         /**
-         * Hàm xử lý kết quả post sửa thêm
+         * Hàm xử lý kết quả post sửa thêm xóa
          */
         this.callbackKpi = function (res) {
             //console.log(res);
@@ -168,7 +168,7 @@ let JobRolesPage = class JobRolesPage {
         });
     }
     /**
-     * Khi có thay đổi chọn đơn vị cấp Cty
+     * Khi có thay đổi thêm mới/cập nhật/xóa
      */
     onChangeSelect() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
@@ -185,12 +185,14 @@ let JobRolesPage = class JobRolesPage {
                     // console.log(this.jobRolesTree);
                 }
                 // thêm thuộc tính click_type và main_tree cho cây chính
+                // ghép cây chức danh vào cây chính
                 this.organizations.forEach(el => {
                     el.click_type = 1; //cây chính cho click luôn
+                    el.main_tree = 1; //là cây chính
+                    // Ghép nhánh chức danh vào cây chính
                     if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
-                        el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng con được ghép vào
+                        el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng chức danh được ghép vào
                     }
-                    el.main_tree = 1; //cây chính
                 });
                 // console.log(this.organizations);
                 // chuyển thành cây tổ chức và chức danh
@@ -337,7 +339,7 @@ let JobRolesPage = class JobRolesPage {
         if (cmd.value === 'edit-owner') {
             item.table_name = 'job_roles'; //tên bảng cần đưa vào
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
-            item.title_name = 'Chức danh';
+            item.title_name = item.name;
             this.addNewItem(item, 'edit');
         }
         //tạm dừng tham số
@@ -363,8 +365,8 @@ let JobRolesPage = class JobRolesPage {
                 ,
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres },
-                { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
-                { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" },
+                { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
+                { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "hand" },
                 {
                     type: "button",
                     options: [
@@ -400,7 +402,7 @@ let JobRolesPage = class JobRolesPage {
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres },
                 { type: "text", key: "short_name", value: item.short_name, name: "Nhóm chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 2, max: 20 }], hint: "Mã nhóm viết tắt vd: TT-VT để nhóm cùng loại khác đơn vị" },
-                { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "ios-people", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" },
+                { type: "text", key: "name", value: item.name, name: "Tên chức danh", input_type: "text", icon: "calendar", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" },
                 { type: "text_area", key: "description", value: item.description, name: "Mô tả công việc của chức danh này", input_type: "text", icon: "md-alert", hint: "Nhập mô tả chức danh này để ghi nhớ, công việc làm gì" },
                 {
                     type: "button",

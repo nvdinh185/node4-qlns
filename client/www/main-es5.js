@@ -964,6 +964,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(AppComponent, [{
         key: "init",
         value: function init() {
+          // this.apiAuth.serviceUrls.RESOURCE_SERVER = 'http://localhost:9239/bsc-kpi/db'
           this.apiAuth.serviceUrls.RESOURCE_SERVER = 'https://dinh-qlns.herokuapp.com/bsc-kpi/db';
         }
       }, {
@@ -971,23 +972,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function ngOnInit() {
           this.treeMenu = [{
             id: 1,
+            name: 'Trang chủ',
+            size: '1.1em',
+            type: 'route',
+            url: '/home',
+            icon: 'home'
+          }, {
+            id: 1,
             name: 'Mô hình tổ chức',
             size: '1.1em',
             type: 'route',
             url: '/organizations',
-            icon: 'home'
+            icon: 'globe'
           }, {
             id: 2,
             name: 'Cây chức danh',
             type: 'route',
             url: '/job-roles',
-            icon: 'log-in'
+            icon: 'card'
           }, {
             id: 3,
             name: 'Cây nhân sự',
             type: 'route',
             url: '/staffs',
-            icon: 'log-in'
+            icon: 'contacts'
           }];
         }
       }]);

@@ -24073,7 +24073,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          <ion-icon style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'green'\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\r\n          <ion-icon *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>";
     /***/
   },
 
@@ -24386,7 +24386,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     // console.log(this.organizations);
                     if (Array.isArray(this.organizations)) {
-                      // Dùng service để chuyển thành cây tổ chức
+                      this.organizations.forEach(function (el) {
+                        el.click_type = 2;
+                      }); // Dùng service để chuyển thành cây tổ chức
+
                       organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id'); // console.log(organizationsTree);
                       // Lấy cây tổ chức theo userReport.organization_id
 
@@ -24474,7 +24477,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               color: "primary"
             }
           }, {
-            name: "Loại bỏ đơn vị",
+            name: event.item.status === 1 ? "Loại bỏ đơn vị" : "Kích hoạt đơn vị",
             value: "stop-owner",
             icon: {
               name: "trash",
@@ -24522,7 +24525,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
 
-            item.title_name = 'Tổ chức';
+            item.title_name = item.name;
             this.addNewItem(item, 'edit');
           } //tạm dừng tham số
 
@@ -24588,7 +24591,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               value: item.short_name,
               name: "Tên viết tắt",
               input_type: "text",
-              icon: "logo-buffer",
+              icon: "at",
               validators: [{
                 required: true,
                 min: 1,
@@ -24622,7 +24625,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
         }
         /**
-         * Hàm loại bỏ đơn vị
+         * Hàm loại bỏ/kích hoạt đơn vị
          * @param item
          */
 
@@ -24654,9 +24657,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               value: item.wheres
             }, {
               type: "datetime",
-              key: "end_date",
-              value: item.end_date,
-              name: "Chọn ngày kết thúc",
+              key: "changed_date",
+              value: item.changed_date,
+              name: "Chọn ngày thay đổi trạng thái",
               display: "DD/MM/YYYY",
               picker: "DD/MM/YYYY"
             }, {
@@ -24665,7 +24668,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               name: item.status ? "Tạm ngưng?" : "Kích hoạt?",
               value: item.status,
               color: "secondary",
-              icon: "ios-hand-outline"
+              icon: "hand"
             }, {
               type: "button",
               options: [{
@@ -24681,6 +24684,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             callback: this.callbackKpi
           });
         }
+        /**
+         * Download file excel xuống máy
+         */
+
       }, {
         key: "onClickDownload",
         value: function onClickDownload() {
@@ -24692,12 +24699,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function onClickUpload(ev) {
           var _this6 = this;
 
-          var file = ev.target.files; // console.log(file);
+          var arFile = ev.target.files; // console.log(file);
 
           var fr = new FileReader();
-          fr.readAsArrayBuffer(file[0]);
+          fr.readAsArrayBuffer(arFile[0]);
 
-          fr.onloadend = function (e) {
+          fr.onloadend = function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this6, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
               var _this7 = this;
 
@@ -24715,7 +24722,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     case 5:
                       workbook = _context3.sent;
-                      worksheet = workbook.getWorksheet("organizations");
+                      worksheet = workbook.getWorksheet(config.sheet_name.value);
                       results = [];
                       worksheet.eachRow(function (row, rowIndex) {
                         if (rowIndex > 3) {
@@ -24923,22 +24930,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             responseType: 'blob'
           }).then(function (blobData) {
             // console.log(blobData);
-            var arrayOutput = [];
             var fr = new FileReader();
             fr.readAsArrayBuffer(blobData);
 
-            fr.onloadend = function (e) {
+            fr.onloadend = function () {
               var bufferData = fr.result;
               var wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
               wb.xlsx.load(bufferData).then(function (workbook) {
                 return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this8, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
                   var _this9 = this;
 
+                  var arrayOutput;
                   return regeneratorRuntime.wrap(function _callee5$(_context5) {
                     while (1) {
                       switch (_context5.prev = _context5.next) {
                         case 0:
                           // console.log(bufferData)
+                          arrayOutput = [];
                           workbook.eachSheet(function (sheet) {
                             return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this9, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
                               var ws, resultCallback;
@@ -24975,10 +24983,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                               }, _callee4, null, [[1, 9]]);
                             }));
                           });
-                          _context5.next = 3;
+                          _context5.next = 4;
                           return this.apiCommon.delay(delayMilis || 5000, arrayOutput);
 
-                        case 3:
+                        case 4:
                           // console.log(arrayOutput);
                           if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
                             workbook.xlsx.writeBuffer().then(function (data) {
@@ -24989,7 +24997,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                             });
                           }
 
-                        case 4:
+                        case 5:
                         case "end":
                           return _context5.stop();
                       }

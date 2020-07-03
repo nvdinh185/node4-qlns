@@ -38,7 +38,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\r\n          <ion-icon style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'green'\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\r\n          <ion-icon *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>");
 
 /***/ }),
 
@@ -200,6 +200,9 @@ let OrganizationsPage = class OrganizationsPage {
                     + "/get-organizations");
                 // console.log(this.organizations);
                 if (Array.isArray(this.organizations)) {
+                    this.organizations.forEach(el => {
+                        el.click_type = 2;
+                    });
                     // Dùng service để chuyển thành cây tổ chức
                     let organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
                     // console.log(organizationsTree);
@@ -272,7 +275,7 @@ let OrganizationsPage = class OrganizationsPage {
                 }
             },
             {
-                name: "Loại bỏ đơn vị",
+                name: event.item.status === 1 ? "Loại bỏ đơn vị" : "Kích hoạt đơn vị",
                 value: "stop-owner",
                 icon: {
                     name: "trash",
@@ -316,7 +319,7 @@ let OrganizationsPage = class OrganizationsPage {
         if (cmd.value === 'edit-owner') {
             item.table_name = 'organizations'; //tên bảng cần đưa vào
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
-            item.title_name = 'Tổ chức';
+            item.title_name = item.name;
             this.addNewItem(item, 'edit');
         }
         //tạm dừng tham số
@@ -343,7 +346,7 @@ let OrganizationsPage = class OrganizationsPage {
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres },
                 { type: "text", key: "name", value: item.name, name: "Tên đơn vị", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 5, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" },
-                { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "logo-buffer", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" },
+                { type: "text", key: "short_name", value: item.short_name, name: "Tên viết tắt", input_type: "text", icon: "at", validators: [{ required: true, min: 1, max: 6 }], hint: "Độ dài tối đa 6 ký tự" },
                 { type: "text_area", key: "description", value: item.description, name: "Mô tả thông tin của đơn vị", input_type: "text", icon: "md-alert", hint: "Nhập mô tả này để ghi nhớ" },
                 {
                     type: "button",
@@ -365,7 +368,7 @@ let OrganizationsPage = class OrganizationsPage {
         });
     }
     /**
-     * Hàm loại bỏ đơn vị
+     * Hàm loại bỏ/kích hoạt đơn vị
      * @param item
      */
     stopItem(item) {
@@ -380,8 +383,8 @@ let OrganizationsPage = class OrganizationsPage {
                 ,
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres },
-                { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
-                { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" },
+                { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
+                { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "hand" },
                 {
                     type: "button",
                     options: [
@@ -399,23 +402,24 @@ let OrganizationsPage = class OrganizationsPage {
             callback: this.callbackKpi
         });
     }
+    /**
+     * Download file excel xuống máy
+     */
     onClickDownload() {
         let linkFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample.xlsx';
         this.apiDownload.processFileDownload(linkFile, config.sheet_name.value, "excel", config, this.callbackDownload);
     }
     onClickUpload(ev) {
-        let file = ev.target.files;
+        let arFile = ev.target.files;
         // console.log(file);
         let fr = new FileReader();
-        fr.readAsArrayBuffer(file[0]);
-        fr.onloadend = (e) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+        fr.readAsArrayBuffer(arFile[0]);
+        fr.onloadend = () => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             let bufferData = fr.result;
             let wb = new exceljs__WEBPACK_IMPORTED_MODULE_5__["Workbook"]();
-            let workbook;
-            let worksheet;
             try {
-                workbook = yield wb.xlsx.load(bufferData);
-                worksheet = workbook.getWorksheet("organizations");
+                let workbook = yield wb.xlsx.load(bufferData);
+                let worksheet = workbook.getWorksheet(config.sheet_name.value);
                 let results = [];
                 worksheet.eachRow((row, rowIndex) => {
                     if (rowIndex > 3) {
@@ -525,15 +529,15 @@ let ApiDownloadService = class ApiDownloadService {
         this.apiAuth.getDynamicUrl(urlTemplateFile, '', { responseType: 'blob' })
             .then(blobData => {
             // console.log(blobData);
-            let arrayOutput = [];
             let fr = new FileReader();
             fr.readAsArrayBuffer(blobData);
-            fr.onloadend = (e) => {
+            fr.onloadend = () => {
                 let bufferData = fr.result;
                 let wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
                 wb.xlsx.load(bufferData)
                     .then((workbook) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                     // console.log(bufferData)
+                    let arrayOutput = [];
                     workbook.eachSheet((sheet) => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
                         if (sheet.name === sheet_name) {
                             try {

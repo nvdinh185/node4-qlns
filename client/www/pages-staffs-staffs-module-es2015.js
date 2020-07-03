@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar color=\"primary\">\n\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n\n    <ion-title>CÂY NHÂN SỰ</ion-title>\n\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-no-padding\">\n  <ion-row>\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\n      [style.background]=\"(item.background?item.background:'#fafafaf6')\">\n\n      <ion-row (click)=\"onClickSpec($event, item)\">\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\n        </ion-col>\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"(item.color?item.color:'darkblue')\">\n          {{item.status}}\n        </ion-col>\n      </ion-row>\n\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\n\n    </ion-col>\n\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar color=\"primary\">\n\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button></ion-back-button>\n    </ion-buttons>\n\n    <ion-title>CÂY NHÂN SỰ</ion-title>\n\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-no-padding\">\n  <ion-row>\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\n      [style.background]=\"'green'\">\n\n      <ion-row (click)=\"onClickSpec($event, item)\">\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\n        </ion-col>\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\n          {{item.status}}\n        </ion-col>\n      </ion-row>\n\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\n\n    </ion-col>\n\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -141,16 +141,16 @@ let StaffsPage = class StaffsPage {
                     //res.ajax.key==='organization_id' là trường có giá trị thay đổi
                     //res.ajax.value là giá trị thay đổi ở trường có tên ở trên
                     if (res.ajax.key === 'organization_id' && res.ajax.value) {
-                        //danh mục chức danh của tổ chức đó
+                        //tùy chọn chức danh
                         let jobOptions = [];
-                        //danh mục chức danh của tổ chức đó nhưng bỏ chức danh chính đi
+                        //tùy chọn chức danh kiêm nhiệm (bỏ chức danh chính đi)
                         let jobListOptions = [];
                         //lấy danh sách chức danh tùy chọn
                         if (Array.isArray(this.jobRoles)) {
                             this.jobRoles.forEach(el => {
                                 //chỉ lọc chức danh của tổ chức được chọn thôi
                                 if ('' + el.organization_id === '' + res.ajax.value) {
-                                    //lấy danh sách chức danh
+                                    //lấy tùy chọn chức danh
                                     jobOptions.push({ name: el.name, value: parseInt(el.id) });
                                     //vì không biết chọn chức danh nào nên vẫn trả đủ danh sách chức danh cho nó
                                     jobListOptions.push({ name: el.name, value: parseInt(el.id) });
@@ -176,8 +176,8 @@ let StaffsPage = class StaffsPage {
                         ]);
                     }
                     else if (res.ajax.key === 'job_id' && res.ajax.value) {
-                        //vì thay đổi công việc chính nên
-                        //thay đổi công việc kiêm nhiệm là trừ công việc chính đi
+                        //vì thay đổi chức danh chính nên
+                        //thay đổi chức danh kiêm nhiệm là trừ công việc chính đi
                         let jobListOptions = [];
                         if (Array.isArray(this.jobRoles)) {
                             //lấy công việc chính đã chọn
@@ -221,7 +221,7 @@ let StaffsPage = class StaffsPage {
     refreshNews() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             try {
-                //Lấy danh sách đơn vị trong toàn bộ cây danh sách, 
+                //Lấy danh sách tổ chức có trong csdl, 
                 this.organizations = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
                     + "/get-organizations");
                 // console.log('Organization', this.organizations);
@@ -229,9 +229,9 @@ let StaffsPage = class StaffsPage {
                 this.userReport = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
                     + "/get-user-report");
                 // console.log('get-user-report', this.userReport);
-                //gán mã công ty vào để kiểm soát sau này
+                //mã tổ chức của user
                 this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
-                //lấy cây chức danh của đơn vị cấp cty/trung tâm
+                //lấy danh sách chức danh từ csdl
                 this.jobRoles = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
                     + "/get-job-roles");
                 // console.log('get-job-roles', this.jobRoles);
@@ -244,28 +244,28 @@ let StaffsPage = class StaffsPage {
         });
     }
     /**
-     * Khi có thay đổi chọn đơn vị cấp Cty
+     * Khi có thay đổi thêm/sửa/xóa
      */
     onChangeSelect() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
-            //reset cây vai trò
+            //reset cây tổ chức
             this.organizationsTree = [];
             try {
-                //lấy danh sách chức danh
+                //lấy danh sách nhân sự
                 this.staffs = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
                     + "/get-staffs");
                 // console.log(this.staffs);
                 if (Array.isArray(this.staffs)) {
                     this.organizations.forEach(el => {
                         el.click_type = 1; //cây chính cho click luôn
-                        //ghép con vào các nhánh cây (bỏ qua gốc cây)
+                        el.main_tree = 1; //là cây chính
+                        //ghép nhân sự vào gốc cây
                         if (this.staffs && el.id + '' !== '' + this.organizationId) {
-                            el.subs = this.staffs.filter(x => x.organization_id === el.id); //mảng con được ghép vào
+                            el.subs = this.staffs.filter(x => x.organization_id === el.id); //mảng nhân sự được ghép vào
                         }
-                        el.main_tree = 1; //cây chính
                     });
                     // console.log(this.organizations);
-                    //tạo cây để hiển thị lên form
+                    //tạo cây tổ chức để hiển thị lên form
                     this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
                     // console.log(this.organizationsTree);
                     //ghép thêm nhân sự Giám đốc, Phó Giám đốc vào gốc cây
@@ -425,24 +425,23 @@ let StaffsPage = class StaffsPage {
     addNewItem(item, type) {
         // console.log('item', item);
         let orgOptions = [];
-        //lấy danh sách đơn vị
+        //lấy tùy chọn đơn vị
         if (Array.isArray(this.organizations)) {
             this.organizations.forEach(el => {
                 orgOptions.push({ name: el.name, value: parseInt(el.id) });
             });
         }
-        //danh mục chức danh của tổ chức đó
+        //tùy chọn chức danh
         let jobOptions = [];
-        //danh mục chức danh của tổ chức đó nhưng bỏ chức danh chính đi
+        //tùy chọn chức danh kiêm nhiệm (bỏ chức danh chính đi)
         let jobListOptions = [];
-        //lấy từ cây đơn vị mà trong đó parent_id là gốc cây của đơn vị
         if (Array.isArray(this.jobRoles)) {
             this.jobRoles.forEach(el => {
                 //chỉ lọc các chức danh trong tổ chức đó thôi
                 if ('' + el.organization_id === '' + item.organization_id) {
-                    //lấy danh sách chức danh
+                    //lấy tùy chọn chức danh
                     jobOptions.push({ name: el.name, value: parseInt(el.id) });
-                    //lấy danh sách chức danh kiêm nhiệm - bỏ chức danh đang đảm nhiệm
+                    //lấy danh sách tùy chọn chức danh kiêm nhiệm - bỏ chức danh đang đảm nhiệm
                     if ('' + el.id !== '' + item.job_id) {
                         jobListOptions.push({ name: el.name, value: parseInt(el.id) });
                     }
@@ -504,14 +503,14 @@ let StaffsPage = class StaffsPage {
                 ,
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres },
-                { type: "datetime", key: "end_date", value: item.end_date, name: "Chọn ngày kết thúc", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
-                { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "ios-hand-outline" },
+                { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
+                { type: "toggle", key: "status", name: item.status ? "Tạm ngưng?" : "Kích hoạt?", value: item.status, color: "secondary", icon: "hand" },
                 {
                     type: "button",
                     options: [
                         {
                             name: 'Cập nhập', next: "CALLBACK", url: this.apiAuth.serviceUrls.RESOURCE_SERVER
-                                + "/post-parameters", token: true, signed: true
+                                + "/post-parameters"
                         }
                     ]
                 }
