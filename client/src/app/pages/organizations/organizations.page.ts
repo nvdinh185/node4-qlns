@@ -7,7 +7,7 @@ import * as Excel from "exceljs";
 
 let config = {
   sheet_name: { value: "organizations" }
-  , nId: { value: "A" }
+  , noId: { value: "A" }
   , name: { value: "B" }
   , short_name: { value: "C" }
   , description: { value: "D" }
@@ -312,7 +312,7 @@ export class OrganizationsPage {
    * Download file excel xuống máy
    */
   onClickDownload() {
-    let linkFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample.xlsx'
+    let linkFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample-danhmuc-tochuc.xlsx'
     this.apiDownload.processFileDownload(linkFile
       , config.sheet_name.value
       , "excel"
@@ -320,6 +320,9 @@ export class OrganizationsPage {
       , this.callbackDownload)
   }
 
+  /**
+   * Hàm xử lý gọi lại download
+   */
   callbackDownload = function (ws: Excel.Worksheet, config: any) {
     return new Promise(async resolve => {
       try {
@@ -333,6 +336,10 @@ export class OrganizationsPage {
     })
   }.bind(this)
 
+  /**
+   * Chọn file dữ liệu mẫu và upload để cập nhật CSDL
+   * @param ev 
+   */
   onClickUpload(ev) {
     let arFile = ev.target.files;
     // console.log(file);

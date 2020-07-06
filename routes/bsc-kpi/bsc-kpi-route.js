@@ -41,4 +41,14 @@ router.post('/post-organizations'
     , handlers.postOrganizations
 );
 
+router.post('/post-job-roles'
+    , postHandler.jsonProcess //lay json_data
+    , handlers.postJobRoles
+);
+
+router.post('/post-staffs'
+    , postHandler.jsonProcess //lay json_data
+    , handlers.postStaffs
+);
+
 module.exports = router;

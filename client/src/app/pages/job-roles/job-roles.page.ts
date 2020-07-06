@@ -3,6 +3,19 @@ import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePag
 
 import * as Excel from "exceljs";
 import * as fs from 'file-saver';
+
+let config = {
+  sheet_name: { value: 'job_roles' }
+  , noId: { value: "A" }
+  , name: { value: "B" }
+  , short_name: { value: "C" }
+  , description: { value: "D" }
+  , id: { value: "E" }
+  , parent_id: { value: "F" }
+  , organization_id: { value: "G" }
+  , organization_name: { value: "H" }
+}
+
 @Component({
   selector: 'app-job-roles',
   templateUrl: './job-roles.page.html',
@@ -370,28 +383,114 @@ export class JobRolesPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
-      let worksheet = workbook.getWorksheet('job_roles');
+      let worksheet = workbook.getWorksheet(config.sheet_name.value);
 
-      let idx = 6;
-      let row;
+      let row = worksheet.getRow(2);
+      row.getCell("A").value = this.organizationsTree[0].name;
+      row.getCell("E").value = this.organizationsTree[0].id;
+
+      let idx = 4;
+      // Lặp mảng để ghi dữ liệu vào excel
       this.jobRoles.forEach(el => {
         row = worksheet.getRow(idx);
-        row.getCell("A").value = idx - 5;
-        row.getCell("B").value = el.name;
-        row.getCell("C").value = el.short_name;
-        row.getCell("D").value = el.description;
-        row.getCell("E").value = el.id;
-        row.getCell("F").value = el.parent_id;
-        row.getCell("G").value = el.organization_id;
-        row.getCell("H").value = el.organization_name;
-        // console.log(el);
+        row.getCell(config.noId.value).value = idx - 3;
+        row.getCell(config.name.value).value = el.name;
+        row.getCell(config.short_name.value).value = el.short_name;
+        row.getCell(config.description.value).value = el.description;
+        row.getCell(config.id.value).value = el.id;
+        row.getCell(config.parent_id.value).value = el.parent_id;
+        row.getCell(config.organization_id.value).value = el.organization_id;
+        row.getCell(config.organization_name.value).value = el.organization_name;
         idx++;
       });
       //Ghi file excel
       workbook.xlsx.writeBuffer().then((data) => {
         let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        fs.saveAs(blob, `excel-123.xlsx`);
+        fs.saveAs(blob, `excel-job_roles-${Date.now()}.xlsx`);
       })
     }
+  }
+
+  onClickUpload(ev) {
+    let arFile = ev.target.files;
+    // console.log(file);
+    let fr = new FileReader();
+    fr.readAsArrayBuffer(arFile[0]);
+    fr.onloadend = async () => {
+      let bufferData: any = fr.result;
+      let wb = new Excel.Workbook();
+      try {
+        let workbook = await wb.xlsx.load(bufferData)
+        let worksheet = workbook.getWorksheet(config.sheet_name.value);
+        let results = []
+        worksheet.eachRow((row, rowIndex) => {
+          if (rowIndex > 3) {
+            let cols = {}
+            for (let key in config) {
+              let item = config[key];
+              if (key != "sheet_name") {
+                Object.defineProperty(cols
+                  , key
+                  , {
+                    value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)])
+                    , writable: true
+                    , enumerable: true
+                    , configurable: true
+                  })
+              }
+            }
+            results.push(cols);
+          }
+        })
+        // console.log(results);
+        let returnFinish = { count_success: 0, count_fail: 0 }
+        for (const el of results) {
+          let json_data = {
+            name: el.name,
+            short_name: el.short_name,
+            description: el.description,
+            id: el.id,
+            parent_id: el.parent_id,
+            organization_id: el.organization_id
+          }
+          // console.log(json_data);
+          try {
+            await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
+              + '/post-job-roles', json_data)
+            returnFinish.count_success++;
+          } catch (err) {
+            // console.log(err);
+            returnFinish.count_fail++;
+          }
+        }
+        console.log(returnFinish);
+        this.onChangeSelect();
+
+      } catch (err) {
+        console.log('Lỗi đọc file excel nguồn!', err);
+      } finally {
+      }
+
+    }
+
+  }
+
+  convertColExcel2Number = (val: string): number => {
+    var base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', i, j, result = 0;
+    for (i = 0, j = val.length - 1; i < val.length; i += 1, j -= 1) {
+      result += Math.pow(base.length, j) * (base.indexOf(val[i]) + 1);
+    }
+    return result;
+  }
+
+  getValueFormula(obj) {
+    if (obj === null || obj === undefined) return null
+    if (typeof obj === 'object') {
+      // xử lý chuyển đổi chỉ lấy text thôi
+      if (obj.richText) return obj.richText.map(o => o["text"]).join("")
+      // lấy giá trị bằng biểu thức function
+      return obj.result
+    }
+    return obj
   }
 }

@@ -12,20 +12,20 @@ export class ApiExcelService {
     return new Promise((resolve, reject) => {
       try {
         // console.log(data);
-        let row = ws.getRow(1);
-        row.getCell("B").value = data[0].name;
+        let row = ws.getRow(2);
+        row.getCell("A").value = data[0].name;
         row.getCell("E").value = data[0].id;
-        
+
         let index = 0;
-        data[0].subs.forEach((el, idx) => {
-          index++;
-          row = ws.getRow(idx + 4);
-          row.getCell(config.nId.value).value = idx + 1;
+        data[0].subs.forEach(el => {
+          row = ws.getRow(index + 4);
+          row.getCell(config.noId.value).value = index + 1;
           row.getCell(config.name.value).value = el.name;
           row.getCell(config.short_name.value).value = el.short_name;
           row.getCell(config.description.value).value = el.description;
           row.getCell(config.id.value).value = el.id;
           row.getCell(config.parent_id.value).value = el.parent_id;
+          index++;
         });
 
         resolve({ status: "OK", count: index })

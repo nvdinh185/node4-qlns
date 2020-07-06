@@ -2,7 +2,7 @@
 
 const arrObj = require('../../utils/array-object');
 const db = require('../../db/sqlite3/db-pool');
-
+const vnUtils = require('../../utils/vietnamese-handler');
 
 class Handler {
 
@@ -128,6 +128,81 @@ class Handler {
                 } else {//Nếu không có name thì chèn mới
                     dataJson.created_time = Date.now();
                     let insertSql = arrObj.convertSqlFromJson("organizations", dataJson);
+                    await db.insert(insertSql);
+                }
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ status: "OK", message: "cập nhật thành công!" }));
+        } catch (e) {
+            console.log(e);
+            res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: e, message: "error update db" }));
+        }
+    }
+
+    /**
+     * Post danh sách chức danh lưu vào csdl
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async postJobRoles(req, res, next) {
+        let dataJson = req.json_data;
+        // console.log(dataJson);
+
+        try {
+            if (dataJson.id) {//Nếu có id (upload file vừa download)
+                dataJson.updated_time = Date.now();
+                let updateSql = arrObj.convertSqlFromJson("job_roles", dataJson, ["id"]);
+                await db.update(updateSql);
+            } else {//không có id (file sample)
+                let data = await db.getRsts(`select * from job_roles where name = '${dataJson.name}'`);
+                if (data.length > 0) {//Nếu có name thì update theo name
+                    dataJson.updated_time = Date.now();
+                    let updateSql = arrObj.convertSqlFromJson("job_roles", dataJson, ["name"]);
+                    await db.update(updateSql);
+                } else {//Nếu không có name thì chèn mới
+                    dataJson.created_time = Date.now();
+                    let insertSql = arrObj.convertSqlFromJson("job_roles", dataJson);
+                    await db.insert(insertSql);
+                }
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ status: "OK", message: "cập nhật thành công!" }));
+        } catch (e) {
+            console.log(e);
+            res.writeHead(403, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: e, message: "error update db" }));
+        }
+    }
+
+    /**
+     * Post danh sách nhân sự lưu vào csdl
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async postStaffs(req, res, next) {
+        let dataJson = req.json_data;
+        // console.log(dataJson);
+        let splitName = vnUtils.splitFullName(dataJson['name']);
+        dataJson.last_name = splitName.last_name;
+        dataJson.first_name = splitName.first_name;
+
+        try {
+            if (dataJson.id) {//Nếu có id (upload file vừa download)
+                dataJson.updated_time = Date.now();
+                let updateSql = arrObj.convertSqlFromJson("staffs", dataJson, ["id"]);
+                await db.update(updateSql);
+            } else {//không có id (file sample)
+                let data = await db.getRsts(`select * from staffs where name = '${dataJson.name}'`);
+                if (data.length > 0) {//Nếu có name thì update theo name
+                    dataJson.updated_time = Date.now();
+                    let updateSql = arrObj.convertSqlFromJson("staffs", dataJson, ["name"]);
+                    await db.update(updateSql);
+                } else {//Nếu không có name thì chèn mới
+                    dataJson.created_time = Date.now();
+                    let insertSql = arrObj.convertSqlFromJson("staffs", dataJson);
                     await db.insert(insertSql);
                 }
             }

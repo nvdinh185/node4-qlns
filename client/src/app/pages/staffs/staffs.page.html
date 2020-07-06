@@ -4,9 +4,20 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       <ion-back-button></ion-back-button>
+      <ion-button>
+        <input class="file-over" type="file" multiple="single" (change)="onClickUpload($event)"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+        <ion-icon name="cloud-upload"></ion-icon>
+      </ion-button>
     </ion-buttons>
 
     <ion-title>CÂY NHÂN SỰ</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="onClickDownload()">
+        <ion-icon name="cloud-download"></ion-icon>
+      </ion-button>
+    </ion-buttons>
 
   </ion-toolbar>
 </ion-header>
