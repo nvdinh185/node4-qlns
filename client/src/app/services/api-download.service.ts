@@ -41,11 +41,23 @@ export class ApiDownloadService {
                   } catch (e) {
                     console.log('Lỗi xử lý dữ liệu', e);
                   }
+                } else {
+                  // ẩn các sheet không dùng đến
+                  sheet.state = 'hidden';
                 }
               })
               await this.apiCommon.delay(delayMilis || 5000, arrayOutput)
               // console.log(arrayOutput);
               if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
+
+                workbook.views = [
+                  {
+                    x: 0, y: 0, width: 10000, height: 20000,
+                    // Set activeTab to 0
+                    firstSheet: 0, activeTab: 0, visibility: 'visible'
+                  }
+                ];
+
                 workbook.xlsx.writeBuffer().then((data) => {
                   let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                   fs.saveAs(blob, `${file_name}-${sheet_name}-${Date.now()}.xlsx`);

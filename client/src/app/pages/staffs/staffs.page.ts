@@ -92,7 +92,18 @@ export class StaffsPage implements OnInit {
 
       if (Array.isArray(this.staffs)) {
 
+        let orgTree = []
+
         this.organizations.forEach(el => {
+          if (el.id === this.organizationId) {
+            orgTree.push(el)
+          }
+          if (el.parent_id + '' == '' + this.organizationId) {
+            orgTree.push(el)
+          }
+        })
+
+        orgTree.forEach(el => {
 
           el.click_type = 1; //cây chính cho click luôn
           el.main_tree = 1; //là cây chính
@@ -106,7 +117,7 @@ export class StaffsPage implements OnInit {
         // console.log(this.organizations);
 
         //tạo cây tổ chức để hiển thị lên form
-        this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
+        this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
         // console.log(this.organizationsTree);
 
         //ghép thêm nhân sự Giám đốc, Phó Giám đốc vào gốc cây
@@ -508,6 +519,9 @@ export class StaffsPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
+      workbook.eachSheet((sheet, id) => {
+        if (id != 19) sheet.state = 'hidden';//ẩn các sheet không mong muốn
+      })
       let worksheet = workbook.getWorksheet(config.sheet_name.value);
 
       let row = worksheet.getRow(2);
@@ -528,6 +542,14 @@ export class StaffsPage implements OnInit {
         row.getCell(config.job_list.value).value = el.job_list;
         idx++;
       });
+
+      workbook.views = [
+        {
+          x: 0, y: 0, width: 10000, height: 20000,
+          firstSheet: 2, activeTab: 2, visibility: 'visible'
+        }
+      ];
+
       //Ghi file excel
       workbook.xlsx.writeBuffer().then((data) => {
         let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

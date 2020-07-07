@@ -45,15 +45,15 @@ export class JobRolesPage implements OnInit {
   async refreshNews() {
 
     try {
-      this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-organizations", true);
-      // console.log(this.organizations);
-
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-user-report", true);
       // console.log(this.userReport);
 
       this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
+
+      this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
+        + "/get-organizations", true);
+      // console.log(this.organizations);
 
     } catch (e) { }
 
@@ -80,9 +80,20 @@ export class JobRolesPage implements OnInit {
         // console.log(this.jobRolesTree);
       }
 
+      let orgTree = []
+
+      this.organizations.forEach(el => {
+        if (el.id === this.organizationId) {
+          orgTree.push(el)
+        }
+        if (el.parent_id + '' == '' + this.organizationId) {
+          orgTree.push(el)
+        }
+      })
+
       // thêm thuộc tính click_type và main_tree cho cây chính
       // ghép cây chức danh vào cây chính
-      this.organizations.forEach(el => {
+      orgTree.forEach(el => {
         el.click_type = 1; //cây chính cho click luôn
         el.main_tree = 1; //là cây chính
 
@@ -92,10 +103,10 @@ export class JobRolesPage implements OnInit {
         }
 
       });
-      // console.log(this.organizations);
+      // console.log(orgTree);
 
       // chuyển thành cây tổ chức và chức danh
-      this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
+      this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
 
       // console.log(this.organizationsTree);
 
@@ -383,6 +394,9 @@ export class JobRolesPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
+      workbook.eachSheet((sheet, id) => {
+        if (id != 18) sheet.state = 'hidden';//ẩn các sheet không mong muốn
+      })
       let worksheet = workbook.getWorksheet(config.sheet_name.value);
 
       let row = worksheet.getRow(2);
@@ -403,6 +417,14 @@ export class JobRolesPage implements OnInit {
         row.getCell(config.organization_name.value).value = el.organization_name;
         idx++;
       });
+
+      workbook.views = [
+        {
+          x: 0, y: 0, width: 10000, height: 20000,
+          firstSheet: 1, activeTab: 1, visibility: 'visible'
+        }
+      ];
+
       //Ghi file excel
       workbook.xlsx.writeBuffer().then((data) => {
         let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

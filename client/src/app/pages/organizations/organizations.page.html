@@ -25,9 +25,9 @@
 <ion-content>
   <ion-row>
     <ion-col class="ion-text-center" size="12" class="card-prospect" *ngFor="let item of organizationsTree"
-      [style.background]="'green'">
+      [style.background]="'#fafafaf6'">
       <ion-row (click)="onClickSpec($event, item)">
-        <ion-col size="10" class="prospect-header" [style.color]="'yellow'">
+        <ion-col size="10" class="prospect-header" [style.color]="'darkblue'">
           <ion-icon *ngIf="item.click_type" style="font-size: 1em" [style.color]="'lightblue'" name="md-cloud-upload">
           </ion-icon>{{item.name}}
         </ion-col>
