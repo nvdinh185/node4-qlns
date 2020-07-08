@@ -94,6 +94,7 @@ export class StaffsPage implements OnInit {
 
         let orgTree = []
 
+        // Lọc danh sách nhân sự theo mã tổ chức của user
         this.organizations.forEach(el => {
           if (el.id === this.organizationId) {
             orgTree.push(el)
@@ -418,7 +419,7 @@ export class StaffsPage implements OnInit {
 
     //console.log(res);
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
 
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
@@ -527,6 +528,20 @@ export class StaffsPage implements OnInit {
       let row = worksheet.getRow(2);
       row.getCell("A").value = this.organizationsTree[0].name;
       row.getCell("G").value = this.organizationsTree[0].id;
+
+      // xác định bề rộng cho các cột
+      worksheet.getColumn(1).width = 5
+      worksheet.getColumn(2).width = 25
+      worksheet.getColumn(4).width = 25
+      worksheet.getColumn(6).width = 30
+      worksheet.getColumn(8).width = 20
+      worksheet.getColumn(9).width = 20
+
+      worksheet.getColumn(2).alignment = { wrapText: true };
+      worksheet.getColumn(4).alignment = { wrapText: true };
+      worksheet.getColumn(6).alignment = { wrapText: true };
+      worksheet.getColumn(8).alignment = { wrapText: true };
+      worksheet.getColumn(9).alignment = { wrapText: true };
 
       let idx = 4;
       // Lặp mảng để ghi dữ liệu vào excel

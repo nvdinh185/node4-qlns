@@ -35,8 +35,7 @@ class Handler {
                 dataJson["job_list"] = JSON.stringify(dataJson["job_list"]);
             }
 
-            // tên bản là staff, truyền lên là họ và tên, phải tự cắt firstname, lastname để đưa vào sắp xếp
-            // console.log('Trước', dataJson, tableName);
+            // tên bảng là staffs, truyền lên là họ và tên, phải tự cắt firstname, lastname để đưa vào sắp xếp
 
             if (tableName === 'staffs' && dataJson['name']) {
                 // tự động cắt firstname và lastname
@@ -45,11 +44,9 @@ class Handler {
                 dataJson.first_name = splitName.first_name;
             }
 
-            // console.log('Sau', JSON.stringify(dataJson));
             try {
                 if (dataJson.id < 0) {
                     delete dataJson["id"]; //xóa trường giả này đi
-                    //yêu cầu bảng phải có trường dữ liệu này
                     dataJson.created_time = Date.now();
                     await db.insert(arrObj.convertSqlFromJson(tableName, dataJson));
                 } else if (dataJson.id > 0) {

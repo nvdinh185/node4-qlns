@@ -23,7 +23,7 @@ let config = {
 })
 export class JobRolesPage implements OnInit {
 
-  organizationId: any; //mã tổ chức của user
+  organizationId: any; //id tổ chức của user
 
   userReport: any;
 
@@ -46,13 +46,13 @@ export class JobRolesPage implements OnInit {
 
     try {
       this.userReport = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-user-report", true);
+        + "/get-user-report");
       // console.log(this.userReport);
 
       this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
 
       this.organizations = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-        + "/get-organizations", true);
+        + "/get-organizations");
       // console.log(this.organizations);
 
     } catch (e) { }
@@ -82,6 +82,7 @@ export class JobRolesPage implements OnInit {
 
       let orgTree = []
 
+      // lọc lấy những tổ chức theo id tổ chức của user
       this.organizations.forEach(el => {
         if (el.id === this.organizationId) {
           orgTree.push(el)
@@ -90,6 +91,7 @@ export class JobRolesPage implements OnInit {
           orgTree.push(el)
         }
       })
+      // console.log(orgTree);
 
       // thêm thuộc tính click_type và main_tree cho cây chính
       // ghép cây chức danh vào cây chính
@@ -98,6 +100,7 @@ export class JobRolesPage implements OnInit {
         el.main_tree = 1; //là cây chính
 
         // Ghép nhánh chức danh vào cây chính
+        // Nếu id nhánh khác id tổ chức thì mới ghép vào
         if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
           el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng chức danh được ghép vào
         }
@@ -253,7 +256,7 @@ export class JobRolesPage implements OnInit {
       let itemNew = {
         id: -1, //Giả id để thêm vào
         parent_id: item.main_tree === 1 ? undefined : item.id, //kế thừa cấp cha của nó
-        organization_id: item.organization_id ? item.organization_id : item.id,
+        organization_id: item.organization_id ? item.organization_id : item.id,//mã tổ chức của nó hoặc cấp cha
         table_name: 'job_roles', //tên bảng cần đưa vào
         wheres: [], //Mệnh đề wheres để update
         title_name: item.name //tên của cấp cha
@@ -370,7 +373,7 @@ export class JobRolesPage implements OnInit {
 
     //console.log(res);
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
 
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
@@ -402,6 +405,18 @@ export class JobRolesPage implements OnInit {
       let row = worksheet.getRow(2);
       row.getCell("A").value = this.organizationsTree[0].name;
       row.getCell("E").value = this.organizationsTree[0].id;
+
+      // xác định bề rộng cho các cột
+      worksheet.getColumn(1).width = 5
+      worksheet.getColumn(2).width = 30
+      worksheet.getColumn(3).width = 18
+      worksheet.getColumn(4).width = 30
+      worksheet.getColumn(8).width = 20
+
+      worksheet.getColumn(2).alignment = { wrapText: true };
+      worksheet.getColumn(3).alignment = { wrapText: true };
+      worksheet.getColumn(4).alignment = { wrapText: true };
+      worksheet.getColumn(8).alignment = { wrapText: true };
 
       let idx = 4;
       // Lặp mảng để ghi dữ liệu vào excel
@@ -435,7 +450,7 @@ export class JobRolesPage implements OnInit {
 
   onClickUpload(ev) {
     let arFile = ev.target.files;
-    // console.log(file);
+    // console.log(arFile);
     let fr = new FileReader();
     fr.readAsArrayBuffer(arFile[0]);
     fr.onloadend = async () => {

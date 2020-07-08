@@ -16,6 +16,11 @@ export class ApiExcelService {
         row.getCell("A").value = data[0].name;
         row.getCell("E").value = data[0].id;
 
+        // Xác định bề rộng cho các cột
+        ws.getColumn(1).width = 5;
+        ws.getColumn(2).alignment = { wrapText: true };
+        ws.getColumn(4).alignment = { wrapText: true };
+
         let index = 0;
         data[0].subs.forEach(el => {
           row = ws.getRow(index + 4);

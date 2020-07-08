@@ -124,6 +124,7 @@ export class OrganizationsPage {
    * @param event 
    */
   onClickTreeItem(event) {
+    // console.log(event);
 
     //Khai báo menu popup
     let menu = [
@@ -342,7 +343,7 @@ export class OrganizationsPage {
    */
   onClickUpload(ev) {
     let arFile = ev.target.files;
-    // console.log(file);
+    // console.log(arFile);
     let fr = new FileReader();
     fr.readAsArrayBuffer(arFile[0]);
     fr.onloadend = async () => {
