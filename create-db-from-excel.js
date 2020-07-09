@@ -1,7 +1,7 @@
 const excel_db = require('./db/sqlite3/excel-2-sqlite');
 
-const excelFilename = "./db/excel/kpi-bsc-database-v1.xlsx";  //ten file excel cau hinh
-const dbFilename = "./db/database/kpi-bsc-database-v1.db";     //ten database muon tao
+const excelFilename = "./db/excel/qlns-database-v1.xlsx";  //ten file excel cau hinh
+const dbFilename = "./db/database/qlns-database-v1.db";     //ten database muon tao
 
 const fs = require('fs');
 //xoa file csdl cu neu co

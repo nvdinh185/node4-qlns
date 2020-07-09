@@ -30,10 +30,13 @@ class Handler {
 
             dataJson.updated_time = Date.now();
 
+            // console.log("Trước: ", dataJson["job_list"]);
+            // chuyển mảng [ '2', '3' ] -> [2,3] để lưu csdl
             if (dataJson["job_list"]) {
                 dataJson["job_list"] = dataJson["job_list"].map(function (item) { return parseInt(item); });
                 dataJson["job_list"] = JSON.stringify(dataJson["job_list"]);
             }
+            // console.log("Sau: ", dataJson["job_list"]);
 
             // tên bảng là staffs, truyền lên là họ và tên, phải tự cắt firstname, lastname để đưa vào sắp xếp
 
