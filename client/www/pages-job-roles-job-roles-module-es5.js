@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'green'\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'#fafafaf6'\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.id}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>";
     /***/
   },
 
@@ -180,7 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".card-title-header {\n  font-size: 1.5em;\n  width: 90%;\n  font-weight: bold;\n  color: darkblue;\n  text-transform: uppercase;\n  opacity: 0.7;\n}\n\n.card-prospect {\n  border-radius: 0.8em;\n  border: solid 0.15em #FFFFFF;\n  width: 100%;\n}\n\n.card-prospect .prospect-header {\n  font-size: 1.2em;\n  width: 100%;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: 0.9;\n}\n\n.table-row .table-header {\n  background: #99b7f0e0 !important;\n  color: #0a0909fb !important;\n  font-weight: bold;\n}\n\n.table-row ion-col {\n  border: solid 0.1em #FFFFFF;\n  font-size: 1.3em;\n}\n\n.table-row ion-row:nth-of-type(odd) {\n  background: #fafafaf6;\n  color: #202020;\n  opacity: 0.9;\n}\n\n.table-row ion-row:nth-of-type(even) {\n  background: #e6f5f8;\n  color: #202020;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvam9iLXJvbGVzL0Q6XFxESU5ITlZcXE15RGF0YVxcTEFQVFJJTkhcXE5PREU0XFxpb25pYzQucWxuc1xcY2xpZW50L3NyY1xcYXBwXFxwYWdlc1xcam9iLXJvbGVzXFxqb2Itcm9sZXMucGFnZS5zY3NzIiwic3JjL2FwcC9wYWdlcy9qb2Itcm9sZXMvam9iLXJvbGVzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLGdCQUFBO0VBQ0EsVUFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtBQ0FKOztBRElBO0VBQ0ksb0JBQUE7RUFDQSw0QkFBQTtFQUNBLFdBQUE7QUNESjs7QURLQTtFQUNJLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0FDRko7O0FETUE7RUFDSSxnQ0FBQTtFQUNBLDJCQUFBO0VBQ0EsaUJBQUE7QUNISjs7QURNQTtFQUNJLDJCQUFBO0VBQ0EsZ0JBQUE7QUNISjs7QURNQTtFQUNJLHFCQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISjs7QURNQTtFQUNJLG1CQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2pvYi1yb2xlcy9qb2Itcm9sZXMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy90aGnhur90IGzhuq1wIGNo4buvIGNobyB0acOqdSDEkeG7gSBjw7RuZyB0eVxyXG4uY2FyZC10aXRsZS1oZWFkZXIge1xyXG4gICAgZm9udC1zaXplOiAxLjVlbTtcclxuICAgIHdpZHRoOiA5MCU7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxuICAgIGNvbG9yOiBkYXJrYmx1ZTtcclxuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn1cclxuXHJcbi8vVGhp4bq/dCBs4bqtcCBraHVuZyBu4buBbiB2w6AgY+G7oSBjaOG7ryBjaG8gY2FyZCB2aeG7hW4gY+G6o25oXHJcbi5jYXJkLXByb3NwZWN0e1xyXG4gICAgYm9yZGVyLXJhZGl1czogMC44ZW07XHJcbiAgICBib3JkZXI6IHNvbGlkIDAuMTVlbSAjRkZGRkZGO1xyXG4gICAgd2lkdGg6MTAwJTtcclxuICAgIC8vb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcclxuICAgIGZvbnQtc2l6ZTogMS4yZW07XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgIG9wYWNpdHk6IDAuOTtcclxufVxyXG5cclxuLy9UaGnhur90IGzhuq1wIGTDsm5nIGNo4bq1biBs4bq7IGNobyBi4bqjbmdcclxuLnRhYmxlLXJvdyAudGFibGUtaGVhZGVyIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xyXG4gICAgY29sb3I6IzBhMDkwOWZiICFpbXBvcnRhbnQ7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuLnRhYmxlLXJvdyBpb24tY29sIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJvcmRlcjogc29saWQgMC4xZW0gI0ZGRkZGRjtcclxuICAgIGZvbnQtc2l6ZTogMS4zZW07XHJcbn1cclxuXHJcbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHsgLy9kw7JuZyBs4bq7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZmFmYWZhZjY7XHJcbiAgICBjb2xvcjojMjAyMDIwO1xyXG4gICAgb3BhY2l0eTogMC45O1xyXG59XHJcblxyXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikgeyAvL2TDsm5nIGNo4bq1blxyXG4gICAgYmFja2dyb3VuZDogI2U2ZjVmODtcclxuICAgIGNvbG9yOiMyMDIwMjA7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn0iLCIuY2FyZC10aXRsZS1oZWFkZXIge1xuICBmb250LXNpemU6IDEuNWVtO1xuICB3aWR0aDogOTAlO1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgY29sb3I6IGRhcmtibHVlO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjc7XG59XG5cbi5jYXJkLXByb3NwZWN0IHtcbiAgYm9yZGVyLXJhZGl1czogMC44ZW07XG4gIGJvcmRlcjogc29saWQgMC4xNWVtICNGRkZGRkY7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcbiAgZm9udC1zaXplOiAxLjJlbTtcbiAgd2lkdGg6IDEwMCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjk7XG59XG5cbi50YWJsZS1yb3cgLnRhYmxlLWhlYWRlciB7XG4gIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xuICBjb2xvcjogIzBhMDkwOWZiICFpbXBvcnRhbnQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG4udGFibGUtcm93IGlvbi1jb2wge1xuICBib3JkZXI6IHNvbGlkIDAuMWVtICNGRkZGRkY7XG4gIGZvbnQtc2l6ZTogMS4zZW07XG59XG5cbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHtcbiAgYmFja2dyb3VuZDogI2ZhZmFmYWY2O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC45O1xufVxuXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikge1xuICBiYWNrZ3JvdW5kOiAjZTZmNWY4O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC43O1xufSJdfQ== */";
+    __webpack_exports__["default"] = ".card-title-header {\n  font-size: 1.5em;\n  width: 90%;\n  font-weight: bold;\n  color: darkblue;\n  text-transform: uppercase;\n  opacity: 0.7;\n}\n\n.card-prospect {\n  border-radius: 0.8em;\n  border: solid 0.15em #FFFFFF;\n  width: 100%;\n}\n\n.card-prospect .prospect-header {\n  font-size: 1.2em;\n  width: 100%;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: 0.9;\n}\n\n.table-row .table-header {\n  background: #99b7f0e0 !important;\n  color: #0a0909fb !important;\n  font-weight: bold;\n}\n\n.table-row ion-col {\n  border: solid 0.1em #FFFFFF;\n  font-size: 1.3em;\n}\n\n.table-row ion-row:nth-of-type(odd) {\n  background: #fafafaf6;\n  color: #202020;\n  opacity: 0.9;\n}\n\n.table-row ion-row:nth-of-type(even) {\n  background: #e6f5f8;\n  color: #202020;\n  opacity: 0.7;\n}\n\n.file-over {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvam9iLXJvbGVzL0Q6XFxESU5ITlZcXE15RGF0YVxcTEFQVFJJTkhcXE5PREU0XFxpb25pYzQucWxuc1xcY2xpZW50L3NyY1xcYXBwXFxwYWdlc1xcam9iLXJvbGVzXFxqb2Itcm9sZXMucGFnZS5zY3NzIiwic3JjL2FwcC9wYWdlcy9qb2Itcm9sZXMvam9iLXJvbGVzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLGdCQUFBO0VBQ0EsVUFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtBQ0FKOztBRElBO0VBQ0ksb0JBQUE7RUFDQSw0QkFBQTtFQUNBLFdBQUE7QUNESjs7QURLQTtFQUNJLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0FDRko7O0FETUE7RUFDSSxnQ0FBQTtFQUNBLDJCQUFBO0VBQ0EsaUJBQUE7QUNISjs7QURNQTtFQUNJLDJCQUFBO0VBQ0EsZ0JBQUE7QUNISjs7QURNQTtFQUNJLHFCQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISjs7QURNQTtFQUNJLG1CQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISjs7QURNQTtFQUNJLGtCQUFBO0VBQ0EsTUFBQTtFQUNBLE9BQUE7RUFDQSxVQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxVQUFBO0VBQ0EsZUFBQTtBQ0hKIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvam9iLXJvbGVzL2pvYi1yb2xlcy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvL3RoaeG6v3QgbOG6rXAgY2jhu68gY2hvIHRpw6p1IMSR4buBIGPDtG5nIHR5XHJcbi5jYXJkLXRpdGxlLWhlYWRlciB7XHJcbiAgICBmb250LXNpemU6IDEuNWVtO1xyXG4gICAgd2lkdGg6IDkwJTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgY29sb3I6IGRhcmtibHVlO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgIG9wYWNpdHk6IDAuNztcclxufVxyXG5cclxuLy9UaGnhur90IGzhuq1wIGtodW5nIG7hu4FuIHbDoCBj4buhIGNo4buvIGNobyBjYXJkIHZp4buFbiBj4bqjbmhcclxuLmNhcmQtcHJvc3BlY3R7XHJcbiAgICBib3JkZXItcmFkaXVzOiAwLjhlbTtcclxuICAgIGJvcmRlcjogc29saWQgMC4xNWVtICNGRkZGRkY7XHJcbiAgICB3aWR0aDoxMDAlO1xyXG4gICAgLy9vcGFjaXR5OiAwLjg7XHJcbn1cclxuXHJcbi5jYXJkLXByb3NwZWN0IC5wcm9zcGVjdC1oZWFkZXIge1xyXG4gICAgZm9udC1zaXplOiAxLjJlbTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xyXG4gICAgb3BhY2l0eTogMC45O1xyXG59XHJcblxyXG4vL1RoaeG6v3QgbOG6rXAgZMOybmcgY2jhurVuIGzhursgY2hvIGLhuqNuZ1xyXG4udGFibGUtcm93IC50YWJsZS1oZWFkZXIgeyAvL3ThuqV0IGPhuqMgY8OhYyBj4buZdCBzYXUgY2xhc3MgbsOgeVxyXG4gICAgYmFja2dyb3VuZDogIzk5YjdmMGUwICFpbXBvcnRhbnQ7XHJcbiAgICBjb2xvcjojMGEwOTA5ZmIgIWltcG9ydGFudDtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG4udGFibGUtcm93IGlvbi1jb2wgeyAvL3ThuqV0IGPhuqMgY8OhYyBj4buZdCBzYXUgY2xhc3MgbsOgeVxyXG4gICAgYm9yZGVyOiBzb2xpZCAwLjFlbSAjRkZGRkZGO1xyXG4gICAgZm9udC1zaXplOiAxLjNlbTtcclxufVxyXG5cclxuLnRhYmxlLXJvdyBpb24tcm93Om50aC1vZi10eXBlKG9kZCkgeyAvL2TDsm5nIGzhurtcclxuICAgIGJhY2tncm91bmQ6ICNmYWZhZmFmNjtcclxuICAgIGNvbG9yOiMyMDIwMjA7XHJcbiAgICBvcGFjaXR5OiAwLjk7XHJcbn1cclxuXHJcbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShldmVuKSB7IC8vZMOybmcgY2jhurVuXHJcbiAgICBiYWNrZ3JvdW5kOiAjZTZmNWY4O1xyXG4gICAgY29sb3I6IzIwMjAyMDtcclxuICAgIG9wYWNpdHk6IDAuNztcclxufVxyXG5cclxuLmZpbGUtb3ZlciB7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBsZWZ0OiAwO1xyXG4gICAgei1pbmRleDogMjtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgb3BhY2l0eTogMTtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxufSIsIi5jYXJkLXRpdGxlLWhlYWRlciB7XG4gIGZvbnQtc2l6ZTogMS41ZW07XG4gIHdpZHRoOiA5MCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBjb2xvcjogZGFya2JsdWU7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIG9wYWNpdHk6IDAuNztcbn1cblxuLmNhcmQtcHJvc3BlY3Qge1xuICBib3JkZXItcmFkaXVzOiAwLjhlbTtcbiAgYm9yZGVyOiBzb2xpZCAwLjE1ZW0gI0ZGRkZGRjtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbi5jYXJkLXByb3NwZWN0IC5wcm9zcGVjdC1oZWFkZXIge1xuICBmb250LXNpemU6IDEuMmVtO1xuICB3aWR0aDogMTAwJTtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIG9wYWNpdHk6IDAuOTtcbn1cblxuLnRhYmxlLXJvdyAudGFibGUtaGVhZGVyIHtcbiAgYmFja2dyb3VuZDogIzk5YjdmMGUwICFpbXBvcnRhbnQ7XG4gIGNvbG9yOiAjMGEwOTA5ZmIgIWltcG9ydGFudDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG5cbi50YWJsZS1yb3cgaW9uLWNvbCB7XG4gIGJvcmRlcjogc29saWQgMC4xZW0gI0ZGRkZGRjtcbiAgZm9udC1zaXplOiAxLjNlbTtcbn1cblxuLnRhYmxlLXJvdyBpb24tcm93Om50aC1vZi10eXBlKG9kZCkge1xuICBiYWNrZ3JvdW5kOiAjZmFmYWZhZjY7XG4gIGNvbG9yOiAjMjAyMDIwO1xuICBvcGFjaXR5OiAwLjk7XG59XG5cbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShldmVuKSB7XG4gIGJhY2tncm91bmQ6ICNlNmY1Zjg7XG4gIGNvbG9yOiAjMjAyMDIwO1xuICBvcGFjaXR5OiAwLjc7XG59XG5cbi5maWxlLW92ZXIge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgei1pbmRleDogMjtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgb3BhY2l0eTogMTtcbiAgY3Vyc29yOiBwb2ludGVyO1xufSJdfQ== */";
     /***/
   },
 
@@ -221,6 +221,56 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ngxi4-dynamic-service */
     "./node_modules/ngxi4-dynamic-service/fesm2015/ngxi4-dynamic-service.js");
+    /* harmony import */
+
+
+    var exceljs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! exceljs */
+    "./node_modules/exceljs/dist/exceljs.min.js");
+    /* harmony import */
+
+
+    var exceljs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_3__);
+    /* harmony import */
+
+
+    var file_saver__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! file-saver */
+    "./node_modules/file-saver/dist/FileSaver.min.js");
+    /* harmony import */
+
+
+    var file_saver__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_4__);
+
+    var config = {
+      sheet_name: {
+        value: 'job_roles'
+      },
+      noId: {
+        value: "A"
+      },
+      name: {
+        value: "B"
+      },
+      short_name: {
+        value: "C"
+      },
+      description: {
+        value: "D"
+      },
+      id: {
+        value: "E"
+      },
+      parent_id: {
+        value: "F"
+      },
+      organization_id: {
+        value: "G"
+      },
+      organization_name: {
+        value: "H"
+      }
+    };
 
     var JobRolesPage = /*#__PURE__*/function () {
       function JobRolesPage(apiAuth, apiCommon) {
@@ -236,7 +286,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var _this = this;
 
           //console.log(res);
-          return new Promise(function (resolve, reject) {
+          return new Promise(function (resolve) {
             if (res.error) {
               _this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
             } else if (res.ajax) {//Khi thay đổi cần gọi ajax thì nó gọi cái này
@@ -251,6 +301,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             });
           });
         }.bind(this);
+
+        this.convertColExcel2Number = function (val) {
+          var base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+              i,
+              j,
+              result = 0;
+
+          for (i = 0, j = val.length - 1; i < val.length; i += 1, j -= 1) {
+            result += Math.pow(base.length, j) * (base.indexOf(val[i]) + 1);
+          }
+
+          return result;
+        };
       }
 
       _createClass(JobRolesPage, [{
@@ -268,17 +331,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                   case 0:
                     _context.prev = 0;
                     _context.next = 3;
-                    return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-organizations", true);
+                    return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-user-report");
 
                   case 3:
-                    this.organizations = _context.sent;
-                    _context.next = 6;
-                    return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-user-report", true);
-
-                  case 6:
                     this.userReport = _context.sent;
                     // console.log(this.userReport);
                     this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
+                    _context.next = 7;
+                    return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-organizations");
+
+                  case 7:
+                    this.organizations = _context.sent;
                     _context.next = 12;
                     break;
 
@@ -307,6 +370,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
             var _this2 = this;
 
+            var orgTree;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
               while (1) {
                 switch (_context2.prev = _context2.next) {
@@ -324,25 +388,38 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     // Chuyển thành cây chức danh
                     if (Array.isArray(this.jobRoles)) {
                       this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id'); // console.log(this.jobRolesTree);
-                    } // thêm thuộc tính click_type và main_tree cho cây chính
-                    // ghép cây chức danh vào cây chính
+                    }
 
+                    orgTree = []; // lọc lấy những tổ chức theo id tổ chức của user
 
                     this.organizations.forEach(function (el) {
+                      if (el.id === _this2.organizationId) {
+                        orgTree.push(el);
+                      }
+
+                      if (el.parent_id + '' == '' + _this2.organizationId) {
+                        orgTree.push(el);
+                      }
+                    }); // console.log(orgTree);
+                    // thêm thuộc tính click_type và main_tree cho cây chính
+                    // ghép cây chức danh vào cây chính
+
+                    orgTree.forEach(function (el) {
                       el.click_type = 1; //cây chính cho click luôn
 
                       el.main_tree = 1; //là cây chính
-                      // Ghép nhánh chức danh vào cây chính
+                      // Nếu id khác id tổ chức của user thì mới ghép vào (tức là ds các chức danh của tổ chức, không phải là giám đốc)
 
                       if (_this2.jobRolesTree && el.id + '' !== '' + _this2.organizationId) {
+                        // ghép cây chức danh vào làm nhánh của cây tổ chức theo id tổ chức
                         el.subs = _this2.jobRolesTree.filter(function (x) {
                           return x.organization_id === el.id;
-                        }); //mảng chức danh được ghép vào
+                        });
                       }
-                    }); // console.log(this.organizations);
-                    // chuyển thành cây tổ chức và chức danh
+                    }); // console.log(orgTree);
+                    // chuyển cây tổ chức và chức danh thành cây chính để hiển thị
 
-                    this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id'); // console.log(this.organizationsTree);
+                    this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id'); // console.log(this.organizationsTree);
                     // ghép chức danh giám đốc vào
 
                     this.organizationsTree.forEach(function (el) {
@@ -365,20 +442,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         });
                       }
                     });
-                    _context2.next = 15;
+                    _context2.next = 17;
                     break;
 
-                  case 12:
-                    _context2.prev = 12;
+                  case 14:
+                    _context2.prev = 14;
                     _context2.t0 = _context2["catch"](2);
                     console.log('Error:', _context2.t0);
 
-                  case 15:
+                  case 17:
                   case "end":
                     return _context2.stop();
                 }
               }
-            }, _callee2, this, [[2, 12]]);
+            }, _callee2, this, [[2, 14]]);
           }));
         }
         /**
@@ -666,6 +743,246 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             form: form,
             callback: this.callbackKpi
           });
+        }
+      }, {
+        key: "onClickDownload",
+        value: function onClickDownload() {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+            var _this5 = this;
+
+            var templateFile, blobData, fr;
+            return regeneratorRuntime.wrap(function _callee4$(_context4) {
+              while (1) {
+                switch (_context4.prev = _context4.next) {
+                  case 0:
+                    templateFile = this.apiAuth.serviceUrls.RESOURCE_SERVER + '/get-templates/sample-danhmuc-tochuc.xlsx';
+                    _context4.next = 3;
+                    return this.apiAuth.getDynamicUrl(templateFile, '', {
+                      responseType: 'blob'
+                    });
+
+                  case 3:
+                    blobData = _context4.sent;
+                    fr = new FileReader();
+                    fr.readAsArrayBuffer(blobData);
+
+                    fr.onloadend = function () {
+                      return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this5, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+                        var bufferData, wb, workbook, worksheet, row, idx;
+                        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                          while (1) {
+                            switch (_context3.prev = _context3.next) {
+                              case 0:
+                                bufferData = fr.result;
+                                wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
+                                _context3.next = 4;
+                                return wb.xlsx.load(bufferData);
+
+                              case 4:
+                                workbook = _context3.sent;
+                                workbook.eachSheet(function (sheet) {
+                                  if (sheet.name != config.sheet_name.value) sheet.state = 'hidden'; //ẩn các sheet không mong muốn
+                                });
+                                worksheet = workbook.getWorksheet(config.sheet_name.value);
+                                row = worksheet.getRow(2);
+                                row.getCell("A").value = this.organizationsTree[0].name;
+                                row.getCell("E").value = this.organizationsTree[0].id; // xác định bề rộng cho các cột
+
+                                worksheet.getColumn(1).width = 5;
+                                worksheet.getColumn(2).width = 30;
+                                worksheet.getColumn(3).width = 18;
+                                worksheet.getColumn(4).width = 30;
+                                worksheet.getColumn(8).width = 20; // tự động xuống hàng nếu text quá dài
+
+                                worksheet.getColumn(2).alignment = {
+                                  wrapText: true
+                                };
+                                worksheet.getColumn(3).alignment = {
+                                  wrapText: true
+                                };
+                                worksheet.getColumn(4).alignment = {
+                                  wrapText: true
+                                };
+                                worksheet.getColumn(8).alignment = {
+                                  wrapText: true
+                                };
+                                idx = 4; // Lặp mảng để ghi dữ liệu vào excel
+
+                                this.jobRoles.forEach(function (el) {
+                                  row = worksheet.getRow(idx);
+                                  row.getCell(config.noId.value).value = idx - 3;
+                                  row.getCell(config.name.value).value = el.name;
+                                  row.getCell(config.short_name.value).value = el.short_name;
+                                  row.getCell(config.description.value).value = el.description;
+                                  row.getCell(config.id.value).value = el.id;
+                                  row.getCell(config.parent_id.value).value = el.parent_id;
+                                  row.getCell(config.organization_id.value).value = el.organization_id;
+                                  row.getCell(config.organization_name.value).value = el.organization_name;
+                                  idx++;
+                                });
+                                workbook.views = [{
+                                  x: 0,
+                                  y: 0,
+                                  width: 10000,
+                                  height: 20000,
+                                  firstSheet: 1,
+                                  activeTab: 1,
+                                  visibility: 'visible'
+                                }]; //Ghi file excel
+
+                                workbook.xlsx.writeBuffer().then(function (data) {
+                                  var blob = new Blob([data], {
+                                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                  });
+                                  file_saver__WEBPACK_IMPORTED_MODULE_4__["saveAs"](blob, "excel-job_roles-".concat(Date.now(), ".xlsx"));
+                                });
+
+                              case 23:
+                              case "end":
+                                return _context3.stop();
+                            }
+                          }
+                        }, _callee3, this);
+                      }));
+                    };
+
+                  case 7:
+                  case "end":
+                    return _context4.stop();
+                }
+              }
+            }, _callee4, this);
+          }));
+        }
+      }, {
+        key: "onClickUpload",
+        value: function onClickUpload(ev) {
+          var _this6 = this;
+
+          var arFile = ev.target.files; // console.log(arFile);
+
+          var fr = new FileReader();
+          fr.readAsArrayBuffer(arFile[0]);
+
+          fr.onloadend = function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this6, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+              var _this7 = this;
+
+              var bufferData, wb, workbook, worksheet, results, returnFinish, _i, _results, el, jsonPost;
+
+              return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                  switch (_context5.prev = _context5.next) {
+                    case 0:
+                      bufferData = fr.result;
+                      wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
+                      _context5.prev = 2;
+                      _context5.next = 5;
+                      return wb.xlsx.load(bufferData);
+
+                    case 5:
+                      workbook = _context5.sent;
+                      worksheet = workbook.getWorksheet(config.sheet_name.value);
+                      results = [];
+                      worksheet.eachRow(function (row, rowIndex) {
+                        if (rowIndex > 3) {
+                          var cols = {};
+
+                          for (var key in config) {
+                            var item = config[key];
+
+                            if (key != "sheet_name") {
+                              Object.defineProperty(cols, key, {
+                                value: _this7.getValueFormula(row.values[_this7.convertColExcel2Number(item.value)])
+                              });
+                            }
+                          }
+
+                          results.push(cols);
+                        }
+                      }); // console.log(results);
+
+                      returnFinish = {
+                        count_success: 0,
+                        count_fail: 0
+                      };
+                      _i = 0, _results = results;
+
+                    case 11:
+                      if (!(_i < _results.length)) {
+                        _context5.next = 26;
+                        break;
+                      }
+
+                      el = _results[_i];
+                      jsonPost = {
+                        name: el.name,
+                        short_name: el.short_name,
+                        description: el.description,
+                        id: el.id,
+                        parent_id: el.parent_id,
+                        organization_id: el.organization_id
+                      }; // console.log(jsonPost);
+
+                      _context5.prev = 14;
+                      _context5.next = 17;
+                      return this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER + '/post-job-roles', jsonPost);
+
+                    case 17:
+                      returnFinish.count_success++;
+                      _context5.next = 23;
+                      break;
+
+                    case 20:
+                      _context5.prev = 20;
+                      _context5.t0 = _context5["catch"](14);
+                      // console.log(err);
+                      returnFinish.count_fail++;
+
+                    case 23:
+                      _i++;
+                      _context5.next = 11;
+                      break;
+
+                    case 26:
+                      console.log(returnFinish);
+                      this.onChangeSelect();
+                      _context5.next = 33;
+                      break;
+
+                    case 30:
+                      _context5.prev = 30;
+                      _context5.t1 = _context5["catch"](2);
+                      console.log('Lỗi đọc file excel nguồn!', _context5.t1);
+
+                    case 33:
+                      _context5.prev = 33;
+                      return _context5.finish(33);
+
+                    case 35:
+                    case "end":
+                      return _context5.stop();
+                  }
+                }
+              }, _callee5, this, [[2, 30, 33, 35], [14, 20]]);
+            }));
+          };
+        }
+      }, {
+        key: "getValueFormula",
+        value: function getValueFormula(obj) {
+          if (obj === null || obj === undefined) return null;
+
+          if (typeof obj === 'object') {
+            // xử lý chuyển đổi chỉ lấy text thôi
+            if (obj.richText) return obj.richText.map(function (o) {
+              return o["text"];
+            }).join(""); // lấy giá trị bằng biểu thức function
+
+            return obj.result;
+          }
+
+          return obj;
         }
       }]);
 

@@ -99,16 +99,16 @@ export class JobRolesPage implements OnInit {
         el.click_type = 1; //cây chính cho click luôn
         el.main_tree = 1; //là cây chính
 
-        // Ghép nhánh chức danh vào cây chính
-        // Nếu id nhánh khác id tổ chức thì mới ghép vào
+        // Nếu id khác id tổ chức của user thì mới ghép vào (tức là ds các chức danh của tổ chức, không phải là giám đốc)
         if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
-          el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng chức danh được ghép vào
+          // ghép cây chức danh vào làm nhánh của cây tổ chức theo id tổ chức
+          el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id);
         }
 
       });
       // console.log(orgTree);
 
-      // chuyển thành cây tổ chức và chức danh
+      // chuyển cây tổ chức và chức danh thành cây chính để hiển thị
       this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
 
       // console.log(this.organizationsTree);
@@ -389,7 +389,7 @@ export class JobRolesPage implements OnInit {
   }.bind(this)
 
   async onClickDownload() {
-    let templateFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample-danhmuc-tochuc.xlsx'
+    let templateFile = this.apiAuth.serviceUrls.RESOURCE_SERVER + '/get-templates/sample-danhmuc-tochuc.xlsx'
     let blobData = await this.apiAuth.getDynamicUrl(templateFile, '', { responseType: 'blob' });
     let fr = new FileReader();
     fr.readAsArrayBuffer(blobData);
@@ -397,8 +397,8 @@ export class JobRolesPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
-      workbook.eachSheet((sheet, id) => {
-        if (id != 18) sheet.state = 'hidden';//ẩn các sheet không mong muốn
+      workbook.eachSheet(sheet => {
+        if (sheet.name != config.sheet_name.value) sheet.state = 'hidden';//ẩn các sheet không mong muốn
       })
       let worksheet = workbook.getWorksheet(config.sheet_name.value);
 
@@ -413,6 +413,7 @@ export class JobRolesPage implements OnInit {
       worksheet.getColumn(4).width = 30
       worksheet.getColumn(8).width = 20
 
+      // tự động xuống hàng nếu text quá dài
       worksheet.getColumn(2).alignment = { wrapText: true };
       worksheet.getColumn(3).alignment = { wrapText: true };
       worksheet.getColumn(4).alignment = { wrapText: true };
@@ -468,12 +469,7 @@ export class JobRolesPage implements OnInit {
               if (key != "sheet_name") {
                 Object.defineProperty(cols
                   , key
-                  , {
-                    value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)])
-                    , writable: true
-                    , enumerable: true
-                    , configurable: true
-                  })
+                  , { value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)]) })
               }
             }
             results.push(cols);
@@ -482,7 +478,7 @@ export class JobRolesPage implements OnInit {
         // console.log(results);
         let returnFinish = { count_success: 0, count_fail: 0 }
         for (const el of results) {
-          let json_data = {
+          let jsonPost = {
             name: el.name,
             short_name: el.short_name,
             description: el.description,
@@ -490,10 +486,10 @@ export class JobRolesPage implements OnInit {
             parent_id: el.parent_id,
             organization_id: el.organization_id
           }
-          // console.log(json_data);
+          // console.log(jsonPost);
           try {
             await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-job-roles', json_data)
+              + '/post-job-roles', jsonPost)
             returnFinish.count_success++;
           } catch (err) {
             // console.log(err);

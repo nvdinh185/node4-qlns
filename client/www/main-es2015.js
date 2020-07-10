@@ -734,15 +734,15 @@ const routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: 'organizations',
-        loadChildren: () => Promise.all(/*! import() | pages-organizations-organizations-module */[__webpack_require__.e("common"), __webpack_require__.e("pages-organizations-organizations-module")]).then(__webpack_require__.bind(null, /*! ./pages/organizations/organizations.module */ "./src/app/pages/organizations/organizations.module.ts")).then(m => m.OrganizationsPageModule)
+        loadChildren: () => Promise.all(/*! import() | pages-organizations-organizations-module */[__webpack_require__.e("default~pages-job-roles-job-roles-module~pages-organizations-organizations-module~pages-staffs-staffs-module"), __webpack_require__.e("pages-organizations-organizations-module")]).then(__webpack_require__.bind(null, /*! ./pages/organizations/organizations.module */ "./src/app/pages/organizations/organizations.module.ts")).then(m => m.OrganizationsPageModule)
     },
     {
         path: 'job-roles',
-        loadChildren: () => Promise.all(/*! import() | pages-job-roles-job-roles-module */[__webpack_require__.e("common"), __webpack_require__.e("pages-job-roles-job-roles-module")]).then(__webpack_require__.bind(null, /*! ./pages/job-roles/job-roles.module */ "./src/app/pages/job-roles/job-roles.module.ts")).then(m => m.JobRolesPageModule)
+        loadChildren: () => Promise.all(/*! import() | pages-job-roles-job-roles-module */[__webpack_require__.e("default~pages-job-roles-job-roles-module~pages-organizations-organizations-module~pages-staffs-staffs-module"), __webpack_require__.e("pages-job-roles-job-roles-module")]).then(__webpack_require__.bind(null, /*! ./pages/job-roles/job-roles.module */ "./src/app/pages/job-roles/job-roles.module.ts")).then(m => m.JobRolesPageModule)
     },
     {
         path: 'staffs',
-        loadChildren: () => Promise.all(/*! import() | pages-staffs-staffs-module */[__webpack_require__.e("common"), __webpack_require__.e("pages-staffs-staffs-module")]).then(__webpack_require__.bind(null, /*! ./pages/staffs/staffs.module */ "./src/app/pages/staffs/staffs.module.ts")).then(m => m.StaffsPageModule)
+        loadChildren: () => Promise.all(/*! import() | pages-staffs-staffs-module */[__webpack_require__.e("default~pages-job-roles-job-roles-module~pages-organizations-organizations-module~pages-staffs-staffs-module"), __webpack_require__.e("pages-staffs-staffs-module")]).then(__webpack_require__.bind(null, /*! ./pages/staffs/staffs.module */ "./src/app/pages/staffs/staffs.module.ts")).then(m => m.StaffsPageModule)
     },
     {
         path: 'home',

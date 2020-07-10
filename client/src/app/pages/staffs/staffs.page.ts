@@ -71,7 +71,6 @@ export class StaffsPage implements OnInit {
       console.log('Lỗi', e);
     }
 
-    //thay đổi chọn lựa
     this.onChangeSelect();
   }
 
@@ -80,7 +79,7 @@ export class StaffsPage implements OnInit {
    */
   async onChangeSelect() {
 
-    //reset cây tổ chức
+    //cây tổ chức
     this.organizationsTree = [];
 
     try {
@@ -99,23 +98,24 @@ export class StaffsPage implements OnInit {
           if (el.id === this.organizationId) {
             orgTree.push(el)
           }
-          if (el.parent_id + '' == '' + this.organizationId) {
+          if (el.parent_id === this.organizationId) {
             orgTree.push(el)
           }
         })
 
         orgTree.forEach(el => {
-
           el.click_type = 1; //cây chính cho click luôn
           el.main_tree = 1; //là cây chính
 
-          //ghép nhân sự vào gốc cây
-          if (this.staffs && el.id + '' !== '' + this.organizationId) {
-            el.subs = this.staffs.filter(x => x.organization_id === el.id); //mảng nhân sự được ghép vào
+          // ghép nhân sự vào gốc cây
+          // chỉ ghép những nhân sự của các chức danh
+          if (this.staffs && el.id !== this.organizationId) {
+            // ghép nhân sự vào theo id tổ chức
+            el.subs = this.staffs.filter(x => x.organization_id === el.id);
           }
 
         });
-        // console.log(this.organizations);
+        // console.log(orgTree);
 
         //tạo cây tổ chức để hiển thị lên form
         this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
@@ -142,8 +142,6 @@ export class StaffsPage implements OnInit {
                 el.subs.unshift(elsub); //bổ sung vào đầu
               }
             })
-
-
           }
         })
 
@@ -263,8 +261,7 @@ export class StaffsPage implements OnInit {
     if (cmd.value === 'add-child') {
       let itemNew = {
         id: -1, //Giả id để thêm vào
-        parent_id: item.main_tree === 1 ? undefined : item.id, //kế thừa cấp cha của nó nếu là cây con
-        organization_id: item.organization_id ? item.organization_id : item.id,
+        organization_id: item.id,
         table_name: 'staffs', //tên bảng cần đưa vào
         wheres: [], //Mệnh đề wheres để update
         title_name: item.name //tên của cấp cha
@@ -320,17 +317,16 @@ export class StaffsPage implements OnInit {
     if (Array.isArray(this.jobRoles)) {
       this.jobRoles.forEach(el => {
         //chỉ lọc các chức danh trong tổ chức đó thôi
-        if ('' + el.organization_id === '' + item.organization_id) {
+        if (el.organization_id === item.organization_id) {
 
           //lấy tùy chọn chức danh
           jobOptions.push({ name: el.name, value: parseInt(el.id) })
 
           //lấy danh sách tùy chọn chức danh kiêm nhiệm - bỏ chức danh đang đảm nhiệm
-          if ('' + el.id !== '' + item.job_id) {
+          if (el.id !== item.job_id) {
             jobListOptions.push({ name: el.name, value: parseInt(el.id) })
           }
         }
-
       });
     }
 
@@ -343,7 +339,6 @@ export class StaffsPage implements OnInit {
       , items: [
         { type: "title", name: item.title_name }
         , { type: "hidden", key: "id", value: item.id }
-        , { type: "hidden", key: "parent_id", value: item.parent_id }
         , { type: "hidden", key: "organization_id", value: item.organization_id }
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
@@ -443,7 +438,7 @@ export class StaffsPage implements OnInit {
                 //lấy tùy chọn chức danh
                 jobOptions.push({ name: el.name, value: parseInt(el.id) })
 
-                //vì không biết chọn chức danh nào nên vẫn trả đủ danh sách chức danh cho nó
+                //vì không biết chọn chức danh nào nên vẫn trả đủ danh sách chức danh kiêm nhiệm
                 jobListOptions.push({ name: el.name, value: parseInt(el.id) })
               }
 
@@ -501,7 +496,7 @@ export class StaffsPage implements OnInit {
           resolve({ next: "NO-CHANGE" }); //không có gì thay đổi cả
         }
 
-        return; //nếu gọi kiểu ajax thì chỉ trả về form đó thôi
+        return; //nếu gọi kiểu ajax thì chỉ trả về form đó thôi, không đóng form popup
 
       } else {
         //lấy lại kết quả đã tính toán
@@ -512,7 +507,7 @@ export class StaffsPage implements OnInit {
   }.bind(this)
 
   async onClickDownload() {
-    let templateFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample-danhmuc-tochuc.xlsx'
+    let templateFile = this.apiAuth.serviceUrls.RESOURCE_SERVER + '/get-templates/sample-danhmuc-tochuc.xlsx'
     let blobData = await this.apiAuth.getDynamicUrl(templateFile, '', { responseType: 'blob' });
     let fr = new FileReader();
     fr.readAsArrayBuffer(blobData);
@@ -520,8 +515,8 @@ export class StaffsPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
-      workbook.eachSheet((sheet, id) => {
-        if (id != 19) sheet.state = 'hidden';//ẩn các sheet không mong muốn
+      workbook.eachSheet(sheet => {
+        if (sheet.name != config.sheet_name.value) sheet.state = 'hidden';//ẩn các sheet không mong muốn
       })
       let worksheet = workbook.getWorksheet(config.sheet_name.value);
 
@@ -537,6 +532,7 @@ export class StaffsPage implements OnInit {
       worksheet.getColumn(8).width = 20
       worksheet.getColumn(9).width = 20
 
+      // tự động xuống hàng nếu text quá dài
       worksheet.getColumn(2).alignment = { wrapText: true };
       worksheet.getColumn(4).alignment = { wrapText: true };
       worksheet.getColumn(6).alignment = { wrapText: true };
@@ -575,7 +571,7 @@ export class StaffsPage implements OnInit {
 
   onClickUpload(ev) {
     let arFile = ev.target.files;
-    // console.log(file);
+    // console.log(arFile);
     let fr = new FileReader();
     fr.readAsArrayBuffer(arFile[0]);
     fr.onloadend = async () => {
@@ -593,12 +589,7 @@ export class StaffsPage implements OnInit {
               if (key != "sheet_name") {
                 Object.defineProperty(cols
                   , key
-                  , {
-                    value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)])
-                    , writable: true
-                    , enumerable: true
-                    , configurable: true
-                  })
+                  , { value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)]) })
               }
             }
             results.push(cols);
@@ -607,17 +598,17 @@ export class StaffsPage implements OnInit {
         // console.log(results);
         let returnFinish = { count_success: 0, count_fail: 0 }
         for (const el of results) {
-          let json_data = {
+          let jsonPost = {
             id: el.id,
             organization_id: el.organization_id,
             name: el.name,
             job_id: el.job_id,
             job_list: el.job_list,
           }
-          // console.log(json_data);
+          // console.log(jsonPost);
           try {
             await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-staffs', json_data)
+              + '/post-staffs', jsonPost)
             returnFinish.count_success++;
           } catch (err) {
             // console.log(err);

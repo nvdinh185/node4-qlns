@@ -313,7 +313,7 @@ export class OrganizationsPage {
    * Download file excel xuống máy
    */
   onClickDownload() {
-    let linkFile = 'http://localhost:9239/bsc-kpi/db/get-templates/sample-danhmuc-tochuc.xlsx'
+    let linkFile = this.apiAuth.serviceUrls.RESOURCE_SERVER + '/get-templates/sample-danhmuc-tochuc.xlsx'
     this.apiDownload.processFileDownload(linkFile
       , config.sheet_name.value
       , "excel"
@@ -361,12 +361,7 @@ export class OrganizationsPage {
               if (key != "sheet_name") {
                 Object.defineProperty(cols
                   , key
-                  , {
-                    value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)])
-                    , writable: true
-                    , enumerable: true
-                    , configurable: true
-                  })
+                  , { value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)]) })
               }
             }
             results.push(cols);
@@ -375,11 +370,11 @@ export class OrganizationsPage {
         // console.log(results);
         let returnFinish = { count_success: 0, count_fail: 0 }
         for (const el of results) {
-          let json_data = { name: el.name, short_name: el.short_name, description: el.description, id: el.id, parent_id: el.parent_id }
-          // console.log(json_data);
+          let jsonPost = { name: el.name, short_name: el.short_name, description: el.description, id: el.id, parent_id: el.parent_id }
+          // console.log(jsonPost);
           try {
             await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-organizations', json_data)
+              + '/post-organizations', jsonPost)
             returnFinish.count_success++;
           } catch (err) {
             // console.log(err);

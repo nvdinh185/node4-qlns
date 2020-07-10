@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'green'\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'yellow'\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.status}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>CÂY CHỨC DANH</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content class=\"ion-no-padding\">\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'#fafafaf6'\">\r\n\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\r\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.id}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n\r\n  </ion-row>\r\n</ion-content>");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ JobRolesPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".card-title-header {\n  font-size: 1.5em;\n  width: 90%;\n  font-weight: bold;\n  color: darkblue;\n  text-transform: uppercase;\n  opacity: 0.7;\n}\n\n.card-prospect {\n  border-radius: 0.8em;\n  border: solid 0.15em #FFFFFF;\n  width: 100%;\n}\n\n.card-prospect .prospect-header {\n  font-size: 1.2em;\n  width: 100%;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: 0.9;\n}\n\n.table-row .table-header {\n  background: #99b7f0e0 !important;\n  color: #0a0909fb !important;\n  font-weight: bold;\n}\n\n.table-row ion-col {\n  border: solid 0.1em #FFFFFF;\n  font-size: 1.3em;\n}\n\n.table-row ion-row:nth-of-type(odd) {\n  background: #fafafaf6;\n  color: #202020;\n  opacity: 0.9;\n}\n\n.table-row ion-row:nth-of-type(even) {\n  background: #e6f5f8;\n  color: #202020;\n  opacity: 0.7;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvam9iLXJvbGVzL0Q6XFxESU5ITlZcXE15RGF0YVxcTEFQVFJJTkhcXE5PREU0XFxpb25pYzQucWxuc1xcY2xpZW50L3NyY1xcYXBwXFxwYWdlc1xcam9iLXJvbGVzXFxqb2Itcm9sZXMucGFnZS5zY3NzIiwic3JjL2FwcC9wYWdlcy9qb2Itcm9sZXMvam9iLXJvbGVzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLGdCQUFBO0VBQ0EsVUFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtBQ0FKOztBRElBO0VBQ0ksb0JBQUE7RUFDQSw0QkFBQTtFQUNBLFdBQUE7QUNESjs7QURLQTtFQUNJLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0FDRko7O0FETUE7RUFDSSxnQ0FBQTtFQUNBLDJCQUFBO0VBQ0EsaUJBQUE7QUNISjs7QURNQTtFQUNJLDJCQUFBO0VBQ0EsZ0JBQUE7QUNISjs7QURNQTtFQUNJLHFCQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISjs7QURNQTtFQUNJLG1CQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISiIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL2pvYi1yb2xlcy9qb2Itcm9sZXMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy90aGnhur90IGzhuq1wIGNo4buvIGNobyB0acOqdSDEkeG7gSBjw7RuZyB0eVxyXG4uY2FyZC10aXRsZS1oZWFkZXIge1xyXG4gICAgZm9udC1zaXplOiAxLjVlbTtcclxuICAgIHdpZHRoOiA5MCU7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxuICAgIGNvbG9yOiBkYXJrYmx1ZTtcclxuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn1cclxuXHJcbi8vVGhp4bq/dCBs4bqtcCBraHVuZyBu4buBbiB2w6AgY+G7oSBjaOG7ryBjaG8gY2FyZCB2aeG7hW4gY+G6o25oXHJcbi5jYXJkLXByb3NwZWN0e1xyXG4gICAgYm9yZGVyLXJhZGl1czogMC44ZW07XHJcbiAgICBib3JkZXI6IHNvbGlkIDAuMTVlbSAjRkZGRkZGO1xyXG4gICAgd2lkdGg6MTAwJTtcclxuICAgIC8vb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcclxuICAgIGZvbnQtc2l6ZTogMS4yZW07XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgIG9wYWNpdHk6IDAuOTtcclxufVxyXG5cclxuLy9UaGnhur90IGzhuq1wIGTDsm5nIGNo4bq1biBs4bq7IGNobyBi4bqjbmdcclxuLnRhYmxlLXJvdyAudGFibGUtaGVhZGVyIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xyXG4gICAgY29sb3I6IzBhMDkwOWZiICFpbXBvcnRhbnQ7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuLnRhYmxlLXJvdyBpb24tY29sIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJvcmRlcjogc29saWQgMC4xZW0gI0ZGRkZGRjtcclxuICAgIGZvbnQtc2l6ZTogMS4zZW07XHJcbn1cclxuXHJcbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHsgLy9kw7JuZyBs4bq7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZmFmYWZhZjY7XHJcbiAgICBjb2xvcjojMjAyMDIwO1xyXG4gICAgb3BhY2l0eTogMC45O1xyXG59XHJcblxyXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikgeyAvL2TDsm5nIGNo4bq1blxyXG4gICAgYmFja2dyb3VuZDogI2U2ZjVmODtcclxuICAgIGNvbG9yOiMyMDIwMjA7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn0iLCIuY2FyZC10aXRsZS1oZWFkZXIge1xuICBmb250LXNpemU6IDEuNWVtO1xuICB3aWR0aDogOTAlO1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgY29sb3I6IGRhcmtibHVlO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjc7XG59XG5cbi5jYXJkLXByb3NwZWN0IHtcbiAgYm9yZGVyLXJhZGl1czogMC44ZW07XG4gIGJvcmRlcjogc29saWQgMC4xNWVtICNGRkZGRkY7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcbiAgZm9udC1zaXplOiAxLjJlbTtcbiAgd2lkdGg6IDEwMCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjk7XG59XG5cbi50YWJsZS1yb3cgLnRhYmxlLWhlYWRlciB7XG4gIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xuICBjb2xvcjogIzBhMDkwOWZiICFpbXBvcnRhbnQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG4udGFibGUtcm93IGlvbi1jb2wge1xuICBib3JkZXI6IHNvbGlkIDAuMWVtICNGRkZGRkY7XG4gIGZvbnQtc2l6ZTogMS4zZW07XG59XG5cbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHtcbiAgYmFja2dyb3VuZDogI2ZhZmFmYWY2O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC45O1xufVxuXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikge1xuICBiYWNrZ3JvdW5kOiAjZTZmNWY4O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC43O1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".card-title-header {\n  font-size: 1.5em;\n  width: 90%;\n  font-weight: bold;\n  color: darkblue;\n  text-transform: uppercase;\n  opacity: 0.7;\n}\n\n.card-prospect {\n  border-radius: 0.8em;\n  border: solid 0.15em #FFFFFF;\n  width: 100%;\n}\n\n.card-prospect .prospect-header {\n  font-size: 1.2em;\n  width: 100%;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: 0.9;\n}\n\n.table-row .table-header {\n  background: #99b7f0e0 !important;\n  color: #0a0909fb !important;\n  font-weight: bold;\n}\n\n.table-row ion-col {\n  border: solid 0.1em #FFFFFF;\n  font-size: 1.3em;\n}\n\n.table-row ion-row:nth-of-type(odd) {\n  background: #fafafaf6;\n  color: #202020;\n  opacity: 0.9;\n}\n\n.table-row ion-row:nth-of-type(even) {\n  background: #e6f5f8;\n  color: #202020;\n  opacity: 0.7;\n}\n\n.file-over {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvam9iLXJvbGVzL0Q6XFxESU5ITlZcXE15RGF0YVxcTEFQVFJJTkhcXE5PREU0XFxpb25pYzQucWxuc1xcY2xpZW50L3NyY1xcYXBwXFxwYWdlc1xcam9iLXJvbGVzXFxqb2Itcm9sZXMucGFnZS5zY3NzIiwic3JjL2FwcC9wYWdlcy9qb2Itcm9sZXMvam9iLXJvbGVzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNJLGdCQUFBO0VBQ0EsVUFBQTtFQUNBLGlCQUFBO0VBQ0EsZUFBQTtFQUNBLHlCQUFBO0VBQ0EsWUFBQTtBQ0FKOztBRElBO0VBQ0ksb0JBQUE7RUFDQSw0QkFBQTtFQUNBLFdBQUE7QUNESjs7QURLQTtFQUNJLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGlCQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0FDRko7O0FETUE7RUFDSSxnQ0FBQTtFQUNBLDJCQUFBO0VBQ0EsaUJBQUE7QUNISjs7QURNQTtFQUNJLDJCQUFBO0VBQ0EsZ0JBQUE7QUNISjs7QURNQTtFQUNJLHFCQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISjs7QURNQTtFQUNJLG1CQUFBO0VBQ0EsY0FBQTtFQUNBLFlBQUE7QUNISjs7QURNQTtFQUNJLGtCQUFBO0VBQ0EsTUFBQTtFQUNBLE9BQUE7RUFDQSxVQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxVQUFBO0VBQ0EsZUFBQTtBQ0hKIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvam9iLXJvbGVzL2pvYi1yb2xlcy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvL3RoaeG6v3QgbOG6rXAgY2jhu68gY2hvIHRpw6p1IMSR4buBIGPDtG5nIHR5XHJcbi5jYXJkLXRpdGxlLWhlYWRlciB7XHJcbiAgICBmb250LXNpemU6IDEuNWVtO1xyXG4gICAgd2lkdGg6IDkwJTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgY29sb3I6IGRhcmtibHVlO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgIG9wYWNpdHk6IDAuNztcclxufVxyXG5cclxuLy9UaGnhur90IGzhuq1wIGtodW5nIG7hu4FuIHbDoCBj4buhIGNo4buvIGNobyBjYXJkIHZp4buFbiBj4bqjbmhcclxuLmNhcmQtcHJvc3BlY3R7XHJcbiAgICBib3JkZXItcmFkaXVzOiAwLjhlbTtcclxuICAgIGJvcmRlcjogc29saWQgMC4xNWVtICNGRkZGRkY7XHJcbiAgICB3aWR0aDoxMDAlO1xyXG4gICAgLy9vcGFjaXR5OiAwLjg7XHJcbn1cclxuXHJcbi5jYXJkLXByb3NwZWN0IC5wcm9zcGVjdC1oZWFkZXIge1xyXG4gICAgZm9udC1zaXplOiAxLjJlbTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xyXG4gICAgb3BhY2l0eTogMC45O1xyXG59XHJcblxyXG4vL1RoaeG6v3QgbOG6rXAgZMOybmcgY2jhurVuIGzhursgY2hvIGLhuqNuZ1xyXG4udGFibGUtcm93IC50YWJsZS1oZWFkZXIgeyAvL3ThuqV0IGPhuqMgY8OhYyBj4buZdCBzYXUgY2xhc3MgbsOgeVxyXG4gICAgYmFja2dyb3VuZDogIzk5YjdmMGUwICFpbXBvcnRhbnQ7XHJcbiAgICBjb2xvcjojMGEwOTA5ZmIgIWltcG9ydGFudDtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG4udGFibGUtcm93IGlvbi1jb2wgeyAvL3ThuqV0IGPhuqMgY8OhYyBj4buZdCBzYXUgY2xhc3MgbsOgeVxyXG4gICAgYm9yZGVyOiBzb2xpZCAwLjFlbSAjRkZGRkZGO1xyXG4gICAgZm9udC1zaXplOiAxLjNlbTtcclxufVxyXG5cclxuLnRhYmxlLXJvdyBpb24tcm93Om50aC1vZi10eXBlKG9kZCkgeyAvL2TDsm5nIGzhurtcclxuICAgIGJhY2tncm91bmQ6ICNmYWZhZmFmNjtcclxuICAgIGNvbG9yOiMyMDIwMjA7XHJcbiAgICBvcGFjaXR5OiAwLjk7XHJcbn1cclxuXHJcbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShldmVuKSB7IC8vZMOybmcgY2jhurVuXHJcbiAgICBiYWNrZ3JvdW5kOiAjZTZmNWY4O1xyXG4gICAgY29sb3I6IzIwMjAyMDtcclxuICAgIG9wYWNpdHk6IDAuNztcclxufVxyXG5cclxuLmZpbGUtb3ZlciB7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBsZWZ0OiAwO1xyXG4gICAgei1pbmRleDogMjtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgb3BhY2l0eTogMTtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxufSIsIi5jYXJkLXRpdGxlLWhlYWRlciB7XG4gIGZvbnQtc2l6ZTogMS41ZW07XG4gIHdpZHRoOiA5MCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICBjb2xvcjogZGFya2JsdWU7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIG9wYWNpdHk6IDAuNztcbn1cblxuLmNhcmQtcHJvc3BlY3Qge1xuICBib3JkZXItcmFkaXVzOiAwLjhlbTtcbiAgYm9yZGVyOiBzb2xpZCAwLjE1ZW0gI0ZGRkZGRjtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbi5jYXJkLXByb3NwZWN0IC5wcm9zcGVjdC1oZWFkZXIge1xuICBmb250LXNpemU6IDEuMmVtO1xuICB3aWR0aDogMTAwJTtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIG9wYWNpdHk6IDAuOTtcbn1cblxuLnRhYmxlLXJvdyAudGFibGUtaGVhZGVyIHtcbiAgYmFja2dyb3VuZDogIzk5YjdmMGUwICFpbXBvcnRhbnQ7XG4gIGNvbG9yOiAjMGEwOTA5ZmIgIWltcG9ydGFudDtcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XG59XG5cbi50YWJsZS1yb3cgaW9uLWNvbCB7XG4gIGJvcmRlcjogc29saWQgMC4xZW0gI0ZGRkZGRjtcbiAgZm9udC1zaXplOiAxLjNlbTtcbn1cblxuLnRhYmxlLXJvdyBpb24tcm93Om50aC1vZi10eXBlKG9kZCkge1xuICBiYWNrZ3JvdW5kOiAjZmFmYWZhZjY7XG4gIGNvbG9yOiAjMjAyMDIwO1xuICBvcGFjaXR5OiAwLjk7XG59XG5cbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShldmVuKSB7XG4gIGJhY2tncm91bmQ6ICNlNmY1Zjg7XG4gIGNvbG9yOiAjMjAyMDIwO1xuICBvcGFjaXR5OiAwLjc7XG59XG5cbi5maWxlLW92ZXIge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgei1pbmRleDogMjtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgb3BhY2l0eTogMTtcbiAgY3Vyc29yOiBwb2ludGVyO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -121,9 +121,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngxi4-dynamic-service */ "./node_modules/ngxi4-dynamic-service/fesm2015/ngxi4-dynamic-service.js");
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! exceljs */ "./node_modules/exceljs/dist/exceljs.min.js");
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! file-saver */ "./node_modules/file-saver/dist/FileSaver.min.js");
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
+
+
+let config = {
+    sheet_name: { value: 'job_roles' },
+    noId: { value: "A" },
+    name: { value: "B" },
+    short_name: { value: "C" },
+    description: { value: "D" },
+    id: { value: "E" },
+    parent_id: { value: "F" },
+    organization_id: { value: "G" },
+    organization_name: { value: "H" }
+};
 let JobRolesPage = class JobRolesPage {
     constructor(apiAuth, apiCommon) {
         this.apiAuth = apiAuth;
@@ -133,7 +150,7 @@ let JobRolesPage = class JobRolesPage {
          */
         this.callbackKpi = function (res) {
             //console.log(res);
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 if (res.error) {
                     this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
                 }
@@ -148,6 +165,13 @@ let JobRolesPage = class JobRolesPage {
                 resolve({ next: "CLOSE" });
             });
         }.bind(this);
+        this.convertColExcel2Number = (val) => {
+            var base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', i, j, result = 0;
+            for (i = 0, j = val.length - 1; i < val.length; i += 1, j -= 1) {
+                result += Math.pow(base.length, j) * (base.indexOf(val[i]) + 1);
+            }
+            return result;
+        };
     }
     ngOnInit() {
         this.refreshNews();
@@ -155,13 +179,13 @@ let JobRolesPage = class JobRolesPage {
     refreshNews() {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
             try {
-                this.organizations = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-                    + "/get-organizations", true);
-                // console.log(this.organizations);
                 this.userReport = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
-                    + "/get-user-report", true);
+                    + "/get-user-report");
                 // console.log(this.userReport);
                 this.organizationId = this.userReport && this.userReport.organization_id ? this.userReport.organization_id : 0;
+                this.organizations = yield this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
+                    + "/get-organizations");
+                // console.log(this.organizations);
             }
             catch (e) { }
             this.onChangeSelect();
@@ -184,19 +208,31 @@ let JobRolesPage = class JobRolesPage {
                     this.jobRolesTree = this.apiCommon.createTreeMenu(this.jobRoles, 'id', 'parent_id');
                     // console.log(this.jobRolesTree);
                 }
-                // thêm thuộc tính click_type và main_tree cho cây chính
-                // ghép cây chức danh vào cây chính
+                let orgTree = [];
+                // lọc lấy những tổ chức theo id tổ chức của user
                 this.organizations.forEach(el => {
-                    el.click_type = 1; //cây chính cho click luôn
-                    el.main_tree = 1; //là cây chính
-                    // Ghép nhánh chức danh vào cây chính
-                    if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
-                        el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id); //mảng chức danh được ghép vào
+                    if (el.id === this.organizationId) {
+                        orgTree.push(el);
+                    }
+                    if (el.parent_id + '' == '' + this.organizationId) {
+                        orgTree.push(el);
                     }
                 });
-                // console.log(this.organizations);
-                // chuyển thành cây tổ chức và chức danh
-                this.organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
+                // console.log(orgTree);
+                // thêm thuộc tính click_type và main_tree cho cây chính
+                // ghép cây chức danh vào cây chính
+                orgTree.forEach(el => {
+                    el.click_type = 1; //cây chính cho click luôn
+                    el.main_tree = 1; //là cây chính
+                    // Nếu id khác id tổ chức của user thì mới ghép vào (tức là ds các chức danh của tổ chức, không phải là giám đốc)
+                    if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
+                        // ghép cây chức danh vào làm nhánh của cây tổ chức theo id tổ chức
+                        el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id);
+                    }
+                });
+                // console.log(orgTree);
+                // chuyển cây tổ chức và chức danh thành cây chính để hiển thị
+                this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
                 // console.log(this.organizationsTree);
                 // ghép chức danh giám đốc vào
                 this.organizationsTree.forEach(el => {
@@ -422,6 +458,131 @@ let JobRolesPage = class JobRolesPage {
             form: form,
             callback: this.callbackKpi
         });
+    }
+    onClickDownload() {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            let templateFile = this.apiAuth.serviceUrls.RESOURCE_SERVER + '/get-templates/sample-danhmuc-tochuc.xlsx';
+            let blobData = yield this.apiAuth.getDynamicUrl(templateFile, '', { responseType: 'blob' });
+            let fr = new FileReader();
+            fr.readAsArrayBuffer(blobData);
+            fr.onloadend = () => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+                let bufferData = fr.result;
+                let wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
+                let workbook = yield wb.xlsx.load(bufferData);
+                workbook.eachSheet(sheet => {
+                    if (sheet.name != config.sheet_name.value)
+                        sheet.state = 'hidden'; //ẩn các sheet không mong muốn
+                });
+                let worksheet = workbook.getWorksheet(config.sheet_name.value);
+                let row = worksheet.getRow(2);
+                row.getCell("A").value = this.organizationsTree[0].name;
+                row.getCell("E").value = this.organizationsTree[0].id;
+                // xác định bề rộng cho các cột
+                worksheet.getColumn(1).width = 5;
+                worksheet.getColumn(2).width = 30;
+                worksheet.getColumn(3).width = 18;
+                worksheet.getColumn(4).width = 30;
+                worksheet.getColumn(8).width = 20;
+                // tự động xuống hàng nếu text quá dài
+                worksheet.getColumn(2).alignment = { wrapText: true };
+                worksheet.getColumn(3).alignment = { wrapText: true };
+                worksheet.getColumn(4).alignment = { wrapText: true };
+                worksheet.getColumn(8).alignment = { wrapText: true };
+                let idx = 4;
+                // Lặp mảng để ghi dữ liệu vào excel
+                this.jobRoles.forEach(el => {
+                    row = worksheet.getRow(idx);
+                    row.getCell(config.noId.value).value = idx - 3;
+                    row.getCell(config.name.value).value = el.name;
+                    row.getCell(config.short_name.value).value = el.short_name;
+                    row.getCell(config.description.value).value = el.description;
+                    row.getCell(config.id.value).value = el.id;
+                    row.getCell(config.parent_id.value).value = el.parent_id;
+                    row.getCell(config.organization_id.value).value = el.organization_id;
+                    row.getCell(config.organization_name.value).value = el.organization_name;
+                    idx++;
+                });
+                workbook.views = [
+                    {
+                        x: 0, y: 0, width: 10000, height: 20000,
+                        firstSheet: 1, activeTab: 1, visibility: 'visible'
+                    }
+                ];
+                //Ghi file excel
+                workbook.xlsx.writeBuffer().then((data) => {
+                    let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    file_saver__WEBPACK_IMPORTED_MODULE_4__["saveAs"](blob, `excel-job_roles-${Date.now()}.xlsx`);
+                });
+            });
+        });
+    }
+    onClickUpload(ev) {
+        let arFile = ev.target.files;
+        // console.log(arFile);
+        let fr = new FileReader();
+        fr.readAsArrayBuffer(arFile[0]);
+        fr.onloadend = () => tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function* () {
+            let bufferData = fr.result;
+            let wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
+            try {
+                let workbook = yield wb.xlsx.load(bufferData);
+                let worksheet = workbook.getWorksheet(config.sheet_name.value);
+                let results = [];
+                worksheet.eachRow((row, rowIndex) => {
+                    if (rowIndex > 3) {
+                        let cols = {};
+                        for (let key in config) {
+                            let item = config[key];
+                            if (key != "sheet_name") {
+                                Object.defineProperty(cols, key, { value: this.getValueFormula(row.values[this.convertColExcel2Number(item.value)]) });
+                            }
+                        }
+                        results.push(cols);
+                    }
+                });
+                // console.log(results);
+                let returnFinish = { count_success: 0, count_fail: 0 };
+                for (const el of results) {
+                    let jsonPost = {
+                        name: el.name,
+                        short_name: el.short_name,
+                        description: el.description,
+                        id: el.id,
+                        parent_id: el.parent_id,
+                        organization_id: el.organization_id
+                    };
+                    // console.log(jsonPost);
+                    try {
+                        yield this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
+                            + '/post-job-roles', jsonPost);
+                        returnFinish.count_success++;
+                    }
+                    catch (err) {
+                        // console.log(err);
+                        returnFinish.count_fail++;
+                    }
+                }
+                console.log(returnFinish);
+                this.onChangeSelect();
+            }
+            catch (err) {
+                console.log('Lỗi đọc file excel nguồn!', err);
+            }
+            finally {
+            }
+        });
+    }
+    getValueFormula(obj) {
+        if (obj === null || obj === undefined)
+            return null;
+        if (typeof obj === 'object') {
+            // xử lý chuyển đổi chỉ lấy text thôi
+            if (obj.richText)
+                return obj.richText.map(o => o["text"]).join("");
+            // lấy giá trị bằng biểu thức function
+            return obj.result;
+        }
+        return obj;
     }
 };
 JobRolesPage.ctorParameters = () => [

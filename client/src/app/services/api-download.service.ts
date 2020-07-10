@@ -46,6 +46,7 @@ export class ApiDownloadService {
                   sheet.state = 'hidden';
                 }
               })
+              // Đợi cho đến khi arrayOutput có dữ liệu mới đi tiếp
               await this.apiCommon.delay(delayMilis || 5000, arrayOutput)
               // console.log(arrayOutput);
               if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
