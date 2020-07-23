@@ -119,31 +119,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @angular/common */
-    "./node_modules/@angular/common/fesm2015/common.js");
-    /* harmony import */
-
-
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! @angular/forms */
-    "./node_modules/@angular/forms/fesm2015/forms.js");
-    /* harmony import */
-
-
-    var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @ionic/angular */
     "./node_modules/@ionic/angular/dist/fesm5.js");
     /* harmony import */
 
 
-    var _home_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _home_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ./home-routing.module */
     "./src/app/pages/home/home-routing.module.ts");
     /* harmony import */
 
 
-    var _home_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _home_page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ./home.page */
     "./src/app/pages/home/home.page.ts");
 
@@ -152,8 +140,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     HomePageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"], _home_routing_module__WEBPACK_IMPORTED_MODULE_5__["HomePageRoutingModule"]],
-      declarations: [_home_page__WEBPACK_IMPORTED_MODULE_6__["HomePage"]]
+      imports: [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["IonicModule"], _home_routing_module__WEBPACK_IMPORTED_MODULE_3__["HomePageRoutingModule"]],
+      declarations: [_home_page__WEBPACK_IMPORTED_MODULE_4__["HomePage"]]
     })], HomePageModule);
     /***/
   },

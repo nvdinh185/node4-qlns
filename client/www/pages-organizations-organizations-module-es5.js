@@ -21,7 +21,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'#fafafaf6'\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          <ion-icon *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.id}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>";
+    __webpack_exports__["default"] = "<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'#fafafaf6'\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          <ion-icon *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.id}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>";
     /***/
   },
 
@@ -59,37 +59,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @ionic/angular */
-    "./node_modules/@ionic/angular/dist/fesm5.js");
-    /* harmony import */
-
-
-    var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/fesm2015/router.js");
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-    /*! @angular/common */
-    "./node_modules/@angular/common/fesm2015/common.js");
-    /* harmony import */
-
-
-    var _organizations_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _organizations_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! ./organizations.page */
     "./src/app/pages/organizations/organizations.page.ts");
     /* harmony import */
 
 
-    var ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-    /*! ngxi4-dynamic-service */
-    "./node_modules/ngxi4-dynamic-service/fesm2015/ngxi4-dynamic-service.js");
-    /* harmony import */
-
-
-    var _shared_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! ../../shared.module */
     "./src/app/shared.module.ts");
 
@@ -98,11 +80,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     OrganizationsPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-      imports: [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["IonicModule"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"], _shared_module__WEBPACK_IMPORTED_MODULE_7__["SharedModule"], ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_6__["Ngxi4DynamicServiceModule"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterModule"].forChild([{
+      imports: [_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild([{
         path: '',
-        component: _organizations_page__WEBPACK_IMPORTED_MODULE_5__["OrganizationsPage"]
+        component: _organizations_page__WEBPACK_IMPORTED_MODULE_3__["OrganizationsPage"]
       }])],
-      declarations: [_organizations_page__WEBPACK_IMPORTED_MODULE_5__["OrganizationsPage"]]
+      declarations: [_organizations_page__WEBPACK_IMPORTED_MODULE_3__["OrganizationsPage"]]
     })], OrganizationsPageModule);
     /***/
   },
@@ -225,13 +207,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          * Hàm xử lý kết quả post sửa thêm
          */
 
-        this.callbackKpi = function (res) {
+        this.callbackProcess = function (res) {
           // console.log(res);
-          return new Promise(function (resolve, reject) {
+          return new Promise(function (resolve) {
             if (res.error) {
               _this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
-            } else if (res.ajax) {//Khi thay đổi cần gọi ajax thì nó gọi cái này
-              //ta không cần refresh trang
             } else {
               //lấy lại kết quả đã tính toán
               _this.refreshNews();
@@ -378,7 +358,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
       }, {
         key: "onClickSpec",
-        value: function onClickSpec(ev, card) {
+        value: function onClickSpec(ev, item) {
           var _this4 = this;
 
           // console.log(card);
@@ -405,7 +385,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             menu: menu
           }).then(function (data) {
             // console.log(data);
-            _this4.processKpiDetails(data, card);
+            _this4.processDetails(data, item);
           })["catch"](function (err) {
             console.log('err: ', err);
           });
@@ -445,7 +425,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             menu: menu
           }).then(function (data) {
             // console.log(data);
-            _this5.processKpiDetails(data, event.item);
+            _this5.processDetails(data, event.item);
           })["catch"](function (err) {
             console.log('err: ', err);
           });
@@ -457,8 +437,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          */
 
       }, {
-        key: "processKpiDetails",
-        value: function processKpiDetails(cmd, item) {
+        key: "processDetails",
+        value: function processDetails(cmd, item) {
           //thêm tham số
           if (cmd.value === 'add-child') {
             var itemNew = {
@@ -574,7 +554,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.apiCommon.openModal(ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["DynamicFormMobilePage"], {
             parent: this,
             form: form,
-            callback: this.callbackKpi
+            callback: this.callbackProcess
           });
         }
         /**
@@ -599,8 +579,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               type: "hidden",
               key: "id",
               value: item.id
-            } //đối tượng để update
-            , {
+            }, {
               type: "hidden",
               key: "table_name",
               value: item.table_name
@@ -634,7 +613,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           this.apiCommon.openModal(ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["DynamicFormMobilePage"], {
             parent: this,
             form: form,
-            callback: this.callbackKpi
+            callback: this.callbackProcess
           });
         }
         /**
@@ -958,7 +937,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                               y: 0,
                               width: 10000,
                               height: 20000,
-                              // Set activeTab to 0
                               firstSheet: 0,
                               activeTab: 0,
                               visibility: 'visible'

@@ -32,7 +32,7 @@ export class ApiDownloadService {
             .then(async workbook => {
               // console.log(bufferData)
               let arrayOutput = [];
-              workbook.eachSheet(async (sheet) => {
+              workbook.eachSheet(async sheet => {
                 if (sheet.name === sheet_name) {
                   try {
                     let ws: Excel.Worksheet = sheet;
@@ -54,12 +54,11 @@ export class ApiDownloadService {
                 workbook.views = [
                   {
                     x: 0, y: 0, width: 10000, height: 20000,
-                    // Set activeTab to 0
                     firstSheet: 0, activeTab: 0, visibility: 'visible'
                   }
                 ];
 
-                workbook.xlsx.writeBuffer().then((data) => {
+                workbook.xlsx.writeBuffer().then(data => {
                   let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                   fs.saveAs(blob, `${file_name}-${sheet_name}-${Date.now()}.xlsx`);
                 })

@@ -3,11 +3,11 @@
 const fs = require('fs');
 const mime = require('mime-types');
 
-class Handler {
+class FileHandler {
 
     getTemplates(req, res, next) {
         let fileRead = "templates/" + req.params['0'];
-        let contentType = 'image/jpeg';
+        let contentType;
         // console.log(fileRead);
         if (mime.lookup(fileRead)) contentType = mime.lookup(fileRead);
 
@@ -25,4 +25,4 @@ class Handler {
 
 }
 
-module.exports = new Handler()
+module.exports = new FileHandler()

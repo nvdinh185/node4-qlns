@@ -7,7 +7,7 @@ const arrObj = require('../../utils/array-object');
 //bộ xử lý cơ sở dữ liệu db...
 const db = require('../../db/sqlite3/db-pool');
 
-class Handler {
+class ParametersHandler {
 
     /**
      * Hàm này sẽ đẩy dữ liệu json_data từ client vào csdl
@@ -71,4 +71,4 @@ class Handler {
 
 }
 
-module.exports = new Handler()
+module.exports = new ParametersHandler()

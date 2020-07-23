@@ -33,7 +33,7 @@ router.get('/get-staffs'
 
 
 router.get('/get-templates/*'
-    , fileHandler.getTemplates       // dựa vào giá trị req.user.username trả thông tin user
+    , fileHandler.getTemplates
 )
 
 router.post('/post-organizations'

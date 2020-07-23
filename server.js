@@ -1,24 +1,19 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
 function main(isHttp) {
 
-  // Web khai báo tĩnh - test local
   app.use(express.static(__dirname + '/client/www'));
-  // đường dẫn chính
-  app.use("/bsc-kpi", express.static(__dirname + '/client/www'));
-
+  
   // xử lý CORS handle
   app.use(require('./handlers/cors-handler').cors);
 
-  // Quản lý các chức năng của máy chủ resource của bsc-kpi
+  // Đường dẫn truy cập server
   app.use('/bsc-kpi/db', require('./routes/bsc-kpi/bsc-kpi-route'));
 
-  //ham tra loi cac dia chi khong co
-  app.all('*', (req, res) => {
-    //gui trang thai bao noi dung tra ve
-    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end('<h1>Xin lỗi trang bạn muốn tìm không tồn tại!</h1>Địa chỉ ip của bạn là : ' + req.clientIp);
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client/www', 'index.html'));
   });
 
   if (isHttp) {

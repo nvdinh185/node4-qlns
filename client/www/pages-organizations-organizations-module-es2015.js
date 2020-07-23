@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'#fafafaf6'\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          <ion-icon *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.id}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\r\n  <ion-toolbar color=\"primary\">\r\n\r\n    <ion-buttons slot=\"start\">\r\n      <ion-menu-button></ion-menu-button>\r\n      <ion-back-button></ion-back-button>\r\n      <ion-button>\r\n        <input class=\"file-over\" type=\"file\" (change)=\"onClickUpload($event)\"\r\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\r\n        <ion-icon name=\"cloud-upload\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n    <ion-title>MÔ HÌNH TỔ CHỨC</ion-title>\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-button (click)=\"onClickDownload()\">\r\n        <ion-icon name=\"cloud-download\"></ion-icon>\r\n      </ion-button>\r\n    </ion-buttons>\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-row>\r\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\r\n      [style.background]=\"'#fafafaf6'\">\r\n      <ion-row (click)=\"onClickSpec($event, item)\">\r\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          <ion-icon *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\" name=\"md-cloud-upload\">\r\n          </ion-icon>{{item.name}}\r\n        </ion-col>\r\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\r\n          {{item.id}}\r\n        </ion-col>\r\n      </ion-row>\r\n\r\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\r\n\r\n    </ion-col>\r\n  </ion-row>\r\n</ion-content>");
 
 /***/ }),
 
@@ -25,15 +25,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrganizationsPageModule", function() { return OrganizationsPageModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-/* harmony import */ var _organizations_page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./organizations.page */ "./src/app/pages/organizations/organizations.page.ts");
-/* harmony import */ var ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngxi4-dynamic-service */ "./node_modules/ngxi4-dynamic-service/fesm2015/ngxi4-dynamic-service.js");
-/* harmony import */ var _shared_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../shared.module */ "./src/app/shared.module.ts");
-
-
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _organizations_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./organizations.page */ "./src/app/pages/organizations/organizations.page.ts");
+/* harmony import */ var _shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared.module */ "./src/app/shared.module.ts");
 
 
 
@@ -44,18 +38,15 @@ let OrganizationsPageModule = class OrganizationsPageModule {
 OrganizationsPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         imports: [
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["IonicModule"],
-            _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"],
-            _shared_module__WEBPACK_IMPORTED_MODULE_7__["SharedModule"],
-            ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_6__["Ngxi4DynamicServiceModule"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterModule"].forChild([
+            _shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild([
                 {
                     path: '',
-                    component: _organizations_page__WEBPACK_IMPORTED_MODULE_5__["OrganizationsPage"]
+                    component: _organizations_page__WEBPACK_IMPORTED_MODULE_3__["OrganizationsPage"]
                 }
             ])
         ],
-        declarations: [_organizations_page__WEBPACK_IMPORTED_MODULE_5__["OrganizationsPage"]]
+        declarations: [_organizations_page__WEBPACK_IMPORTED_MODULE_3__["OrganizationsPage"]]
     })
 ], OrganizationsPageModule);
 
@@ -117,15 +108,11 @@ let OrganizationsPage = class OrganizationsPage {
         /**
          * Hàm xử lý kết quả post sửa thêm
          */
-        this.callbackKpi = (res) => {
+        this.callbackProcess = (res) => {
             // console.log(res);
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 if (res.error) {
                     this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
-                }
-                else if (res.ajax) {
-                    //Khi thay đổi cần gọi ajax thì nó gọi cái này
-                    //ta không cần refresh trang
                 }
                 else {
                     //lấy lại kết quả đã tính toán
@@ -198,7 +185,7 @@ let OrganizationsPage = class OrganizationsPage {
      * @param ev
      * @param card
      */
-    onClickSpec(ev, card) {
+    onClickSpec(ev, item) {
         // console.log(card);
         let menu = [
             {
@@ -227,7 +214,7 @@ let OrganizationsPage = class OrganizationsPage {
         })
             .then(data => {
             // console.log(data);
-            this.processKpiDetails(data, card);
+            this.processDetails(data, item);
         })
             .catch(err => {
             console.log('err: ', err);
@@ -267,7 +254,7 @@ let OrganizationsPage = class OrganizationsPage {
         })
             .then(data => {
             // console.log(data);
-            this.processKpiDetails(data, event.item);
+            this.processDetails(data, event.item);
         })
             .catch(err => {
             console.log('err: ', err);
@@ -278,7 +265,7 @@ let OrganizationsPage = class OrganizationsPage {
      * @param cmd
      * @param item
      */
-    processKpiDetails(cmd, item) {
+    processDetails(cmd, item) {
         //thêm tham số
         if (cmd.value === 'add-child') {
             let itemNew = {
@@ -339,7 +326,7 @@ let OrganizationsPage = class OrganizationsPage {
         this.apiCommon.openModal(ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["DynamicFormMobilePage"], {
             parent: this,
             form: form,
-            callback: this.callbackKpi
+            callback: this.callbackProcess
         });
     }
     /**
@@ -354,8 +341,7 @@ let OrganizationsPage = class OrganizationsPage {
             ],
             items: [
                 { type: "title", name: item.name },
-                { type: "hidden", key: "id", value: item.id } //đối tượng để update
-                ,
+                { type: "hidden", key: "id", value: item.id },
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres },
                 { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" },
@@ -374,7 +360,7 @@ let OrganizationsPage = class OrganizationsPage {
         this.apiCommon.openModal(ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["DynamicFormMobilePage"], {
             parent: this,
             form: form,
-            callback: this.callbackKpi
+            callback: this.callbackProcess
         });
     }
     /**
@@ -535,11 +521,10 @@ let ApiDownloadService = class ApiDownloadService {
                         workbook.views = [
                             {
                                 x: 0, y: 0, width: 10000, height: 20000,
-                                // Set activeTab to 0
                                 firstSheet: 0, activeTab: 0, visibility: 'visible'
                             }
                         ];
-                        workbook.xlsx.writeBuffer().then((data) => {
+                        workbook.xlsx.writeBuffer().then(data => {
                             let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                             file_saver__WEBPACK_IMPORTED_MODULE_4__["saveAs"](blob, `${file_name}-${sheet_name}-${Date.now()}.xlsx`);
                         });

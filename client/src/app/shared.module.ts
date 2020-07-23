@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
         , CommonModule
     ],
     declarations: [TreeList],
-    exports: [TreeList]
+    exports: [TreeList, IonicModule, CommonModule]
 })
 export class SharedModule { }

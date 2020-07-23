@@ -77,7 +77,7 @@ export class OrganizationsPage {
    * @param ev 
    * @param card 
    */
-  onClickSpec(ev, card) {
+  onClickSpec(ev, item) {
     // console.log(card);
     let menu =
       [
@@ -111,7 +111,7 @@ export class OrganizationsPage {
       })
       .then(data => {
         // console.log(data);
-        this.processKpiDetails(data, card)
+        this.processDetails(data, item)
       })
       .catch(err => {
         console.log('err: ', err);
@@ -158,7 +158,7 @@ export class OrganizationsPage {
       })
       .then(data => {
         // console.log(data);
-        this.processKpiDetails(data, event.item)
+        this.processDetails(data, event.item)
       })
       .catch(err => {
         console.log('err: ', err);
@@ -171,7 +171,7 @@ export class OrganizationsPage {
    * @param cmd 
    * @param item 
    */
-  processKpiDetails(cmd, item) {
+  processDetails(cmd, item) {
 
     //thêm tham số
     if (cmd.value === 'add-child') {
@@ -246,7 +246,7 @@ export class OrganizationsPage {
     this.apiCommon.openModal(DynamicFormMobilePage, {
       parent: this,
       form: form,
-      callback: this.callbackKpi
+      callback: this.callbackProcess
     })
 
   }
@@ -263,7 +263,7 @@ export class OrganizationsPage {
       ]
       , items: [
         { type: "title", name: item.name }
-        , { type: "hidden", key: "id", value: item.id } //đối tượng để update
+        , { type: "hidden", key: "id", value: item.id }
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
         , { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
@@ -283,24 +283,21 @@ export class OrganizationsPage {
     this.apiCommon.openModal(DynamicFormMobilePage, {
       parent: this,
       form: form,
-      callback: this.callbackKpi
+      callback: this.callbackProcess
     })
   }
 
   /**
    * Hàm xử lý kết quả post sửa thêm
    */
-  callbackKpi = (res) => {
+  callbackProcess = (res) => {
 
     // console.log(res);
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
 
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)))
-      } else if (res.ajax) {
-        //Khi thay đổi cần gọi ajax thì nó gọi cái này
-        //ta không cần refresh trang
       } else {
         //lấy lại kết quả đã tính toán
         this.refreshNews();

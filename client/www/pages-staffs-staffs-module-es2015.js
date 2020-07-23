@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar color=\"primary\">\n\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button></ion-back-button>\n      <ion-button>\n        <input class=\"file-over\" type=\"file\" multiple=\"single\" (change)=\"onClickUpload($event)\"\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\n        <ion-icon name=\"cloud-upload\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n\n    <ion-title>CÂY NHÂN SỰ</ion-title>\n\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"onClickDownload()\">\n        <ion-icon name=\"cloud-download\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-no-padding\">\n  <ion-row>\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\n      [style.background]=\"'#fafafaf6'\">\n\n      <ion-row (click)=\"onClickSpec($event, item)\">\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\n        </ion-col>\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\n          {{item.id}}\n        </ion-col>\n      </ion-row>\n\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\n\n    </ion-col>\n\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar color=\"primary\">\n\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n      <ion-back-button></ion-back-button>\n      <ion-button>\n        <input class=\"file-over\" type=\"file\" (change)=\"onClickUpload($event)\"\n          accept=\".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel\" />\n        <ion-icon name=\"cloud-upload\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n\n    <ion-title>CÂY NHÂN SỰ</ion-title>\n\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"onClickDownload()\">\n        <ion-icon name=\"cloud-download\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class=\"ion-no-padding\">\n  <ion-row>\n    <ion-col class=\"ion-text-center\" size=\"12\" class=\"card-prospect\" *ngFor=\"let item of organizationsTree\"\n      [style.background]=\"'#fafafaf6'\">\n\n      <ion-row (click)=\"onClickSpec($event, item)\">\n        <ion-col size=\"10\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\n          <ion-icon item-start *ngIf=\"item.click_type\" style=\"font-size: 1em\" [style.color]=\"'lightblue'\"\n            name=\"md-cloud-upload\"></ion-icon>{{item.name}}\n        </ion-col>\n        <ion-col size=\"2\" class=\"prospect-header\" [style.color]=\"'darkblue'\">\n          {{item.id}}\n        </ion-col>\n      </ion-row>\n\n      <tree-list [treeData]=\"item.subs\" (onClickKpi)=\"onClickTreeItem($event)\"></tree-list>\n\n    </ion-col>\n\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -62,15 +62,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StaffsPageModule", function() { return StaffsPageModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _staffs_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./staffs-routing.module */ "./src/app/pages/staffs/staffs-routing.module.ts");
-/* harmony import */ var _staffs_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./staffs.page */ "./src/app/pages/staffs/staffs.page.ts");
-/* harmony import */ var src_app_shared_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared.module */ "./src/app/shared.module.ts");
-
-
-
+/* harmony import */ var _staffs_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./staffs-routing.module */ "./src/app/pages/staffs/staffs-routing.module.ts");
+/* harmony import */ var _staffs_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./staffs.page */ "./src/app/pages/staffs/staffs.page.ts");
+/* harmony import */ var src_app_shared_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared.module */ "./src/app/shared.module.ts");
 
 
 
@@ -81,13 +75,10 @@ let StaffsPageModule = class StaffsPageModule {
 StaffsPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
-            src_app_shared_module__WEBPACK_IMPORTED_MODULE_7__["SharedModule"],
-            _staffs_routing_module__WEBPACK_IMPORTED_MODULE_5__["StaffsPageRoutingModule"]
+            src_app_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"],
+            _staffs_routing_module__WEBPACK_IMPORTED_MODULE_2__["StaffsPageRoutingModule"]
         ],
-        declarations: [_staffs_page__WEBPACK_IMPORTED_MODULE_6__["StaffsPage"]]
+        declarations: [_staffs_page__WEBPACK_IMPORTED_MODULE_3__["StaffsPage"]]
     })
 ], StaffsPageModule);
 
@@ -148,7 +139,7 @@ let StaffsPage = class StaffsPage {
         /**
          * Hàm xử lý kết quả post sửa thêm
          */
-        this.callbackKpi = function (res) {
+        this.callbackProcess = function (res) {
             //console.log(res);
             return new Promise(resolve => {
                 if (res.error) {
@@ -166,7 +157,7 @@ let StaffsPage = class StaffsPage {
                         if (Array.isArray(this.jobRoles)) {
                             this.jobRoles.forEach(el => {
                                 //chỉ lọc chức danh của tổ chức được chọn thôi
-                                if ('' + el.organization_id === '' + res.ajax.value) {
+                                if (el.organization_id == res.ajax.value) { //chỉ so sánh giá trị thôi (không so sánh kiểu)
                                     //lấy tùy chọn chức danh
                                     jobOptions.push({ name: el.name, value: parseInt(el.id) });
                                     //vì không biết chọn chức danh nào nên vẫn trả đủ danh sách chức danh kiêm nhiệm
@@ -203,7 +194,7 @@ let StaffsPage = class StaffsPage {
                                 this.jobRoles.forEach(el => {
                                     //chỉ lọc chức danh của tổ chức được chọn thôi
                                     //loại trừ chức danh được chọn
-                                    if ('' + el.organization_id === '' + elSelected.organization_id && '' + el.id !== '' + res.ajax.value) {
+                                    if (el.organization_id === elSelected.organization_id && el.id != res.ajax.value) {
                                         jobListOptions.push({ name: el.name, value: parseInt(el.id) });
                                     }
                                 });
@@ -339,8 +330,8 @@ let StaffsPage = class StaffsPage {
      * @param ev
      * @param card
      */
-    onClickSpec(ev, card) {
-        //console.log(card);
+    onClickSpec(ev, item) {
+        //console.log(item);
         let menu = [
             {
                 icon: {
@@ -360,7 +351,7 @@ let StaffsPage = class StaffsPage {
         })
             .then(data => {
             // console.log(data);
-            this.processKpiDetails(data, card);
+            this.processDetails(data, item);
         })
             .catch(err => {
             console.log('err: ', err);
@@ -373,7 +364,6 @@ let StaffsPage = class StaffsPage {
     onClickTreeItem(event) {
         //Khai báo menu popup
         let menu;
-        //cây nhân sự thuần
         if (!event.item.main_tree) {
             menu = [
                 {
@@ -415,7 +405,7 @@ let StaffsPage = class StaffsPage {
         })
             .then(data => {
             // console.log(data);
-            this.processKpiDetails(data, event.item);
+            this.processDetails(data, event.item);
         })
             .catch(err => {
             console.log('err: ', err);
@@ -426,7 +416,7 @@ let StaffsPage = class StaffsPage {
      * @param cmd
      * @param item
      */
-    processKpiDetails(cmd, item) {
+    processDetails(cmd, item) {
         //thêm tham số
         if (cmd.value === 'add-child') {
             let itemNew = {
@@ -494,11 +484,11 @@ let StaffsPage = class StaffsPage {
                 { type: "hidden", key: "organization_id", value: item.organization_id },
                 { type: "hidden", key: "table_name", value: item.table_name },
                 { type: "hidden", key: "wheres", value: item.wheres }
-                //hiển thị các thông tin của nhân sự
+                //Nhập các thông tin của nhân sự
                 ,
                 { type: "text", key: "name", value: item.name, name: "Họ và tên", input_type: "text", icon: "contact", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" },
                 { type: "select-origin", key: "organization_id", name: "Thuộc đơn vị", value: "" + item.organization_id, options: orgOptions, icon: "logo-windows", validators: [{ required: true }], hint: "Chọn một đơn vị trực thuộc" },
-                { type: "select-origin", key: "job_id", name: "Chức danh", value: "" + item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" },
+                { type: "select-origin", key: "job_id", name: "Chức danh", value: item.job_id ? "" + item.job_id : item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" },
                 { type: "select-multiple-origin", key: "job_list", name: "Chức danh kiêm nhiệm", value: [], options: jobListOptions, icon: "logo-buffer", hint: "Chọn các công việc kiêm nhiệm của cá nhân đó" },
                 {
                     type: "button",
@@ -516,7 +506,7 @@ let StaffsPage = class StaffsPage {
         this.apiCommon.openModal(ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["DynamicFormMobilePage"], {
             parent: this,
             form: form,
-            callback: this.callbackKpi
+            callback: this.callbackProcess
         });
     }
     /**
@@ -552,7 +542,7 @@ let StaffsPage = class StaffsPage {
         this.apiCommon.openModal(ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["DynamicFormMobilePage"], {
             parent: this,
             form: form,
-            callback: this.callbackKpi
+            callback: this.callbackProcess
         });
     }
     onClickDownload() {
@@ -565,9 +555,10 @@ let StaffsPage = class StaffsPage {
                 let bufferData = fr.result;
                 let wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
                 let workbook = yield wb.xlsx.load(bufferData);
+                //ẩn các sheet không mong muốn
                 workbook.eachSheet(sheet => {
                     if (sheet.name != config.sheet_name.value)
-                        sheet.state = 'hidden'; //ẩn các sheet không mong muốn
+                        sheet.state = 'hidden';
                 });
                 let worksheet = workbook.getWorksheet(config.sheet_name.value);
                 let row = worksheet.getRow(2);

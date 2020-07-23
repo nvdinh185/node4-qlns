@@ -4,7 +4,7 @@ const arrObj = require('../../utils/array-object');
 const db = require('../../db/sqlite3/db-pool');
 const vnUtils = require('../../utils/vietnamese-handler');
 
-class Handler {
+class BSCKPIHandler {
 
     async getUserReport(req, res, next) {
 
@@ -115,7 +115,7 @@ class Handler {
         // console.log(dataJson);
 
         try {
-            if (dataJson.id) {//Nếu có id
+            if (dataJson.id) {//Nếu có id thì update theo id
                 dataJson.updated_time = Date.now();
                 let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["id"]);
                 await db.update(updateSql);
@@ -217,4 +217,4 @@ class Handler {
 
 }
 
-module.exports = new Handler()
+module.exports = new BSCKPIHandler()

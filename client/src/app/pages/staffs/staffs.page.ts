@@ -157,8 +157,8 @@ export class StaffsPage implements OnInit {
    * @param ev 
    * @param card 
    */
-  onClickSpec(ev, card) {
-    //console.log(card);
+  onClickSpec(ev, item) {
+    //console.log(item);
     let menu = [
       {
         icon: {
@@ -181,7 +181,7 @@ export class StaffsPage implements OnInit {
       })
       .then(data => {
         // console.log(data);
-        this.processKpiDetails(data, card)
+        this.processDetails(data, item)
       })
       .catch(err => {
         console.log('err: ', err);
@@ -198,7 +198,6 @@ export class StaffsPage implements OnInit {
     //Khai báo menu popup
     let menu;
 
-    //cây nhân sự thuần
     if (!event.item.main_tree) {
       menu = [
         {
@@ -243,7 +242,7 @@ export class StaffsPage implements OnInit {
       })
       .then(data => {
         // console.log(data);
-        this.processKpiDetails(data, event.item)
+        this.processDetails(data, event.item)
       })
       .catch(err => {
         console.log('err: ', err);
@@ -255,7 +254,7 @@ export class StaffsPage implements OnInit {
    * @param cmd 
    * @param item 
    */
-  processKpiDetails(cmd, item) {
+  processDetails(cmd, item) {
 
     //thêm tham số
     if (cmd.value === 'add-child') {
@@ -343,10 +342,10 @@ export class StaffsPage implements OnInit {
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
 
-        //hiển thị các thông tin của nhân sự
+        //Nhập các thông tin của nhân sự
         , { type: "text", key: "name", value: item.name, name: "Họ và tên", input_type: "text", icon: "contact", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
         , { type: "select-origin", key: "organization_id", name: "Thuộc đơn vị", value: "" + item.organization_id, options: orgOptions, icon: "logo-windows", validators: [{ required: true }], hint: "Chọn một đơn vị trực thuộc" }
-        , { type: "select-origin", key: "job_id", name: "Chức danh", value: "" + item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" }
+        , { type: "select-origin", key: "job_id", name: "Chức danh", value: item.job_id ? "" + item.job_id : item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" }
         , { type: "select-multiple-origin", key: "job_list", name: "Chức danh kiêm nhiệm", value: [], options: jobListOptions, icon: "logo-buffer", hint: "Chọn các công việc kiêm nhiệm của cá nhân đó" }
         , {
           type: "button"
@@ -365,7 +364,7 @@ export class StaffsPage implements OnInit {
     this.apiCommon.openModal(DynamicFormMobilePage, {
       parent: this,
       form: form,
-      callback: this.callbackKpi
+      callback: this.callbackProcess
     })
 
   }
@@ -403,14 +402,14 @@ export class StaffsPage implements OnInit {
     this.apiCommon.openModal(DynamicFormMobilePage, {
       parent: this,
       form: form,
-      callback: this.callbackKpi
+      callback: this.callbackProcess
     })
   }
 
   /**
    * Hàm xử lý kết quả post sửa thêm
    */
-  callbackKpi = function (res) {
+  callbackProcess = function (res) {
 
     //console.log(res);
 
@@ -433,7 +432,7 @@ export class StaffsPage implements OnInit {
           if (Array.isArray(this.jobRoles)) {
             this.jobRoles.forEach(el => {
               //chỉ lọc chức danh của tổ chức được chọn thôi
-              if ('' + el.organization_id === '' + res.ajax.value) {
+              if (el.organization_id == res.ajax.value) {//chỉ so sánh giá trị thôi (không so sánh kiểu)
 
                 //lấy tùy chọn chức danh
                 jobOptions.push({ name: el.name, value: parseInt(el.id) })
@@ -474,7 +473,7 @@ export class StaffsPage implements OnInit {
               this.jobRoles.forEach(el => {
                 //chỉ lọc chức danh của tổ chức được chọn thôi
                 //loại trừ chức danh được chọn
-                if ('' + el.organization_id === '' + elSelected.organization_id && '' + el.id !== '' + res.ajax.value) {
+                if (el.organization_id === elSelected.organization_id && el.id != res.ajax.value) {
                   jobListOptions.push({ name: el.name, value: parseInt(el.id) })
                 }
               });
@@ -515,8 +514,9 @@ export class StaffsPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
+      //ẩn các sheet không mong muốn
       workbook.eachSheet(sheet => {
-        if (sheet.name != config.sheet_name.value) sheet.state = 'hidden';//ẩn các sheet không mong muốn
+        if (sheet.name != config.sheet_name.value) sheet.state = 'hidden';
       })
       let worksheet = workbook.getWorksheet(config.sheet_name.value);
 

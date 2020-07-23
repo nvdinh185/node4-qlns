@@ -87,7 +87,7 @@ export class JobRolesPage implements OnInit {
         if (el.id === this.organizationId) {
           orgTree.push(el)
         }
-        if (el.parent_id + '' == '' + this.organizationId) {
+        if (el.parent_id === this.organizationId) {
           orgTree.push(el)
         }
       })
@@ -100,7 +100,7 @@ export class JobRolesPage implements OnInit {
         el.main_tree = 1; //là cây chính
 
         // Nếu id khác id tổ chức của user thì mới ghép vào (tức là ds các chức danh của tổ chức, không phải là giám đốc)
-        if (this.jobRolesTree && el.id + '' !== '' + this.organizationId) {
+        if (this.jobRolesTree && el.id !== this.organizationId) {
           // ghép cây chức danh vào làm nhánh của cây tổ chức theo id tổ chức
           el.subs = this.jobRolesTree.filter(x => x.organization_id === el.id);
         }
@@ -141,8 +141,8 @@ export class JobRolesPage implements OnInit {
    * @param ev 
    * @param card 
    */
-  onClickSpec(ev, card) {
-    //console.log(card);
+  onClickSpec(ev, item) {
+    //console.log(item);
     let menu = [
       {
         name: "Thêm chức danh GĐ",
@@ -165,7 +165,7 @@ export class JobRolesPage implements OnInit {
       })
       .then(data => {
         // console.log(data);
-        this.processKpiDetails(data, card)
+        this.processDetails(data, item)
       })
       .catch(err => {
         console.log('err: ', err);
@@ -237,7 +237,7 @@ export class JobRolesPage implements OnInit {
       })
       .then(data => {
         // console.log(data);
-        this.processKpiDetails(data, event.item)
+        this.processDetails(data, event.item)
       })
       .catch(err => {
         console.log('err: ', err);
@@ -249,7 +249,7 @@ export class JobRolesPage implements OnInit {
    * @param cmd 
    * @param item 
    */
-  processKpiDetails(cmd, item) {
+  processDetails(cmd, item) {
 
     //thêm tham số
     if (cmd.value === 'add-child') {
@@ -298,7 +298,7 @@ export class JobRolesPage implements OnInit {
       ]
       , items: [
         { type: "title", name: item.name }
-        , { type: "hidden", key: "id", value: item.id } //đối tượng để update
+        , { type: "hidden", key: "id", value: item.id }
         , { type: "hidden", key: "table_name", value: item.table_name }
         , { type: "hidden", key: "wheres", value: item.wheres }
         , { type: "datetime", key: "changed_date", value: item.changed_date, name: "Chọn ngày thay đổi trạng thái", display: "DD/MM/YYYY", picker: "DD/MM/YYYY" }
@@ -318,7 +318,7 @@ export class JobRolesPage implements OnInit {
     this.apiCommon.openModal(DynamicFormMobilePage, {
       parent: this,
       form: form,
-      callback: this.callbackKpi
+      callback: this.callbackProcess
     })
   }
 
@@ -361,7 +361,7 @@ export class JobRolesPage implements OnInit {
     this.apiCommon.openModal(DynamicFormMobilePage, {
       parent: this,
       form: form,
-      callback: this.callbackKpi
+      callback: this.callbackProcess
     })
 
   }
@@ -369,7 +369,7 @@ export class JobRolesPage implements OnInit {
   /**
    * Hàm xử lý kết quả post sửa thêm xóa
    */
-  callbackKpi = function (res) {
+  callbackProcess = function (res) {
 
     //console.log(res);
 
@@ -377,9 +377,6 @@ export class JobRolesPage implements OnInit {
 
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
-      } else if (res.ajax) {
-        //Khi thay đổi cần gọi ajax thì nó gọi cái này
-        //ta không cần refresh trang
       } else {
         //lấy lại kết quả đã tính toán
         this.onChangeSelect();
@@ -397,8 +394,9 @@ export class JobRolesPage implements OnInit {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       let workbook = await wb.xlsx.load(bufferData);
+      //ẩn các sheet không mong muốn
       workbook.eachSheet(sheet => {
-        if (sheet.name != config.sheet_name.value) sheet.state = 'hidden';//ẩn các sheet không mong muốn
+        if (sheet.name !== config.sheet_name.value) sheet.state = 'hidden';
       })
       let worksheet = workbook.getWorksheet(config.sheet_name.value);
 

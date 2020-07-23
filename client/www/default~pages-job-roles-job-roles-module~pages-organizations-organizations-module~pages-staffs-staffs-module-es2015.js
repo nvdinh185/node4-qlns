@@ -156,7 +156,7 @@ SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"]
         ],
         declarations: [_components_tree_list_tree_list__WEBPACK_IMPORTED_MODULE_2__["TreeList"]],
-        exports: [_components_tree_list_tree_list__WEBPACK_IMPORTED_MODULE_2__["TreeList"]]
+        exports: [_components_tree_list_tree_list__WEBPACK_IMPORTED_MODULE_2__["TreeList"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"]]
     })
 ], SharedModule);
 
