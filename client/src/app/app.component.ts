@@ -7,7 +7,7 @@ import { AuthService } from 'ngxi4-dynamic-service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  
+
   treeMenu: any = [];
   constructor(private apiAuth: AuthService) { this.init(); }
 
@@ -16,7 +16,7 @@ export class AppComponent {
     // this.apiAuth.serviceUrls.RESOURCE_SERVER = 'https://dinh-qlns.herokuapp.com/bsc-kpi/db'
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.treeMenu = [
       {
         id: 1,
