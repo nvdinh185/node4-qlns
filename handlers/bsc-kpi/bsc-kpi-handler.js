@@ -8,11 +8,11 @@ class BSCKPIHandler {
 
     async getUserReport(req, res, next) {
 
-        let user = await db.getRst(`select c.name as organization_name, a.* 
+        let user = await db.getRst(`select a.organization_id
                                     from users a
-                                    LEFT JOIN organizations c
+                                    JOIN organizations c
                                     ON a.organization_id = c.id
-                                    where username = '766777123'
+                                    where a.username = '766777123'
                                     `);
 
         // console.log('user', user);
@@ -80,28 +80,34 @@ class BSCKPIHandler {
      * @param {*} res 
      * @param {*} next 
      */
-    getStaffs(req, res, next) {
-
-        db.getRsts(`select 
-                    a.name || '  - '  || b.name as view_name,
+    async getStaffs(req, res, next) {
+        try {
+            let listStaffs = await db.getRsts(`select
                     b.name as organization_name,
                     c.name as job_name,
                     a.*
                     from staffs a
-                    LEFT JOIN organizations b
+                    JOIN organizations b
                     ON a.organization_id = b.id
-                    LEFT JOIN job_roles c
+                    JOIN job_roles c
                     ON a.job_id = c.id
                     order by a.organization_id, a.first_name, a.last_name`)
-            .then(results => {
-                // console.log('results', results);
-                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(arrObj.getJsonStringify(results));
-            })
-            .catch(err => {
-                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify([]));
-            });
+
+            if (listStaffs.length > 0) {
+                for (const el of listStaffs) {
+                    if (el.job_list) {
+                        let job_list = el.job_list.replace("[", "(").replace("]", ")")
+                        el.job_list_name = await db.getRsts(`SELECT name FROM job_roles WHERE id IN ${job_list}`)
+                    }
+                }
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(arrObj.getJsonStringify(listStaffs));
+        } catch (err) {
+            console.log(err);
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify([]));
+        }
     }
 
     /**

@@ -31,7 +31,6 @@ router.get('/get-staffs'
     , handlers.getStaffs
 );
 
-
 router.get('/get-templates/*'
     , fileHandler.getTemplates
 )
