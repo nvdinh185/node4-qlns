@@ -197,15 +197,6 @@ export class JobRolesPage implements OnInit {
         ,
         {
           icon: {
-            name: "md-add",
-            color: "secondary",
-          },
-          name: "Thêm chức danh con",
-          value: "add-child"
-        }
-        ,
-        {
-          icon: {
             name: "trash",
             color: "danger",
           },
@@ -213,6 +204,18 @@ export class JobRolesPage implements OnInit {
           value: "stop-owner"
         }
       ];
+
+      //Nếu là chức danh quản lý thì mới có menu thêm chức danh con
+      if (event.item.$level == 1) {
+        menu.unshift({
+          icon: {
+            name: "md-add",
+            color: "secondary",
+          },
+          name: "Thêm chức danh con",
+          value: "add-child"
+        })
+      }
     } else {
       menu = [
         {
@@ -269,7 +272,7 @@ export class JobRolesPage implements OnInit {
     if (cmd.value === 'edit-owner') {
 
       item.table_name = 'job_roles'; //tên bảng cần đưa vào
-      item.wheres = ['id'];              //Mệnh đề wheres để update = '';
+      item.wheres = ['id'];         //Mệnh đề wheres để update
       item.title_name = item.name;
 
       this.addNewItem(item, 'edit');
@@ -279,7 +282,7 @@ export class JobRolesPage implements OnInit {
     if (cmd.value === 'stop-owner') {
 
       item.table_name = 'job_roles'; //tên bảng cần đưa vào
-      item.wheres = ['id'];         //Mệnh đề wheres để update = '';
+      item.wheres = ['id'];         //Mệnh đề wheres để update
 
       this.stopItem(item);
     }

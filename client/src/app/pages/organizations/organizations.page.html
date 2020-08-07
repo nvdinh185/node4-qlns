@@ -6,7 +6,7 @@
       <ion-back-button></ion-back-button>
       <ion-button>
         <input class="file-over" type="file" (change)="onClickUpload($event)"
-          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
         <ion-icon name="cloud-upload"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -24,7 +24,7 @@
 
 <ion-content>
   <ion-row>
-    <ion-col class="ion-text-center" size="12" class="card-prospect" *ngFor="let item of organizationsTree"
+    <ion-col size="12" class="card-prospect" *ngFor="let item of organizationsTree"
       [style.background]="'#fafafaf6'">
       <ion-row (click)="onClickSpec($event, item)">
         <ion-col size="10" class="prospect-header" [style.color]="'darkblue'">

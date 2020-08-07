@@ -9,7 +9,7 @@ import { AuthService } from 'ngxi4-dynamic-service';
 export class AppComponent {
 
   treeMenu: any = [];
-  constructor(private apiAuth: AuthService) { this.init(); }
+  constructor(private apiAuth: AuthService) { this.init() }
 
   init() {
     this.apiAuth.serviceUrls.RESOURCE_SERVER = 'http://localhost:9239/bsc-kpi/db'

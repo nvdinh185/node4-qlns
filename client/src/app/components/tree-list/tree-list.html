@@ -7,7 +7,8 @@
                 <ion-icon *ngIf="item.subs?.length" tappable (click)="toggleChildren(item)" style="font-size: 2em"
                     [style.color]="item.visible?'darkgoldenrod':'darkblue'"
                     name="{{item.visible?'remove-circle':'add-circle'}}"></ion-icon>
-                <ion-label class="ion-text-wrap" *ngIf="!item.subs?.length" style="font-size: 1.1em; font-weight: bold;">{{idx+1}}
+                <ion-label class="ion-text-wrap" *ngIf="!item.subs?.length"
+                    style="font-size: 1.1em; font-weight: bold;">{{idx+1}}
                 </ion-label>
             </ion-col>
 

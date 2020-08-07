@@ -19,7 +19,7 @@ export class ApiDownloadService {
     , file_name: string
     , config: any
     , callbackPromise: (worksheet: Excel.Worksheet, config: any) => { status: string, message: string, count: number } | { status: string, error: any }
-    , delayMilis?: number) {
+  ) {
     this.apiAuth.getDynamicUrl(urlTemplateFile, '', { responseType: 'blob' })
       .then(blobData => {
         // console.log(blobData);
@@ -47,7 +47,7 @@ export class ApiDownloadService {
                 }
               })
               // Đợi cho đến khi arrayOutput có dữ liệu mới đi tiếp
-              await this.apiCommon.delay(delayMilis || 5000, arrayOutput)
+              await this.apiCommon.delay(5000, arrayOutput)
               // console.log(arrayOutput);
               if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
 

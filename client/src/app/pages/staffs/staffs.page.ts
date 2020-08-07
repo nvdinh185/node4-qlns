@@ -14,6 +14,7 @@ let config = {
   , job_name: { value: "F" }
   , id: { value: "G" }
   , job_list: { value: "H" }
+  , job_list_name: { value: "I" }
 }
 
 @Component({
@@ -86,7 +87,15 @@ export class StaffsPage implements OnInit {
       //lấy danh sách nhân sự
       this.staffs = await this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER
         + "/get-staffs");
-
+      this.staffs.forEach(el => {
+        if (el.job_list_name) {
+          let name = []
+          el.job_list_name.forEach(el => {
+            name.push(el.name)
+          });
+          el.job_list_name = name
+        }
+      });
       // console.log(this.staffs);
 
       if (Array.isArray(this.staffs)) {
@@ -272,18 +281,18 @@ export class StaffsPage implements OnInit {
     //sửa tham số
     if (cmd.value === 'edit-owner') {
       item.table_name = 'staffs';         //tên bảng cần đưa vào
-      item.wheres = ['id'];              //Mệnh đề wheres để update = '';
+      item.wheres = ['id'];              //Mệnh đề wheres để update
       item.title_name = item.organization_name;
 
       this.addNewItem(item, 'edit');
     }
 
 
-    //thêm kpi từ Chỉ tiêu
+    //thay đổi trạng thái
     if (cmd.value === 'stop-owner') {
 
       item.table_name = 'staffs'; //tên bảng cần đưa vào
-      item.wheres = ['id'];              //Mệnh đề wheres để update = '';
+      item.wheres = ['id'];      //Mệnh đề wheres để update
 
       this.stopItem(item);
     }
@@ -329,9 +338,16 @@ export class StaffsPage implements OnInit {
       });
     }
 
+    // Lấy danh sách chức danh kiêm nhiệm đã có
+    let list_str = []
+    if (item.job_list) {
+      item.job_list.forEach(el => {
+        list_str.push("" + el)
+      });
+    }
+
     let form = {
       title: (type === 'add' ? 'THÊM' : 'SỬA') + " DANH MỤC"
-      , home_disable: true
       , buttons: [
         { color: "danger", icon: "close", next: "CLOSE" }
       ]
@@ -343,10 +359,10 @@ export class StaffsPage implements OnInit {
         , { type: "hidden", key: "wheres", value: item.wheres }
 
         //Nhập các thông tin của nhân sự
-        , { type: "text", key: "name", value: item.name, name: "Họ và tên", input_type: "text", icon: "contact", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 5 đến 100 ký tự" }
+        , { type: "text", key: "name", value: item.name, name: "Họ và tên", input_type: "text", icon: "contact", validators: [{ required: true, min: 3, max: 100 }], hint: "Độ dài tên cho phép từ 3 đến 100 ký tự" }
         , { type: "select-origin", key: "organization_id", name: "Thuộc đơn vị", value: "" + item.organization_id, options: orgOptions, icon: "logo-windows", validators: [{ required: true }], hint: "Chọn một đơn vị trực thuộc" }
-        , { type: "select-origin", key: "job_id", name: "Chức danh", value: item.job_id ? "" + item.job_id : item.job_id, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" }
-        , { type: "select-multiple-origin", key: "job_list", name: "Chức danh kiêm nhiệm", value: [], options: jobListOptions, icon: "logo-buffer", hint: "Chọn các công việc kiêm nhiệm của cá nhân đó" }
+        , { type: "select-origin", key: "job_id", name: "Chức danh", value: item.job_id ? "" + item.job_id : undefined, options: jobOptions, icon: "logo-wordpress", validators: [{ required: true }], hint: "Chọn một chức danh" }
+        , { type: "select-multiple-origin", key: "job_list", name: "Chức danh kiêm nhiệm", value: list_str, options: jobListOptions, icon: "logo-buffer", hint: "Chọn các công việc kiêm nhiệm của cá nhân đó" }
         , {
           type: "button"
           , options: [
@@ -491,11 +507,9 @@ export class StaffsPage implements OnInit {
 
           }
 
-        } else {
-          resolve({ next: "NO-CHANGE" }); //không có gì thay đổi cả
         }
 
-        return; //nếu gọi kiểu ajax thì chỉ trả về form đó thôi, không đóng form popup
+        return; //nếu gọi kiểu ajax thì chỉ trả về cho form đó thôi, không đóng form popup
 
       } else {
         //lấy lại kết quả đã tính toán
@@ -530,7 +544,7 @@ export class StaffsPage implements OnInit {
       worksheet.getColumn(4).width = 25
       worksheet.getColumn(6).width = 30
       worksheet.getColumn(8).width = 20
-      worksheet.getColumn(9).width = 20
+      worksheet.getColumn(9).width = 25
 
       // tự động xuống hàng nếu text quá dài
       worksheet.getColumn(2).alignment = { wrapText: true };
@@ -551,6 +565,7 @@ export class StaffsPage implements OnInit {
         row.getCell(config.job_name.value).value = el.job_name;
         row.getCell(config.id.value).value = el.id;
         row.getCell(config.job_list.value).value = el.job_list;
+        row.getCell(config.job_list_name.value).value = el.job_list_name;
         idx++;
       });
 
@@ -620,7 +635,6 @@ export class StaffsPage implements OnInit {
 
       } catch (err) {
         console.log('Lỗi đọc file excel nguồn!', err);
-      } finally {
       }
 
     }

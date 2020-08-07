@@ -78,7 +78,6 @@ export class OrganizationsPage {
    * @param card 
    */
   onClickSpec(ev, item) {
-    // console.log(card);
     let menu =
       [
         {
@@ -383,7 +382,6 @@ export class OrganizationsPage {
 
       } catch (err) {
         console.log('Lỗi đọc file excel nguồn!', err);
-      } finally {
       }
 
     }
