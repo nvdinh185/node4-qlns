@@ -28,7 +28,7 @@ export class AppComponent {
       }
       ,
       {
-        id: 1,
+        id: 2,
         name: 'Mô hình tổ chức',
         size: '1.1em',
         type: 'route',
@@ -37,7 +37,7 @@ export class AppComponent {
       }
       ,
       {
-        id: 2,
+        id: 3,
         name: 'Cây chức danh',
         type: 'route',
         url: '/job-roles',
@@ -45,7 +45,7 @@ export class AppComponent {
       }
       ,
       {
-        id: 3,
+        id: 4,
         name: 'Cây nhân sự',
         type: 'route',
         url: '/staffs',
