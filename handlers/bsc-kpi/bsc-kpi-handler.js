@@ -12,7 +12,7 @@ class BSCKPIHandler {
                                     from users a
                                     JOIN organizations c
                                     ON a.organization_id = c.id
-                                    where a.username = '766777123'
+                                    where a.username = '0766777123'
                                     `);
 
         // console.log('user', user);
