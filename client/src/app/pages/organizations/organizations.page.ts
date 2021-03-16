@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePage } from 'ngxi4-dynamic-service';
 import { ApiDownloadService } from 'src/app/services/api-download.service';
 import { ApiExcelService } from 'src/app/services/api-excel.service';
+import { Socket } from 'ngx-socket-io';
 
 import * as Excel from "exceljs";
 
@@ -32,10 +33,14 @@ export class OrganizationsPage {
     , private apiCommon: CommonsService
     , private apiDownload: ApiDownloadService
     , private apiExcel: ApiExcelService
+    , private socket: Socket
   ) { }
 
   ngOnInit() {
     this.refreshNews();
+    this.socket.on("Server-send-data", () => {
+      this.refreshNews();
+    });
   }
 
   async refreshNews() {
@@ -298,8 +303,8 @@ export class OrganizationsPage {
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)))
       } else {
-        //lấy lại kết quả đã tính toán
-        this.refreshNews();
+        //Báo cho socket biết là thực hiện xong
+        this.socket.emit('Client-send-data');
       }
       resolve({ next: "CLOSE" })
     })

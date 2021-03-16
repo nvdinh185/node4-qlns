@@ -2,13 +2,13 @@
 
 const router = require('express').Router();
 
-const postHandler = require('../../utils/post-handler');
+const postHandler = require('../utils/post-handler');
 
-const handlers = require('../../handlers/bsc-kpi/bsc-kpi-handler');
+const handlers = require('../handlers/qlns/qlns-handler');
 
-const parameterHandler = require("../../handlers/bsc-kpi/parameters-handler");
+const parameterHandler = require("../handlers/qlns/parameters-handler");
 
-const fileHandler = require('../../handlers/bsc-kpi/file-handler');
+const fileHandler = require('../handlers/qlns/file-handler');
 
 router.get('/get-user-report'
     , handlers.getUserReport

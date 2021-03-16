@@ -3,6 +3,7 @@ import { AuthService, CommonsService, PopoverCardComponent, DynamicFormMobilePag
 
 import * as Excel from "exceljs";
 import * as fs from 'file-saver';
+import { Socket } from 'ngx-socket-io';
 
 let config = {
   sheet_name: { value: 'job_roles' }
@@ -36,10 +37,14 @@ export class JobRolesPage implements OnInit {
   constructor(
     private apiAuth: AuthService
     , private apiCommon: CommonsService
+    , private socket: Socket
   ) { }
 
   ngOnInit() {
     this.refreshNews();
+    this.socket.on("server-job-role-done", () => {
+      this.onChangeSelect();
+    });
   }
 
   async refreshNews() {
@@ -382,7 +387,9 @@ export class JobRolesPage implements OnInit {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
       } else {
         //lấy lại kết quả đã tính toán
-        this.onChangeSelect();
+        // this.onChangeSelect();
+        //Báo cho socket biết là thực hiện xong
+        this.socket.emit('client-job-role-done');
       }
       resolve({ next: "CLOSE" })
     })

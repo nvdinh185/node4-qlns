@@ -4,7 +4,7 @@ const arrObj = require('../../utils/array-object');
 const db = require('../../db/sqlite3/db-pool');
 const vnUtils = require('../../utils/vietnamese-handler');
 
-class BSCKPIHandler {
+class QLNSHandler {
 
     async getUserReport(req, res, next) {
 
@@ -223,4 +223,4 @@ class BSCKPIHandler {
 
 }
 
-module.exports = new BSCKPIHandler()
+module.exports = new QLNSHandler()

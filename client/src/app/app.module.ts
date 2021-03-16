@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Ngxi4DynamicServiceModule } from 'ngxi4-dynamic-service'
 import { TreeMenu } from './components/tree-menu/tree-menu';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:9239', options: {} };
 
 @NgModule({
   declarations: [AppComponent, TreeMenu],
@@ -15,7 +18,8 @@ import { TreeMenu } from './components/tree-menu/tree-menu';
     BrowserModule,
     IonicModule.forRoot(),
     Ngxi4DynamicServiceModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
