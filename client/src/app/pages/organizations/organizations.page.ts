@@ -383,7 +383,8 @@ export class OrganizationsPage {
           }
         }
         console.log(returnFinish);
-        this.refreshNews();
+        //Báo cho socket biết là thực hiện xong
+        this.socket.emit('Client-send-data');
 
       } catch (err) {
         console.log('Lỗi đọc file excel nguồn!', err);

@@ -386,8 +386,6 @@ export class JobRolesPage implements OnInit {
       if (res.error) {
         this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
       } else {
-        //lấy lại kết quả đã tính toán
-        // this.onChangeSelect();
         //Báo cho socket biết là thực hiện xong
         this.socket.emit('client-job-role-done');
       }
@@ -505,7 +503,8 @@ export class JobRolesPage implements OnInit {
           }
         }
         console.log(returnFinish);
-        this.onChangeSelect();
+        //Báo cho socket biết là thực hiện xong
+        this.socket.emit('client-job-role-done');
 
       } catch (err) {
         console.log('Lỗi đọc file excel nguồn!', err);

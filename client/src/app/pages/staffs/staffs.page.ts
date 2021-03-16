@@ -517,8 +517,6 @@ export class StaffsPage implements OnInit {
         return; //nếu gọi kiểu ajax thì chỉ trả về cho form đó thôi, không đóng form popup
 
       } else {
-        //lấy lại kết quả đã tính toán
-        // this.onChangeSelect();
         //Báo cho socket biết là thực hiện xong
         this.socket.emit('client-staff-done');
       }
@@ -638,7 +636,8 @@ export class StaffsPage implements OnInit {
           }
         }
         console.log(returnFinish);
-        this.onChangeSelect();
+        //Báo cho socket biết là thực hiện xong
+        this.socket.emit('client-staff-done');
 
       } catch (err) {
         console.log('Lỗi đọc file excel nguồn!', err);
