@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommonsService, AuthService } from 'ngxi4-dynamic-service';
+import { AuthService } from 'ngxi4-dynamic-service';
 
 import * as Excel from "exceljs";
 import * as fs from 'file-saver';
@@ -10,7 +10,6 @@ export class ApiDownloadService {
 
   constructor(
     private apiAuth: AuthService,
-    private apiCommon: CommonsService
   ) { }
 
   processFileDownload(
@@ -34,20 +33,14 @@ export class ApiDownloadService {
               let arrayOutput = [];
               workbook.eachSheet(async sheet => {
                 if (sheet.name === sheet_name) {
-                  try {
-                    let ws: Excel.Worksheet = sheet;
-                    let resultCallback = await callbackPromise(ws, config);
-                    arrayOutput.splice(arrayOutput.length, 0, resultCallback);
-                  } catch (e) {
-                    console.log('Lỗi xử lý dữ liệu', e);
-                  }
+                  let ws: Excel.Worksheet = sheet;
+                  let resultCallback = callbackPromise(ws, config);
+                  arrayOutput.splice(arrayOutput.length, 0, resultCallback);
                 } else {
                   // ẩn các sheet không dùng đến
                   sheet.state = 'hidden';
                 }
               })
-              // Đợi cho đến khi arrayOutput có dữ liệu mới đi tiếp
-              await this.apiCommon.delay(5000, arrayOutput);
               // console.log(arrayOutput);
               if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
 

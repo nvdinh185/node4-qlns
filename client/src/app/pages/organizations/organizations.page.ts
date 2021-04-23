@@ -319,22 +319,16 @@ export class OrganizationsPage {
       , config.sheet_name.value
       , "excel"
       , config
-      , this.callbackDownload)
+      , this.callbackDownload);
   }
 
   /**
    * Hàm xử lý gọi lại download
    */
   callbackDownload = function (ws: Excel.Worksheet, config: any) {
-    return new Promise(async resolve => {
-      try {
-        let result = await this.apiExcel.processWriteExcel(this.organizationsTree, ws, config);
-        resolve({ status: "OK", message: "Xử lý thành công", count: result.count });
-      } catch (e) {
-        console.log("Lỗi xử lý dữ liệu callback process", e);
-        resolve({ status: "NOK", error: e });
-      }
-    })
+    let writeExcel = this.apiExcel.processWriteExcel(this.organizationsTree, ws, config);
+    // console.log(writeExcel);
+    return { status: "OK", message: "Xử lý thành công", count: writeExcel.count };
   }.bind(this)
 
   /**
