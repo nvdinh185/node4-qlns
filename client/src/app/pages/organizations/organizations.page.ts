@@ -6,7 +6,7 @@ import { Socket } from 'ngx-socket-io';
 
 import * as Excel from "exceljs";
 
-let config = {
+const config = {
   sheet_name: { value: "organizations" }
   , noId: { value: "A" }
   , name: { value: "B" }
@@ -162,7 +162,7 @@ export class OrganizationsPage {
       })
       .then(data => {
         // console.log(data);
-        this.processDetails(data, event.item)
+        this.processDetails(data, event.item);
       })
       .catch(err => {
         console.log('err: ', err);
@@ -328,12 +328,11 @@ export class OrganizationsPage {
   callbackDownload = function (ws: Excel.Worksheet, config: any) {
     return new Promise(async resolve => {
       try {
-        let result = await this.apiExcel.processWriteExcel(this.organizationsTree, ws, config)
-        resolve({ status: "OK", message: "Xử lý thành công", count: result.count })
+        let result = await this.apiExcel.processWriteExcel(this.organizationsTree, ws, config);
+        resolve({ status: "OK", message: "Xử lý thành công", count: result.count });
       } catch (e) {
         console.log("Lỗi xử lý dữ liệu callback process", e);
-        resolve({ status: "NOK", error: e })
-      } finally {
+        resolve({ status: "NOK", error: e });
       }
     })
   }.bind(this)
@@ -351,12 +350,12 @@ export class OrganizationsPage {
       let bufferData: any = fr.result;
       let wb = new Excel.Workbook();
       try {
-        let workbook = await wb.xlsx.load(bufferData)
+        let workbook = await wb.xlsx.load(bufferData);
         let worksheet = workbook.getWorksheet(config.sheet_name.value);
-        let results = []
+        let results = [];
         worksheet.eachRow((row, rowIndex) => {
           if (rowIndex > 3) {
-            let cols = {}
+            let cols = {};
             for (let key in config) {
               let item = config[key];
               if (key != "sheet_name") {
@@ -369,13 +368,13 @@ export class OrganizationsPage {
           }
         })
         // console.log(results);
-        let returnFinish = { count_success: 0, count_fail: 0 }
+        let returnFinish = { count_success: 0, count_fail: 0 };
         for (const el of results) {
           let jsonPost = { name: el.name, short_name: el.short_name, description: el.description, id: el.id, parent_id: el.parent_id }
           // console.log(jsonPost);
           try {
             await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-organizations', jsonPost)
+              + '/post-organizations', jsonPost);
             returnFinish.count_success++;
           } catch (err) {
             // console.log(err);
@@ -403,14 +402,14 @@ export class OrganizationsPage {
   }
 
   getValueFormula(obj) {
-    if (obj === null || obj === undefined) return null
+    if (obj === null || obj === undefined) return null;
     if (typeof obj === 'object') {
       // xử lý chuyển đổi chỉ lấy text thôi
-      if (obj.richText) return obj.richText.map(o => o["text"]).join("")
+      if (obj.richText) return obj.richText.map(o => o["text"]).join("");
       // lấy giá trị bằng biểu thức function
-      return obj.result
+      return obj.result;
     }
-    return obj
+    return obj;
   }
 
 }

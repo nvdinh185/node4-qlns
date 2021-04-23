@@ -33,10 +33,10 @@ export class ApiExcelService {
           index++;
         });
 
-        resolve({ status: "OK", count: index })
+        resolve({ status: "OK", count: index });
       } catch (e) {
         console.log(e);
-        reject({ status: "NOK", error: e })
+        reject({ status: "NOK", error: e });
       }
     })
   }

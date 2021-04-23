@@ -30,14 +30,14 @@ export class ApiDownloadService {
           let wb = new Excel.Workbook();
           wb.xlsx.load(bufferData)
             .then(async workbook => {
-              // console.log(bufferData)
+              // console.log(bufferData);
               let arrayOutput = [];
               workbook.eachSheet(async sheet => {
                 if (sheet.name === sheet_name) {
                   try {
                     let ws: Excel.Worksheet = sheet;
                     let resultCallback = await callbackPromise(ws, config);
-                    arrayOutput.splice(arrayOutput.length, 0, resultCallback)
+                    arrayOutput.splice(arrayOutput.length, 0, resultCallback);
                   } catch (e) {
                     console.log('Lỗi xử lý dữ liệu', e);
                   }
@@ -47,7 +47,7 @@ export class ApiDownloadService {
                 }
               })
               // Đợi cho đến khi arrayOutput có dữ liệu mới đi tiếp
-              await this.apiCommon.delay(5000, arrayOutput)
+              await this.apiCommon.delay(5000, arrayOutput);
               // console.log(arrayOutput);
               if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
 

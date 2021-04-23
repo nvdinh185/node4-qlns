@@ -126,8 +126,8 @@ class QLNSHandler {
                 let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["id"]);
                 await db.update(updateSql);
             } else {//không có id
-                let data = await db.getRsts(`select * from organizations where name = '${dataJson.name}'`);
-                if (data.length > 0) {//Nếu có name thì update theo name
+                let name = await db.getRsts(`select * from organizations where name = '${dataJson.name}'`);
+                if (name.length > 0) {//Nếu có name thì update theo name
                     dataJson.updated_time = Date.now();
                     let updateSql = arrObj.convertSqlFromJson("organizations", dataJson, ["name"]);
                     await db.update(updateSql);
