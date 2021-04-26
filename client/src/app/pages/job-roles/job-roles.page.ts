@@ -34,6 +34,8 @@ export class JobRolesPage implements OnInit {
   jobRoles: any; //danh sách chức danh lấy từ csdl
   jobRolesTree: any; // cây chức danh
 
+  orgTree: any;// cây tổ chức theo organization_id của user
+
   constructor(
     private apiAuth: AuthService
     , private apiCommon: CommonsService
@@ -72,6 +74,7 @@ export class JobRolesPage implements OnInit {
 
     this.organizationsTree = [];
     this.jobRolesTree = [];
+    this.orgTree = [];
 
     try {
       // lấy danh sách chức danh trong csdl
@@ -85,22 +88,20 @@ export class JobRolesPage implements OnInit {
         // console.log(this.jobRolesTree);
       }
 
-      let orgTree = []
-
       // lọc lấy những tổ chức theo id tổ chức của user
       this.organizations.forEach(el => {
         if (el.id === this.organizationId) {
-          orgTree.push(el)
+          this.orgTree.push(el)
         }
         if (el.parent_id === this.organizationId) {
-          orgTree.push(el)
+          this.orgTree.push(el)
         }
       })
-      // console.log(orgTree);
+      // console.log(this.orgTree);
 
       // thêm thuộc tính click_type và main_tree cho cây chính
       // ghép cây chức danh vào cây chính
-      orgTree.forEach(el => {
+      this.orgTree.forEach(el => {
         el.click_type = 1; //cây chính cho click luôn
         el.main_tree = 1; //là cây chính
 
@@ -111,10 +112,10 @@ export class JobRolesPage implements OnInit {
         }
 
       });
-      // console.log(orgTree);
+      // console.log(this.orgTree);
 
       // chuyển cây tổ chức và chức danh thành cây chính để hiển thị
-      this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
+      this.organizationsTree = this.apiCommon.createTreeMenu(this.orgTree, 'id', 'parent_id');
 
       // console.log(this.organizationsTree);
 
@@ -482,24 +483,33 @@ export class JobRolesPage implements OnInit {
           }
         })
         // console.log(results);
-        let returnFinish = { count_success: 0, count_fail: 0 }
-        for (const el of results) {
-          let jsonPost = {
-            name: el.name,
-            short_name: el.short_name,
-            description: el.description,
-            id: el.id,
-            parent_id: el.parent_id,
-            organization_id: el.organization_id
+        let returnFinish = { count_success: 0, count_fail: 0 };
+        // hàm này để kiểm tra organization_id post lên có nằm trong danh sách organization_id của user không?
+        let checkId = (id, arr) => {
+          for (let el of arr) {
+            if (id === el.id) return true;
           }
-          // console.log(jsonPost);
-          try {
-            await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-job-roles', jsonPost)
-            returnFinish.count_success++;
-          } catch (err) {
-            // console.log(err);
-            returnFinish.count_fail++;
+          return false;
+        }
+        for (const el of results) {
+          if (checkId(el.organization_id, this.orgTree)) {
+            let jsonPost = {
+              name: el.name,
+              short_name: el.short_name,
+              description: el.description,
+              id: el.id,
+              parent_id: el.parent_id,
+              organization_id: el.organization_id
+            }
+            // console.log(jsonPost);
+            try {
+              await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
+                + '/post-job-roles', jsonPost)
+              returnFinish.count_success++;
+            } catch (err) {
+              // console.log(err);
+              returnFinish.count_fail++;
+            }
           }
         }
         console.log(returnFinish);

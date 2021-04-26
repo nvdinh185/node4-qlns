@@ -35,6 +35,8 @@ export class StaffsPage implements OnInit {
 
   staffs: any;//danh sách nhân sự lấy từ csdl
 
+  orgTree: any;//
+
   constructor(
     private apiAuth: AuthService
     , private apiCommon: CommonsService
@@ -87,6 +89,7 @@ export class StaffsPage implements OnInit {
 
     //cây tổ chức
     this.organizationsTree = [];
+    this.orgTree = [];
 
     try {
       //lấy danh sách nhân sự
@@ -105,19 +108,17 @@ export class StaffsPage implements OnInit {
 
       if (Array.isArray(this.staffs)) {
 
-        let orgTree = []
-
         // Lọc danh sách nhân sự theo mã tổ chức của user
         this.organizations.forEach(el => {
           if (el.id === this.organizationId) {
-            orgTree.push(el)
+            this.orgTree.push(el)
           }
           if (el.parent_id === this.organizationId) {
-            orgTree.push(el)
+            this.orgTree.push(el)
           }
         })
 
-        orgTree.forEach(el => {
+        this.orgTree.forEach(el => {
           el.click_type = 1; //cây chính cho click luôn
           el.main_tree = 1; //là cây chính
 
@@ -129,10 +130,10 @@ export class StaffsPage implements OnInit {
           }
 
         });
-        // console.log(orgTree);
+        // console.log(this.orgTree);
 
         //tạo cây tổ chức để hiển thị lên form
-        this.organizationsTree = this.apiCommon.createTreeMenu(orgTree, 'id', 'parent_id');
+        this.organizationsTree = this.apiCommon.createTreeMenu(this.orgTree, 'id', 'parent_id');
         // console.log(this.organizationsTree);
 
         //ghép thêm nhân sự Giám đốc, Phó Giám đốc vào gốc cây
@@ -616,23 +617,32 @@ export class StaffsPage implements OnInit {
           }
         })
         // console.log(results);
-        let returnFinish = { count_success: 0, count_fail: 0 }
-        for (const el of results) {
-          let jsonPost = {
-            id: el.id,
-            organization_id: el.organization_id,
-            name: el.name,
-            job_id: el.job_id,
-            job_list: el.job_list,
+        let returnFinish = { count_success: 0, count_fail: 0 };
+        // hàm này để kiểm tra organization_id post lên có nằm trong danh sách organization_id của user không?
+        let checkId = (id, arr) => {
+          for (let el of arr) {
+            if (id === el.id) return true;
           }
-          // console.log(jsonPost);
-          try {
-            await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-staffs', jsonPost)
-            returnFinish.count_success++;
-          } catch (err) {
-            // console.log(err);
-            returnFinish.count_fail++;
+          return false;
+        }
+        for (const el of results) {
+          if (checkId(el.organization_id, this.orgTree)) {
+            let jsonPost = {
+              id: el.id,
+              organization_id: el.organization_id,
+              name: el.name,
+              job_id: el.job_id,
+              job_list: el.job_list,
+            }
+            // console.log(jsonPost);
+            try {
+              await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
+                + '/post-staffs', jsonPost)
+              returnFinish.count_success++;
+            } catch (err) {
+              // console.log(err);
+              returnFinish.count_fail++;
+            }
           }
         }
         console.log(returnFinish);

@@ -56,9 +56,6 @@ export class OrganizationsPage {
         + "/get-organizations");
       // console.log(this.organizations);
       if (Array.isArray(this.organizations)) {
-        this.organizations.forEach(el => {
-          el.click_type = 2;
-        });
 
         // Dùng service để chuyển thành cây tổ chức
         let organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id');
@@ -364,15 +361,17 @@ export class OrganizationsPage {
         // console.log(results);
         let returnFinish = { count_success: 0, count_fail: 0 };
         for (const el of results) {
-          let jsonPost = { name: el.name, short_name: el.short_name, description: el.description, id: el.id, parent_id: el.parent_id }
-          // console.log(jsonPost);
-          try {
-            await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
-              + '/post-organizations', jsonPost);
-            returnFinish.count_success++;
-          } catch (err) {
-            // console.log(err);
-            returnFinish.count_fail++;
+          if (el.parent_id === this.userReport.organization_id) {
+            let jsonPost = { name: el.name, short_name: el.short_name, description: el.description, id: el.id, parent_id: el.parent_id }
+            // console.log(jsonPost);
+            try {
+              await this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER
+                + '/post-organizations', jsonPost);
+              returnFinish.count_success++;
+            } catch (err) {
+              // console.log(err);
+              returnFinish.count_fail++;
+            }
           }
         }
         console.log(returnFinish);
