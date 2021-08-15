@@ -1,8 +1,8 @@
 {
   "name": "ionic4.qlns",
   "version": "0.0.1",
-  "author": "Cuongdq",
-  "homepage": "https://c3.mobifone.vn/bsc-kpi",
+  "author": "nvdinh185",
+  "homepage": "https://dinh-qlns.herokuapp.com/",
   "private": true,
   "scripts": {
     "start": "nodemon server"

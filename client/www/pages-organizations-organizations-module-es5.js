@@ -55,13 +55,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
     var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! @angular/router */
-    "./node_modules/@angular/router/fesm2015/router.js");
+    "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
     /* harmony import */
 
 
@@ -79,7 +79,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _classCallCheck(this, OrganizationsPageModule);
     };
 
-    OrganizationsPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+    OrganizationsPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
       imports: [_shared_module__WEBPACK_IMPORTED_MODULE_4__["SharedModule"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild([{
         path: '',
         component: _organizations_page__WEBPACK_IMPORTED_MODULE_3__["OrganizationsPage"]
@@ -105,7 +105,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = ".card-title-header {\n  font-size: 1.5em;\n  width: 90%;\n  font-weight: bold;\n  color: darkblue;\n  text-transform: uppercase;\n  opacity: 0.7;\n}\n\n.card-prospect {\n  border-radius: 0.8em;\n  border: solid 0.15em #FFFFFF;\n  width: 100%;\n}\n\n.card-prospect .prospect-header {\n  font-size: 1.2em;\n  width: 100%;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: 0.9;\n}\n\n.table-row .table-header {\n  background: #99b7f0e0 !important;\n  color: #0a0909fb !important;\n  font-weight: bold;\n}\n\n.table-row ion-col {\n  border: solid 0.1em #FFFFFF;\n  font-size: 1.3em;\n}\n\n.table-row ion-row:nth-of-type(odd) {\n  background: #fafafaf6;\n  color: #202020;\n  opacity: 0.9;\n}\n\n.table-row ion-row:nth-of-type(even) {\n  background: #e6f5f8;\n  color: #202020;\n  opacity: 0.7;\n}\n\n.file-over {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvb3JnYW5pemF0aW9ucy9EOlxcTVlEQVRBXFxMYXBUcmluaERpRG9uZ1xcTk9ERTRcXG5vZGU0LXFsbnNcXGNsaWVudC9zcmNcXGFwcFxccGFnZXNcXG9yZ2FuaXphdGlvbnNcXG9yZ2FuaXphdGlvbnMucGFnZS5zY3NzIiwic3JjL2FwcC9wYWdlcy9vcmdhbml6YXRpb25zL29yZ2FuaXphdGlvbnMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBO0VBQ0ksZ0JBQUE7RUFDQSxVQUFBO0VBQ0EsaUJBQUE7RUFDQSxlQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0FDQUo7O0FESUE7RUFDSSxvQkFBQTtFQUNBLDRCQUFBO0VBQ0EsV0FBQTtBQ0RKOztBREtBO0VBQ0ksZ0JBQUE7RUFDQSxXQUFBO0VBQ0EsaUJBQUE7RUFDQSx5QkFBQTtFQUNBLFlBQUE7QUNGSjs7QURNQTtFQUNJLGdDQUFBO0VBQ0EsMkJBQUE7RUFDQSxpQkFBQTtBQ0hKOztBRE1BO0VBQ0ksMkJBQUE7RUFDQSxnQkFBQTtBQ0hKOztBRE1BO0VBQ0kscUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ0hKOztBRE1BO0VBQ0ksbUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ0hKOztBRE1BO0VBQ0ksa0JBQUE7RUFDQSxNQUFBO0VBQ0EsT0FBQTtFQUNBLFVBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFVBQUE7RUFDQSxlQUFBO0FDSEoiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9vcmdhbml6YXRpb25zL29yZ2FuaXphdGlvbnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy90aGnhur90IGzhuq1wIGNo4buvIGNobyB0acOqdSDEkeG7gSBjw7RuZyB0eVxyXG4uY2FyZC10aXRsZS1oZWFkZXIge1xyXG4gICAgZm9udC1zaXplOiAxLjVlbTtcclxuICAgIHdpZHRoOiA5MCU7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxuICAgIGNvbG9yOiBkYXJrYmx1ZTtcclxuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn1cclxuXHJcbi8vVGhp4bq/dCBs4bqtcCBraHVuZyBu4buBbiB2w6AgY+G7oSBjaOG7ryBjaG8gY2FyZCB2aeG7hW4gY+G6o25oXHJcbi5jYXJkLXByb3NwZWN0e1xyXG4gICAgYm9yZGVyLXJhZGl1czogMC44ZW07XHJcbiAgICBib3JkZXI6IHNvbGlkIDAuMTVlbSAjRkZGRkZGO1xyXG4gICAgd2lkdGg6MTAwJTtcclxuICAgIC8vb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcclxuICAgIGZvbnQtc2l6ZTogMS4yZW07XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgIG9wYWNpdHk6IDAuOTtcclxufVxyXG5cclxuLy9UaGnhur90IGzhuq1wIGTDsm5nIGNo4bq1biBs4bq7IGNobyBi4bqjbmdcclxuLnRhYmxlLXJvdyAudGFibGUtaGVhZGVyIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xyXG4gICAgY29sb3I6IzBhMDkwOWZiICFpbXBvcnRhbnQ7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuLnRhYmxlLXJvdyBpb24tY29sIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJvcmRlcjogc29saWQgMC4xZW0gI0ZGRkZGRjtcclxuICAgIGZvbnQtc2l6ZTogMS4zZW07XHJcbn1cclxuXHJcbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHsgLy9kw7JuZyBs4bq7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZmFmYWZhZjY7XHJcbiAgICBjb2xvcjojMjAyMDIwO1xyXG4gICAgb3BhY2l0eTogMC45O1xyXG59XHJcblxyXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikgeyAvL2TDsm5nIGNo4bq1blxyXG4gICAgYmFja2dyb3VuZDogI2U2ZjVmODtcclxuICAgIGNvbG9yOiMyMDIwMjA7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn1cclxuXHJcbi5maWxlLW92ZXIge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAwO1xyXG4gICAgbGVmdDogMDtcclxuICAgIHotaW5kZXg6IDI7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIG9wYWNpdHk6IDE7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbn0iLCIuY2FyZC10aXRsZS1oZWFkZXIge1xuICBmb250LXNpemU6IDEuNWVtO1xuICB3aWR0aDogOTAlO1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgY29sb3I6IGRhcmtibHVlO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjc7XG59XG5cbi5jYXJkLXByb3NwZWN0IHtcbiAgYm9yZGVyLXJhZGl1czogMC44ZW07XG4gIGJvcmRlcjogc29saWQgMC4xNWVtICNGRkZGRkY7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcbiAgZm9udC1zaXplOiAxLjJlbTtcbiAgd2lkdGg6IDEwMCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjk7XG59XG5cbi50YWJsZS1yb3cgLnRhYmxlLWhlYWRlciB7XG4gIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xuICBjb2xvcjogIzBhMDkwOWZiICFpbXBvcnRhbnQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG4udGFibGUtcm93IGlvbi1jb2wge1xuICBib3JkZXI6IHNvbGlkIDAuMWVtICNGRkZGRkY7XG4gIGZvbnQtc2l6ZTogMS4zZW07XG59XG5cbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHtcbiAgYmFja2dyb3VuZDogI2ZhZmFmYWY2O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC45O1xufVxuXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikge1xuICBiYWNrZ3JvdW5kOiAjZTZmNWY4O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC43O1xufVxuXG4uZmlsZS1vdmVyIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDA7XG4gIGxlZnQ6IDA7XG4gIHotaW5kZXg6IDI7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IDEwMCU7XG4gIG9wYWNpdHk6IDE7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn0iXX0= */";
+    __webpack_exports__["default"] = ".card-title-header {\n  font-size: 1.5em;\n  width: 90%;\n  font-weight: bold;\n  color: darkblue;\n  text-transform: uppercase;\n  opacity: 0.7;\n}\n\n.card-prospect {\n  border-radius: 0.8em;\n  border: solid 0.15em #FFFFFF;\n  width: 100%;\n}\n\n.card-prospect .prospect-header {\n  font-size: 1.2em;\n  width: 100%;\n  font-weight: bold;\n  text-transform: uppercase;\n  opacity: 0.9;\n}\n\n.table-row .table-header {\n  background: #99b7f0e0 !important;\n  color: #0a0909fb !important;\n  font-weight: bold;\n}\n\n.table-row ion-col {\n  border: solid 0.1em #FFFFFF;\n  font-size: 1.3em;\n}\n\n.table-row ion-row:nth-of-type(odd) {\n  background: #fafafaf6;\n  color: #202020;\n  opacity: 0.9;\n}\n\n.table-row ion-row:nth-of-type(even) {\n  background: #e6f5f8;\n  color: #202020;\n  opacity: 0.7;\n}\n\n.file-over {\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  cursor: pointer;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvb3JnYW5pemF0aW9ucy9FOlxcTVlEQVRBXFxMQVBUUklOSFxcTk9ERTRcXG5vZGU0LXFsbnNcXGNsaWVudC9zcmNcXGFwcFxccGFnZXNcXG9yZ2FuaXphdGlvbnNcXG9yZ2FuaXphdGlvbnMucGFnZS5zY3NzIiwic3JjL2FwcC9wYWdlcy9vcmdhbml6YXRpb25zL29yZ2FuaXphdGlvbnMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBO0VBQ0ksZ0JBQUE7RUFDQSxVQUFBO0VBQ0EsaUJBQUE7RUFDQSxlQUFBO0VBQ0EseUJBQUE7RUFDQSxZQUFBO0FDQUo7O0FESUE7RUFDSSxvQkFBQTtFQUNBLDRCQUFBO0VBQ0EsV0FBQTtBQ0RKOztBREtBO0VBQ0ksZ0JBQUE7RUFDQSxXQUFBO0VBQ0EsaUJBQUE7RUFDQSx5QkFBQTtFQUNBLFlBQUE7QUNGSjs7QURNQTtFQUNJLGdDQUFBO0VBQ0EsMkJBQUE7RUFDQSxpQkFBQTtBQ0hKOztBRE1BO0VBQ0ksMkJBQUE7RUFDQSxnQkFBQTtBQ0hKOztBRE1BO0VBQ0kscUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ0hKOztBRE1BO0VBQ0ksbUJBQUE7RUFDQSxjQUFBO0VBQ0EsWUFBQTtBQ0hKOztBRE1BO0VBQ0ksa0JBQUE7RUFDQSxNQUFBO0VBQ0EsT0FBQTtFQUNBLFVBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLFVBQUE7RUFDQSxlQUFBO0FDSEoiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy9vcmdhbml6YXRpb25zL29yZ2FuaXphdGlvbnMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy90aGnhur90IGzhuq1wIGNo4buvIGNobyB0acOqdSDEkeG7gSBjw7RuZyB0eVxyXG4uY2FyZC10aXRsZS1oZWFkZXIge1xyXG4gICAgZm9udC1zaXplOiAxLjVlbTtcclxuICAgIHdpZHRoOiA5MCU7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxuICAgIGNvbG9yOiBkYXJrYmx1ZTtcclxuICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn1cclxuXHJcbi8vVGhp4bq/dCBs4bqtcCBraHVuZyBu4buBbiB2w6AgY+G7oSBjaOG7ryBjaG8gY2FyZCB2aeG7hW4gY+G6o25oXHJcbi5jYXJkLXByb3NwZWN0e1xyXG4gICAgYm9yZGVyLXJhZGl1czogMC44ZW07XHJcbiAgICBib3JkZXI6IHNvbGlkIDAuMTVlbSAjRkZGRkZGO1xyXG4gICAgd2lkdGg6MTAwJTtcclxuICAgIC8vb3BhY2l0eTogMC44O1xyXG59XHJcblxyXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcclxuICAgIGZvbnQtc2l6ZTogMS4yZW07XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgIG9wYWNpdHk6IDAuOTtcclxufVxyXG5cclxuLy9UaGnhur90IGzhuq1wIGTDsm5nIGNo4bq1biBs4bq7IGNobyBi4bqjbmdcclxuLnRhYmxlLXJvdyAudGFibGUtaGVhZGVyIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xyXG4gICAgY29sb3I6IzBhMDkwOWZiICFpbXBvcnRhbnQ7XHJcbiAgICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG5cclxuLnRhYmxlLXJvdyBpb24tY29sIHsgLy904bqldCBj4bqjIGPDoWMgY+G7mXQgc2F1IGNsYXNzIG7DoHlcclxuICAgIGJvcmRlcjogc29saWQgMC4xZW0gI0ZGRkZGRjtcclxuICAgIGZvbnQtc2l6ZTogMS4zZW07XHJcbn1cclxuXHJcbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHsgLy9kw7JuZyBs4bq7XHJcbiAgICBiYWNrZ3JvdW5kOiAjZmFmYWZhZjY7XHJcbiAgICBjb2xvcjojMjAyMDIwO1xyXG4gICAgb3BhY2l0eTogMC45O1xyXG59XHJcblxyXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikgeyAvL2TDsm5nIGNo4bq1blxyXG4gICAgYmFja2dyb3VuZDogI2U2ZjVmODtcclxuICAgIGNvbG9yOiMyMDIwMjA7XHJcbiAgICBvcGFjaXR5OiAwLjc7XHJcbn1cclxuXHJcbi5maWxlLW92ZXIge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgdG9wOiAwO1xyXG4gICAgbGVmdDogMDtcclxuICAgIHotaW5kZXg6IDI7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIG9wYWNpdHk6IDE7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbn0iLCIuY2FyZC10aXRsZS1oZWFkZXIge1xuICBmb250LXNpemU6IDEuNWVtO1xuICB3aWR0aDogOTAlO1xuICBmb250LXdlaWdodDogYm9sZDtcbiAgY29sb3I6IGRhcmtibHVlO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjc7XG59XG5cbi5jYXJkLXByb3NwZWN0IHtcbiAgYm9yZGVyLXJhZGl1czogMC44ZW07XG4gIGJvcmRlcjogc29saWQgMC4xNWVtICNGRkZGRkY7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4uY2FyZC1wcm9zcGVjdCAucHJvc3BlY3QtaGVhZGVyIHtcbiAgZm9udC1zaXplOiAxLjJlbTtcbiAgd2lkdGg6IDEwMCU7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICBvcGFjaXR5OiAwLjk7XG59XG5cbi50YWJsZS1yb3cgLnRhYmxlLWhlYWRlciB7XG4gIGJhY2tncm91bmQ6ICM5OWI3ZjBlMCAhaW1wb3J0YW50O1xuICBjb2xvcjogIzBhMDkwOWZiICFpbXBvcnRhbnQ7XG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG4udGFibGUtcm93IGlvbi1jb2wge1xuICBib3JkZXI6IHNvbGlkIDAuMWVtICNGRkZGRkY7XG4gIGZvbnQtc2l6ZTogMS4zZW07XG59XG5cbi50YWJsZS1yb3cgaW9uLXJvdzpudGgtb2YtdHlwZShvZGQpIHtcbiAgYmFja2dyb3VuZDogI2ZhZmFmYWY2O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC45O1xufVxuXG4udGFibGUtcm93IGlvbi1yb3c6bnRoLW9mLXR5cGUoZXZlbikge1xuICBiYWNrZ3JvdW5kOiAjZTZmNWY4O1xuICBjb2xvcjogIzIwMjAyMDtcbiAgb3BhY2l0eTogMC43O1xufVxuXG4uZmlsZS1vdmVyIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDA7XG4gIGxlZnQ6IDA7XG4gIHotaW5kZXg6IDI7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IDEwMCU7XG4gIG9wYWNpdHk6IDE7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn0iXX0= */";
     /***/
   },
 
@@ -139,13 +139,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
     var ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ngxi4-dynamic-service */
-    "./node_modules/ngxi4-dynamic-service/fesm2015/ngxi4-dynamic-service.js");
+    "./node_modules/ngxi4-dynamic-service/__ivy_ngcc__/fesm2015/ngxi4-dynamic-service.js");
     /* harmony import */
 
 
@@ -161,13 +161,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var exceljs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var ngx_socket_io__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ngx-socket-io */
+    "./node_modules/ngx-socket-io/__ivy_ngcc__/fesm2015/ngx-socket-io.js");
+    /* harmony import */
+
+
+    var exceljs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! exceljs */
     "./node_modules/exceljs/dist/exceljs.min.js");
     /* harmony import */
 
 
-    var exceljs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_5__);
+    var exceljs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_6__);
 
     var config = {
       sheet_name: {
@@ -194,7 +200,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
 
     var OrganizationsPage = /*#__PURE__*/function () {
-      function OrganizationsPage(apiAuth, apiCommon, apiDownload, apiExcel) {
+      function OrganizationsPage(apiAuth, apiCommon, apiDownload, apiExcel, socket) {
         var _this = this;
 
         _classCallCheck(this, OrganizationsPage);
@@ -203,8 +209,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.apiCommon = apiCommon;
         this.apiDownload = apiDownload;
         this.apiExcel = apiExcel;
+        this.socket = socket;
         /**
-         * Hàm xử lý kết quả post sửa thêm
+         * Hàm xử lý kết quả post thêm sửa xóa
          */
 
         this.callbackProcess = function (res) {
@@ -213,8 +220,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             if (res.error) {
               _this.apiCommon.presentAlert('Lỗi:<br>' + (res.error && res.error.message ? res.error.message : "Error Unknow: " + JSON.stringify(res.error)));
             } else {
-              //lấy lại kết quả đã tính toán
-              _this.refreshNews();
+              //Báo cho socket biết là thực hiện xong
+              _this.socket.emit('Client-send-data');
             }
 
             resolve({
@@ -228,50 +235,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
         this.callbackDownload = function (ws, config) {
-          var _this2 = this;
+          var writeExcel = this.apiExcel.processWriteExcel(this.organizationsTree, ws, config); // console.log(writeExcel);
 
-          return new Promise(function (resolve) {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this2, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var result;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      _context.prev = 0;
-                      _context.next = 3;
-                      return this.apiExcel.processWriteExcel(this.organizationsTree, ws, config);
-
-                    case 3:
-                      result = _context.sent;
-                      resolve({
-                        status: "OK",
-                        message: "Xử lý thành công",
-                        count: result.count
-                      });
-                      _context.next = 11;
-                      break;
-
-                    case 7:
-                      _context.prev = 7;
-                      _context.t0 = _context["catch"](0);
-                      console.log("Lỗi xử lý dữ liệu callback process", _context.t0);
-                      resolve({
-                        status: "NOK",
-                        error: _context.t0
-                      });
-
-                    case 11:
-                      _context.prev = 11;
-                      return _context.finish(11);
-
-                    case 13:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this, [[0, 7, 11, 13]]);
-            }));
-          });
+          return {
+            status: "OK",
+            message: "Xử lý thành công",
+            count: writeExcel.count
+          };
         }.bind(this);
 
         this.convertColExcel2Number = function (val) {
@@ -291,37 +261,39 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(OrganizationsPage, [{
         key: "ngOnInit",
         value: function ngOnInit() {
+          var _this2 = this;
+
           this.refreshNews();
+          this.socket.on("Server-send-data", function () {
+            _this2.refreshNews();
+          });
         }
       }, {
         key: "refreshNews",
         value: function refreshNews() {
-          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+          return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
             var _this3 = this;
 
             var organizationsTree;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
-                switch (_context2.prev = _context2.next) {
+                switch (_context.prev = _context.next) {
                   case 0:
-                    _context2.prev = 0;
-                    _context2.next = 3;
+                    _context.prev = 0;
+                    _context.next = 3;
                     return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-user-report");
 
                   case 3:
-                    this.userReport = _context2.sent;
-                    _context2.next = 6;
+                    this.userReport = _context.sent;
+                    _context.next = 6;
                     return this.apiAuth.getDynamicUrl(this.apiAuth.serviceUrls.RESOURCE_SERVER + "/get-organizations");
 
                   case 6:
-                    this.organizations = _context2.sent;
+                    this.organizations = _context.sent;
 
                     // console.log(this.organizations);
                     if (Array.isArray(this.organizations)) {
-                      this.organizations.forEach(function (el) {
-                        el.click_type = 2;
-                      }); // Dùng service để chuyển thành cây tổ chức
-
+                      // Dùng service để chuyển thành cây tổ chức
                       organizationsTree = this.apiCommon.createTreeMenu(this.organizations, 'id', 'parent_id'); // console.log(organizationsTree);
                       // Lấy cây tổ chức theo userReport.organization_id
 
@@ -335,19 +307,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     }
 
-                    _context2.next = 12;
+                    _context.next = 12;
                     break;
 
                   case 10:
-                    _context2.prev = 10;
-                    _context2.t0 = _context2["catch"](0);
+                    _context.prev = 10;
+                    _context.t0 = _context["catch"](0);
 
                   case 12:
                   case "end":
-                    return _context2.stop();
+                    return _context.stop();
                 }
               }
-            }, _callee2, this, [[0, 10]]);
+            }, _callee, this, [[0, 10]]);
           }));
         }
         /**
@@ -448,7 +420,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               title_name: item.name //tên của cấp cha
 
             };
-            this.addNewItem(itemNew, 'add');
+            this.updateItem(itemNew, 'add');
           } //sửa tham số
 
 
@@ -458,7 +430,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             item.wheres = ['id']; //Mệnh đề wheres để update = '';
 
             item.title_name = item.name;
-            this.addNewItem(item, 'edit');
+            this.updateItem(item, 'edit');
           } //tạm dừng tham số
 
 
@@ -476,8 +448,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          */
 
       }, {
-        key: "addNewItem",
-        value: function addNewItem(item, type) {
+        key: "updateItem",
+        value: function updateItem(item, type) {
           var form = {
             title: (type === 'add' ? 'THÊM' : 'SỬA') + " DANH MỤC",
             buttons: [{
@@ -641,23 +613,23 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           fr.readAsArrayBuffer(arFile[0]);
 
           fr.onloadend = function () {
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this6, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this6, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
               var _this7 = this;
 
               var bufferData, wb, workbook, worksheet, results, returnFinish, _i, _results, el, jsonPost;
 
-              return regeneratorRuntime.wrap(function _callee3$(_context3) {
+              return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
-                  switch (_context3.prev = _context3.next) {
+                  switch (_context2.prev = _context2.next) {
                     case 0:
                       bufferData = fr.result;
-                      wb = new exceljs__WEBPACK_IMPORTED_MODULE_5__["Workbook"]();
-                      _context3.prev = 2;
-                      _context3.next = 5;
+                      wb = new exceljs__WEBPACK_IMPORTED_MODULE_6__["Workbook"]();
+                      _context2.prev = 2;
+                      _context2.next = 5;
                       return wb.xlsx.load(bufferData);
 
                     case 5:
-                      workbook = _context3.sent;
+                      workbook = _context2.sent;
                       worksheet = workbook.getWorksheet(config.sheet_name.value);
                       results = [];
                       worksheet.eachRow(function (row, rowIndex) {
@@ -686,11 +658,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
                     case 11:
                       if (!(_i < _results.length)) {
-                        _context3.next = 26;
+                        _context2.next = 27;
                         break;
                       }
 
                       el = _results[_i];
+
+                      if (!(el.parent_id === this.userReport.organization_id)) {
+                        _context2.next = 24;
+                        break;
+                      }
+
                       jsonPost = {
                         name: el.name,
                         short_name: el.short_name,
@@ -699,43 +677,44 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                         parent_id: el.parent_id
                       }; // console.log(jsonPost);
 
-                      _context3.prev = 14;
-                      _context3.next = 17;
+                      _context2.prev = 15;
+                      _context2.next = 18;
                       return this.apiAuth.postDynamicJson(this.apiAuth.serviceUrls.RESOURCE_SERVER + '/post-organizations', jsonPost);
 
-                    case 17:
+                    case 18:
                       returnFinish.count_success++;
-                      _context3.next = 23;
+                      _context2.next = 24;
                       break;
 
-                    case 20:
-                      _context3.prev = 20;
-                      _context3.t0 = _context3["catch"](14);
+                    case 21:
+                      _context2.prev = 21;
+                      _context2.t0 = _context2["catch"](15);
                       // console.log(err);
                       returnFinish.count_fail++;
 
-                    case 23:
+                    case 24:
                       _i++;
-                      _context3.next = 11;
+                      _context2.next = 11;
                       break;
 
-                    case 26:
-                      console.log(returnFinish);
-                      this.refreshNews();
-                      _context3.next = 33;
+                    case 27:
+                      console.log(returnFinish); //Báo cho socket biết là thực hiện xong
+
+                      this.socket.emit('Client-send-data');
+                      _context2.next = 34;
                       break;
 
-                    case 30:
-                      _context3.prev = 30;
-                      _context3.t1 = _context3["catch"](2);
-                      console.log('Lỗi đọc file excel nguồn!', _context3.t1);
+                    case 31:
+                      _context2.prev = 31;
+                      _context2.t1 = _context2["catch"](2);
+                      console.log('Lỗi đọc file excel nguồn!', _context2.t1);
 
-                    case 33:
+                    case 34:
                     case "end":
-                      return _context3.stop();
+                      return _context2.stop();
                   }
                 }
-              }, _callee3, this, [[2, 30], [14, 20]]);
+              }, _callee2, this, [[2, 31], [15, 21]]);
             }));
           };
         }
@@ -769,18 +748,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         type: src_app_services_api_download_service__WEBPACK_IMPORTED_MODULE_3__["ApiDownloadService"]
       }, {
         type: src_app_services_api_excel_service__WEBPACK_IMPORTED_MODULE_4__["ApiExcelService"]
+      }, {
+        type: ngx_socket_io__WEBPACK_IMPORTED_MODULE_5__["Socket"]
       }];
     };
 
-    OrganizationsPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+    OrganizationsPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
       selector: 'app-organizations',
-      template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
       /*! raw-loader!./organizations.page.html */
       "./node_modules/raw-loader/dist/cjs.js!./src/app/pages/organizations/organizations.page.html"))["default"],
-      styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
+      styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(
       /*! ./organizations.page.scss */
       "./src/app/pages/organizations/organizations.page.scss"))["default"]]
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["CommonsService"], src_app_services_api_download_service__WEBPACK_IMPORTED_MODULE_3__["ApiDownloadService"], src_app_services_api_excel_service__WEBPACK_IMPORTED_MODULE_4__["ApiExcelService"]])], OrganizationsPage);
+    }), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["CommonsService"], src_app_services_api_download_service__WEBPACK_IMPORTED_MODULE_3__["ApiDownloadService"], src_app_services_api_excel_service__WEBPACK_IMPORTED_MODULE_4__["ApiExcelService"], ngx_socket_io__WEBPACK_IMPORTED_MODULE_5__["Socket"]])], OrganizationsPage);
     /***/
   },
 
@@ -814,13 +795,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
     /* harmony import */
 
 
     var ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! ngxi4-dynamic-service */
-    "./node_modules/ngxi4-dynamic-service/fesm2015/ngxi4-dynamic-service.js");
+    "./node_modules/ngxi4-dynamic-service/__ivy_ngcc__/fesm2015/ngxi4-dynamic-service.js");
     /* harmony import */
 
 
@@ -843,11 +824,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var file_saver__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_4__);
 
     var ApiDownloadService = /*#__PURE__*/function () {
-      function ApiDownloadService(apiAuth, apiCommon) {
+      function ApiDownloadService(apiAuth) {
         _classCallCheck(this, ApiDownloadService);
 
         this.apiAuth = apiAuth;
-        this.apiCommon = apiCommon;
       }
 
       _createClass(ApiDownloadService, [{
@@ -866,66 +846,41 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               var bufferData = fr.result;
               var wb = new exceljs__WEBPACK_IMPORTED_MODULE_3__["Workbook"]();
               wb.xlsx.load(bufferData).then(function (workbook) {
-                return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this8, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this8, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
                   var _this9 = this;
 
                   var arrayOutput;
-                  return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                  return regeneratorRuntime.wrap(function _callee4$(_context4) {
                     while (1) {
-                      switch (_context5.prev = _context5.next) {
+                      switch (_context4.prev = _context4.next) {
                         case 0:
-                          // console.log(bufferData)
+                          // console.log(bufferData);
                           arrayOutput = [];
                           workbook.eachSheet(function (sheet) {
-                            return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](_this9, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+                            return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(_this9, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
                               var ws, resultCallback;
-                              return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                              return regeneratorRuntime.wrap(function _callee3$(_context3) {
                                 while (1) {
-                                  switch (_context4.prev = _context4.next) {
+                                  switch (_context3.prev = _context3.next) {
                                     case 0:
-                                      if (!(sheet.name === sheet_name)) {
-                                        _context4.next = 14;
-                                        break;
+                                      if (sheet.name === sheet_name) {
+                                        ws = sheet;
+                                        resultCallback = callbackPromise(ws, config);
+                                        arrayOutput.splice(arrayOutput.length, 0, resultCallback);
+                                      } else {
+                                        // ẩn các sheet không dùng đến
+                                        sheet.state = 'hidden';
                                       }
 
-                                      _context4.prev = 1;
-                                      ws = sheet;
-                                      _context4.next = 5;
-                                      return callbackPromise(ws, config);
-
-                                    case 5:
-                                      resultCallback = _context4.sent;
-                                      arrayOutput.splice(arrayOutput.length, 0, resultCallback);
-                                      _context4.next = 12;
-                                      break;
-
-                                    case 9:
-                                      _context4.prev = 9;
-                                      _context4.t0 = _context4["catch"](1);
-                                      console.log('Lỗi xử lý dữ liệu', _context4.t0);
-
-                                    case 12:
-                                      _context4.next = 15;
-                                      break;
-
-                                    case 14:
-                                      // ẩn các sheet không dùng đến
-                                      sheet.state = 'hidden';
-
-                                    case 15:
+                                    case 1:
                                     case "end":
-                                      return _context4.stop();
+                                      return _context3.stop();
                                   }
                                 }
-                              }, _callee4, null, [[1, 9]]);
+                              }, _callee3);
                             }));
-                          }); // Đợi cho đến khi arrayOutput có dữ liệu mới đi tiếp
+                          }); // console.log(arrayOutput);
 
-                          _context5.next = 4;
-                          return this.apiCommon.delay(5000, arrayOutput);
-
-                        case 4:
-                          // console.log(arrayOutput);
                           if (arrayOutput.length > 0 && arrayOutput[0].status === "OK" && arrayOutput[0].count > 0) {
                             workbook.views = [{
                               x: 0,
@@ -944,12 +899,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                             });
                           }
 
-                        case 5:
+                        case 3:
                         case "end":
-                          return _context5.stop();
+                          return _context4.stop();
                       }
                     }
-                  }, _callee5, this);
+                  }, _callee4);
                 }));
               })["catch"](function (err) {
                 console.log('Lỗi đọc dữ liệu blob', err);
@@ -967,14 +922,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     ApiDownloadService.ctorParameters = function () {
       return [{
         type: ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]
-      }, {
-        type: ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["CommonsService"]
       }];
     };
 
-    ApiDownloadService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+    ApiDownloadService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"], ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["CommonsService"]])], ApiDownloadService);
+    }), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [ngxi4_dynamic_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]])], ApiDownloadService);
     /***/
   },
 
@@ -1008,7 +961,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
     /*! @angular/core */
-    "./node_modules/@angular/core/fesm2015/core.js");
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 
     var ApiExcelService = /*#__PURE__*/function () {
       function ApiExcelService() {
@@ -1018,52 +971,41 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ApiExcelService, [{
         key: "processWriteExcel",
         value: function processWriteExcel(data, ws, config) {
-          return new Promise(function (resolve, reject) {
-            try {
-              // console.log(data);
-              var row = ws.getRow(2);
-              row.getCell("A").value = data[0].name;
-              row.getCell("E").value = data[0].id; // Xác định bề rộng cho các cột
+          var row = ws.getRow(2);
+          row.getCell("A").value = data[0].name;
+          row.getCell("E").value = data[0].id; // Xác định bề rộng cho các cột
 
-              ws.getColumn(1).width = 5;
-              ws.getColumn(2).alignment = {
-                wrapText: true
-              };
-              ws.getColumn(4).alignment = {
-                wrapText: true
-              };
-              var index = 0;
-              data[0].subs.forEach(function (el) {
-                row = ws.getRow(index + 4);
-                row.getCell(config.noId.value).value = index + 1;
-                row.getCell(config.name.value).value = el.name;
-                row.getCell(config.short_name.value).value = el.short_name;
-                row.getCell(config.description.value).value = el.description;
-                row.getCell(config.id.value).value = el.id;
-                row.getCell(config.parent_id.value).value = el.parent_id;
-                index++;
-              });
-              resolve({
-                status: "OK",
-                count: index
-              });
-            } catch (e) {
-              console.log(e);
-              reject({
-                status: "NOK",
-                error: e
-              });
-            }
+          ws.getColumn(1).width = 5;
+          ws.getColumn(2).alignment = {
+            wrapText: true
+          };
+          ws.getColumn(4).alignment = {
+            wrapText: true
+          };
+          var index = 0;
+          data[0].subs.forEach(function (el) {
+            row = ws.getRow(index + 4);
+            row.getCell(config.noId.value).value = index + 1;
+            row.getCell(config.name.value).value = el.name;
+            row.getCell(config.short_name.value).value = el.short_name;
+            row.getCell(config.description.value).value = el.description;
+            row.getCell(config.id.value).value = el.id;
+            row.getCell(config.parent_id.value).value = el.parent_id;
+            index++;
           });
+          return {
+            status: "OK",
+            count: index
+          };
         }
       }]);
 
       return ApiExcelService;
     }();
 
-    ApiExcelService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+    ApiExcelService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])], ApiExcelService);
+    }), Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [])], ApiExcelService);
     /***/
   }
 }]);
